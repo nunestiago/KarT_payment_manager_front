@@ -12,6 +12,9 @@ function registerValidations(data) {
     progress: undefined,
   };
 
+  const regexEmail =
+    /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
+
   if (!data.nome) {
     toast.error('Nome é obrigatório.', toastOpts);
     return false;
@@ -19,6 +22,11 @@ function registerValidations(data) {
 
   if (!data.email) {
     toast.error('E-mail é obrigatório.', toastOpts);
+    return false;
+  }
+
+  if (!regexEmail.test(data.email.toLowerCase())) {
+    toast.error('Email inválido.', toastOpts);
     return false;
   }
 
