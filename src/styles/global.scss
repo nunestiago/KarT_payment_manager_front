@@ -1,12 +1,13 @@
-@import './alignments.css';
-@import './buttons.css';
-@import './form.css';
+@import '~react-toastify/dist/ReactToastify.min.css';
+@import './alignments.scss';
+@import './buttons.scss';
+@import './form.scss';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
 body {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
-  background-color: #E5E5E5;
+  background-color: #e5e5e5;
 }
 
 code {
