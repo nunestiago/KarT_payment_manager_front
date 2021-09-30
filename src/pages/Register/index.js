@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import registerValidations from './validations';
 import { ToastContainer, toast } from 'react-toastify';
+import baseUrl from '../../utils/baseUrl';
 
 const toastOpts = {
   position: 'top-right',
@@ -30,14 +31,11 @@ function Register() {
     console.log(data);
     registerValidations(data);
     try {
-      const response = await fetch(
-        'https://kartmanagement.herokuapp.com/user/register',
-        {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
+      const response = await fetch(`${baseUrl}user/register`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' },
+      });
 
       const registerInDB = await response.json();
 
