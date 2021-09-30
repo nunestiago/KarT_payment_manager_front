@@ -5,53 +5,74 @@ import '../../styles/alignments.scss';
 import '../../styles/form.scss';
 import '../../styles/buttons.scss';
 import CubosAcademyLogo from '../../assets/cubos-academy.svg';
-import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 
-function Login() {
+import { Link } from 'react-router-dom';
+import registerValidations from './validations';
+import { ToastContainer, toast } from 'react-toastify';
+
+const toastOpts = {
+  position: 'top-right',
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+};
+
+function Register() {
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm();
 
-  const handleLogin = async (data) => {
-    if (!data.email || !data.senha) {
-      toast.error('Email e senha são obrigatórios.');
-      return;
-    }
+  async function handleRegister(data) {
     setLoading(true);
+    console.log(data);
+    registerValidations(data);
     try {
       const response = await fetch(
-        'https://kartmanagement.herokuapp.com/user/login',
+        'https://kartmanagement.herokuapp.com/user/register',
         {
           method: 'POST',
           body: JSON.stringify(data),
           headers: { 'Content-Type': 'application/json' },
         },
       );
+
+      const registerInDB = await response.json();
+
       if (!response.ok) {
-        setLoading(false);
-        toast.error('Email ou senha incorretos.');
-        return;
+        throw new Error(registerInDB);
       }
-      const dados = await response.json();
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       toast.error(error);
     }
-    setLoading(false);
-  };
-
+  }
   return (
     <div className="container-form">
       <form
-        className="form form-login items-center content-center"
-        onSubmit={handleSubmit(handleLogin)}
+        className="form form-register"
+        noValidate
+        autoComplete="off"
+        onSubmit={handleSubmit(handleRegister)}
       >
         <img src={CubosAcademyLogo} alt="logo" />
         <div className="flex-column input">
+          <label>Nome</label>
+          <input
+            id="user"
+            type="text"
+            placeholder="Novo Usuário"
+            {...register('nome')}
+          />
           <label>E-mail</label>
+
           <input
             id="email"
             type="email"
+            label="E-mail"
             placeholder="exemplo@gmail.com"
             {...register('email')}
           />
@@ -64,15 +85,18 @@ function Login() {
             {...register('senha')}
           />
         </div>
-        <button className="btn-pink-light flex-row items-center content-center">
+        <button
+          type="submit"
+          className="btn-pink-light flex-row items-center content-center"
+        >
           ENTRAR
         </button>
       </form>
       <h1>
-        Não tem uma conta? <Link to="/cadastro">Cadastre-se</Link>
+        Já possui uma conta? <Link to="/">Acesse agora!</Link>
       </h1>
     </div>
   );
 }
 
-export default Login;
+export default Register;
