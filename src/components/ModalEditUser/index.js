@@ -1,16 +1,36 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import baseUrl from '../../utils/baseUrl';
 import cpfMask from '../../utils/cpfMask';
 import phoneMask from '../../utils/phoneMask';
 
 function ModalEditUser() {
   const { register, handleSubmit } = useForm();
 
-  const handleEditUser = async (data, callback) => {
+  const handleEditUser = async (data) => {
     const onlyUpdatedData = Object.fromEntries(
       Object.entries(data).filter(([, value]) => value),
     );
+
+    try {
+      const response = await fetch(`${baseUrl}user/edit`, {
+        method: 'PUT',
+        body: JSON.stringify(onlyUpdatedData),
+        headers: {
+          'Content-Type': 'application/json',
+          // Authorization: 'Bearer ' + token,
+        },
+      });
+
+      const registerInDB = await response.json();
+
+      if (!response.ok) {
+        throw new Error(registerInDB);
+      }
+    } catch (error) {
+      toast.error(error);
+    }
   };
 
   return (
