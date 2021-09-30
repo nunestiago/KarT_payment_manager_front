@@ -9,7 +9,6 @@ import AuthContext from '../contexts/AuthContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../components/Sidebar';
-import AddClient from '../pages/AddClient';
 import ModalEditUser from '../components/ModalEditUser';
 
 function Routes() {
@@ -25,7 +24,7 @@ function Routes() {
           <Route path="/cadastrar-cliente" component={ClientRegister} />
           <Sidebar>
             <Route path="/home" component={Home} />
-            <Route path="/adicionar-cliente" component={AddClient} />
+
             <Route path="/teste" component={ModalEditUser} />
           </Sidebar>
         </Switch>
