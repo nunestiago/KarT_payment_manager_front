@@ -17,7 +17,6 @@ function Register() {
   const [password, setPassword] = useState('');
 
   async function handleRegister(data) {
-    console.log(data);
     registerValidations(data);
     try {
       const response = await fetch(`${baseUrl}user/register`, {
@@ -27,11 +26,12 @@ function Register() {
       });
 
       const registerInDB = await response.json();
-
       if (!response.ok) {
+        toast.error(registerInDB);
         throw new Error(registerInDB);
       }
     } catch (error) {
+      console.log(error);
       toast.error(error);
     }
   }
@@ -46,7 +46,7 @@ function Register() {
         <img src={CubosAcademyLogo} alt="logo" />
         <div className="flex-column register">
           <div className="flex-column input">
-            <label>Nome</label> 
+            <label>Nome</label>
             <input
               id="user"
               type="text"
@@ -55,7 +55,7 @@ function Register() {
             />
           </div>
           <div className="flex-column input">
-            <label>E-mail</label>            
+            <label>E-mail</label>
             <input
               id="email"
               type="email"
@@ -69,6 +69,7 @@ function Register() {
             placeholder="minhasenha"
             value={password}
             setValue={setPassword}
+            register={register}
           />
         </div>
         <button
