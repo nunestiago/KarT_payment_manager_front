@@ -8,7 +8,9 @@ import CubosAcademyLogo from '../../assets/cubos-academy.svg';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import baseUrl from '../../utils/baseUrl';
 import PasswordInput from '../../components/PasswordInput';
+
 
 function Login() {
   const { register, handleSubmit } = useForm();
@@ -20,19 +22,17 @@ function Login() {
       return;
     }
     try {
-      const response = await fetch(
-        'https://kartmanagement.herokuapp.com/user/login',
-        {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
+      const response = await fetch(`${baseUrl}user/login`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' },
+      });
       if (!response.ok) {
         toast.error('Email ou senha incorretos.');
         return;
       }
       const dados = await response.json();
+      console.log(dados);
     } catch (error) {
       toast.error(error);
     }
@@ -62,7 +62,10 @@ function Login() {
             setValue={setPassword}
           />
         </div>
-        <button className="btn-pink-light flex-row items-center content-center">
+        <button
+          className="btn-pink-light flex-row items-center content-center"
+          type="submit"
+        >
           ENTRAR
         </button>
       </form>
