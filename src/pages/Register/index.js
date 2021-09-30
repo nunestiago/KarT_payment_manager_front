@@ -7,8 +7,8 @@ import '../../styles/buttons.scss';
 import CubosAcademyLogo from '../../assets/cubos-academy.svg';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import registerValidations from './registerValidations';
 import { toast } from 'react-toastify';
+import registerValidations from './validations';
 
 function Register() {
   const [loading, setLoading] = useState(false);
