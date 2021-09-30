@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import baseUrl from '../../utils/baseUrl';
+import cepMask from '../../utils/cepMask';
+import cpfMask from '../../utils/cpfMask';
 
 function ClientRegister() {
   const { register, handleSubmit } = useForm();
@@ -68,7 +70,12 @@ function ClientRegister() {
           <input id="email" type="email" {...register('email')} />{' '}
           <div>
             <label htmlFor="cpf">CPF</label>
-            <input id="cpf" type="text" {...register('cpf')} />{' '}
+            <input
+              id="cpf"
+              type="text"
+              {...register('cpf')}
+              onChange={cpfMask}
+            />{' '}
             <label htmlFor="telefone">Telefone</label>
             <input id="telefone" type="text" {...register('telefone')} />{' '}
             <label htmlFor="cep">CEP</label>
@@ -77,6 +84,7 @@ function ClientRegister() {
               type="text"
               {...register('cep')}
               onBlur={(e) => handleCep(e)}
+              onChange={cepMask}
             />
             <label htmlFor="logradouro">Logradouro</label>
             <input
