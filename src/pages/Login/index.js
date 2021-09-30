@@ -9,17 +9,18 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import baseUrl from '../../utils/baseUrl';
+import PasswordInput from '../../components/PasswordInput';
+
 
 function Login() {
-  const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm();
+  const [password, setPassword] = useState('');
 
   const handleLogin = async (data) => {
     if (!data.email || !data.senha) {
       toast.error('Email e senha são obrigatórios.');
       return;
     }
-    setLoading(true);
     try {
       const response = await fetch(`${baseUrl}user/login`, {
         method: 'POST',
@@ -27,7 +28,6 @@ function Login() {
         headers: { 'Content-Type': 'application/json' },
       });
       if (!response.ok) {
-        setLoading(false);
         toast.error('Email ou senha incorretos.');
         return;
       }
@@ -36,7 +36,6 @@ function Login() {
     } catch (error) {
       toast.error(error);
     }
-    setLoading(false);
   };
 
   return (
@@ -46,21 +45,21 @@ function Login() {
         onSubmit={handleSubmit(handleLogin)}
       >
         <img src={CubosAcademyLogo} alt="logo" />
-        <div className="flex-column input">
-          <label>E-mail</label>
-          <input
-            id="email"
-            type="email"
-            placeholder="exemplo@gmail.com"
-            {...register('email')}
-          />
-          <label>Senha</label>
-          <input
-            id="password"
-            type="password"
+        <div className="flex-column">
+          <div className="flex-column input">
+            <label>E-mail</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="exemplo@gmail.com"
+              {...register('email')}
+            />
+          </div>
+          <PasswordInput
             label="Senha"
             placeholder="minhasenha"
-            {...register('senha')}
+            value={password}
+            setValue={setPassword}
           />
         </div>
         <button

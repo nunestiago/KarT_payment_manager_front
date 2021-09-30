@@ -6,18 +6,17 @@ import '../../styles/form.scss';
 import '../../styles/buttons.scss';
 import CubosAcademyLogo from '../../assets/cubos-academy.svg';
 import { useForm } from 'react-hook-form';
-
 import { Link } from 'react-router-dom';
 import registerValidations from './validations';
 import { toast } from 'react-toastify';
 import baseUrl from '../../utils/baseUrl';
+import PasswordInput from '../../components/PasswordInput';
 
 function Register() {
-  const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm();
+  const [password, setPassword] = useState('');
 
   async function handleRegister(data) {
-    setLoading(true);
     console.log(data);
     registerValidations(data);
     try {
@@ -32,9 +31,7 @@ function Register() {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
       toast.error(error);
     }
   }
@@ -47,30 +44,31 @@ function Register() {
         onSubmit={handleSubmit(handleRegister)}
       >
         <img src={CubosAcademyLogo} alt="logo" />
-        <div className="flex-column input">
-          <label>Nome</label>
-          <input
-            id="user"
-            type="text"
-            placeholder="Novo Usuário"
-            {...register('nome')}
-          />
-          <label>E-mail</label>
-
-          <input
-            id="email"
-            type="email"
-            label="E-mail"
-            placeholder="exemplo@gmail.com"
-            {...register('email')}
-          />
-          <label>Senha</label>
-          <input
-            id="password"
-            type="password"
+        <div className="flex-column register">
+          <div className="flex-column input">
+            <label>Nome</label> 
+            <input
+              id="user"
+              type="text"
+              placeholder="Novo Usuário"
+              {...register('nome')}
+            />
+          </div>
+          <div className="flex-column input">
+            <label>E-mail</label>            
+            <input
+              id="email"
+              type="email"
+              label="E-mail"
+              placeholder="exemplo@gmail.com"
+              {...register('email')}
+            />
+          </div>
+          <PasswordInput
             label="Senha"
             placeholder="minhasenha"
-            {...register('senha')}
+            value={password}
+            setValue={setPassword}
           />
         </div>
         <button
