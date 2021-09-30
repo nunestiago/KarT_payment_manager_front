@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-function PasswordInput({ label, placeholder, value, setValue, register }) {
+function PasswordInput({ label, placeholder, register }) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -17,8 +17,6 @@ function PasswordInput({ label, placeholder, value, setValue, register }) {
           type={showPassword ? 'text' : 'password'}
           label="Senha"
           placeholder={placeholder}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
           {...register('senha')}
         />
         <FontAwesomeIcon
