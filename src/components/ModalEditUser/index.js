@@ -4,15 +4,14 @@ import { toast } from 'react-toastify';
 import cpfMask from '../../utils/cpfMask';
 import phoneMask from '../../utils/phoneMask';
 
-const initialValues = {
-  cpf: '',
-  cnpj: '',
-};
-
 function ModalEditUser() {
   const { register, handleSubmit } = useForm();
 
-  const handleEditUser = async (data, callback) => {};
+  const handleEditUser = async (data, callback) => {
+    const onlyUpdatedData = Object.fromEntries(
+      Object.entries(data).filter(([, value]) => value),
+    );
+  };
 
   return (
     <div>
