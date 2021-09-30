@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './style.scss';
 import '../../styles/global.scss';
 import '../../styles/alignments.scss';
@@ -13,7 +13,13 @@ import baseUrl from '../../utils/baseUrl';
 import PasswordInput from '../../components/PasswordInput';
 
 function Register() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty, isValid },
+  } = useForm({
+    mode: 'onChange',
+  });
 
   async function handleRegister(data) {
     registerValidations(data);
@@ -26,7 +32,6 @@ function Register() {
 
       const registerInDB = await response.json();
       if (!response.ok) {
-        toast.error(registerInDB);
         throw new Error(registerInDB);
       }
     } catch (error) {
@@ -49,7 +54,7 @@ function Register() {
               id="user"
               type="text"
               placeholder="Novo Usuário"
-              {...register('nome')}
+              {...register('nome', { required: true })}
             />
           </div>
           <div className="flex-column input">
@@ -59,7 +64,7 @@ function Register() {
               type="email"
               label="E-mail"
               placeholder="exemplo@gmail.com"
-              {...register('email')}
+              {...register('email', { required: true })}
             />
           </div>
           <PasswordInput
@@ -71,6 +76,7 @@ function Register() {
         <button
           type="submit"
           className="btn-pink-light flex-row items-center content-center"
+          disabled={!isDirty || !isValid}
         >
           ENTRAR
         </button>

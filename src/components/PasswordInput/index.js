@@ -17,7 +17,7 @@ function PasswordInput({ label, placeholder, register }) {
           type={showPassword ? 'text' : 'password'}
           label="Senha"
           placeholder={placeholder}
-          {...register('senha')}
+          {...register('senha', { required: true })}
         />
         <FontAwesomeIcon
           icon={showPassword ? faEye : faEyeSlash}

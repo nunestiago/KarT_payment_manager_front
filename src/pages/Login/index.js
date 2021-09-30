@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './style.scss';
 import '../../styles/global.scss';
 import '../../styles/alignments.scss';
@@ -13,7 +13,15 @@ import PasswordInput from '../../components/PasswordInput';
 import useAuth from '../../hooks/useAuth';
 
 function Login() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty, isValid },
+  } = useForm({
+    mode: 'onChange',
+  });
+
+  // const buttonWatch = watch();
   const history = useHistory();
   const { login, token } = useAuth();
 
@@ -63,7 +71,7 @@ function Login() {
               id="email"
               type="email"
               placeholder="exemplo@gmail.com"
-              {...register('email')}
+              {...register('email', { required: true })}
             />
           </div>
           <PasswordInput
@@ -73,11 +81,12 @@ function Login() {
           />
         </div>
         <button
-          className="btn-pink-light flex-row items-center content-center"
+          className={`btn-pink-light flex-row items-center content-center`}
+          disabled={!isDirty || !isValid}
           type="submit"
         >
           ENTRAR
-        </button>
+        </button>{' '}
       </form>
       <h1>
         Não tem uma conta? <Link to="/cadastro">Cadastre-se</Link>

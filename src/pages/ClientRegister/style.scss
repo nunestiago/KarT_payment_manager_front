@@ -1,0 +1,14 @@
+.client_register {
+  &__container {
+    margin: 0 60px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 25px;
+  }
+}
+form input {
+  border-radius: 8px;
+  border: 1px solid #374952;
+  padding: 12px 20px;
+  width: 100%;
+}
