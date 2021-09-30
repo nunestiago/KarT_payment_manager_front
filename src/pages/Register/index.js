@@ -14,7 +14,6 @@ import PasswordInput from '../../components/PasswordInput';
 
 function Register() {
   const { register, handleSubmit } = useForm();
-  const [password, setPassword] = useState('');
 
   async function handleRegister(data) {
     registerValidations(data);
@@ -31,8 +30,7 @@ function Register() {
         throw new Error(registerInDB);
       }
     } catch (error) {
-      console.log(error);
-      toast.error(error);
+      toast.error(error.message);
     }
   }
   return (
@@ -67,8 +65,6 @@ function Register() {
           <PasswordInput
             label="Senha"
             placeholder="minhasenha"
-            value={password}
-            setValue={setPassword}
             register={register}
           />
         </div>
