@@ -5,7 +5,7 @@ import '../../styles/alignments.css';
 import '../../styles/form.css';
 import '../../styles/buttons.css';
 import CubosAcademyLogo from '../../assets/cubos-academy.svg';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 function Register() {
   return (
