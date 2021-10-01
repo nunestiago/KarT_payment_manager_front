@@ -62,6 +62,7 @@ function ClientRegister() {
         <form
           noValidate
           autoComplete="off"
+          className="form"
           onSubmit={handleSubmit(handleAddClient)}
         >
           <label htmlFor="nome">Nome</label>
