@@ -20,6 +20,8 @@ function ModalEditUser({ setOpenModal, openModal }) {
     setOpenModal(!openModal);
   };
 
+  // TODO apagar
+
   const handleEditUser = async (data) => {
     const onlyUpdatedData = Object.fromEntries(
       Object.entries(data).filter(([, value]) => value),
