@@ -2,23 +2,25 @@ import { useState } from 'react';
 
 function useAuthProvider() {
   const [token, setToken] = useState(localStorage.getItem('token') ?? null);
+  const [user, setUser] = useState();
 
-  const login = (tokenUsuario, callback) => {
-    setToken(tokenUsuario);
-    localStorage.setItem('token', tokenUsuario);
+  const login = (userData, callback) => {
+    setToken(userData.token);
+    setUser(userData.usuario);
+    localStorage.setItem('token', userData.token);
     if (callback) callback();
   };
 
-  const logout = (callback) => {
+  const logout = () => {
     setToken(null);
     localStorage.removeItem('token');
-    if (callback) callback();
   };
 
   return {
     login,
     logout,
     token,
+    user,
   };
 }
 
