@@ -5,8 +5,11 @@ import baseUrl from '../../utils/baseUrl';
 import cepMask from '../../utils/cepMask';
 import cpfMask from '../../utils/cpfMask';
 import './style.scss';
+import useAuth from '../../hooks/useAuth';
 
 function ClientRegister() {
+  const [address, setAddress] = useState({});
+  const { token } = useAuth();
   const {
     register,
     handleSubmit,
@@ -14,9 +17,8 @@ function ClientRegister() {
   } = useForm({
     mode: 'onChange',
   });
-  const [address, setAddress] = useState({});
 
-  const handleCep = async (e) => {
+  const handleCep = async e => {
     const insertedCep = e.target.value;
 
     const cep = insertedCep?.replace(/[^0-9]/g, '');
@@ -27,22 +29,20 @@ function ClientRegister() {
 
     try {
       const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-
       const viaCep = await response.json();
-
       setAddress(viaCep);
     } catch (error) {
       toast.error(error);
     }
   };
 
-  const handleAddClient = async (data) => {
+  const handleAddClient = async data => {
     try {
       const response = await fetch(`${baseUrl}client/register`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' },
-        // Authorization: 'Bearer ' + token,
+        Authorization: 'Bearer ' + token,
       });
 
       const registerInDB = await response.json();
@@ -103,7 +103,7 @@ function ClientRegister() {
                 id="cep"
                 type="text"
                 {...register('cep')}
-                onBlur={(e) => handleCep(e)}
+                onBlur={e => handleCep(e)}
                 onChange={cepMask}
               />
             </div>
