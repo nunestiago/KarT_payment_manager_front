@@ -5,8 +5,15 @@ import baseUrl from '../../utils/baseUrl';
 import cpfMask from '../../utils/cpfMask';
 import phoneMask from '../../utils/phoneMask';
 
-function ModalEditUser({ modalStatus, setModalStatus }) {
-  const { register, handleSubmit } = useForm();
+function ModalEditUser({ setOpenModal, openModal }) {
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty, isValid },
+  } = useForm({
+    mode: 'onChange',
+  });
+
   const closeModal = () => {
     setModalStatus(!modalStatus);
   };
