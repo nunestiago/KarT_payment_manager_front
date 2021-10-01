@@ -14,9 +14,6 @@ import baseUrl from '../../utils/baseUrl';
 import PasswordInput from '../../components/PasswordInput';
 
 function Register() {
-
-  
-  const [password, setPassword] = useState('');
   const history = useHistory();
   const {
     register,
@@ -25,7 +22,6 @@ function Register() {
   } = useForm({
     mode: 'onChange',
   });
-
 
   async function handleRegister(data) {
     registerValidations(data);
@@ -40,7 +36,7 @@ function Register() {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
-      history.push('/home')
+      history.push('/home');
     } catch (error) {
       toast.error(error.message);
     }
