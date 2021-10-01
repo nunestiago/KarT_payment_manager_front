@@ -4,11 +4,17 @@ import { toast } from 'react-toastify';
 import baseUrl from '../../utils/baseUrl';
 import cepMask from '../../utils/cepMask';
 import cpfMask from '../../utils/cpfMask';
+import './style.scss';
 
 function ClientRegister() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty, isValid },
+  } = useForm({
+    mode: 'onChange',
+  });
   const [address, setAddress] = useState({});
-  const [loading, setLoading] = useState(false);
 
   const handleCep = async (e) => {
     const insertedCep = e.target.value;
@@ -31,8 +37,6 @@ function ClientRegister() {
   };
 
   const handleAddClient = async (data) => {
-    setLoading(true);
-
     try {
       const response = await fetch(`${baseUrl}client/register`, {
         method: 'POST',
@@ -42,22 +46,18 @@ function ClientRegister() {
       });
 
       const registerInDB = await response.json();
-      console.log(registerInDB.errors[0]);
+
       if (!response.ok) {
-        toast.error(registerInDB.errors[0]);
         throw new Error(registerInDB.errors);
       }
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
-      // TODO ver com monitor pq o erro não passa toast aqui, mas na linha 44 é ok
-      toast.error(error);
+      toast.error(error.message);
     }
   };
-
+  console.log(isDirty, isValid);
   return (
-    <div>
-      AddClient{' '}
+    <div className="client_register__container">
+      Adicionar Cliente{' '}
       <div>
         <form
           noValidate
@@ -65,59 +65,107 @@ function ClientRegister() {
           onSubmit={handleSubmit(handleAddClient)}
         >
           <label htmlFor="nome">Nome</label>
-          <input id="nome" type="text" {...register('nome')} />
+          <input
+            id="nome"
+            type="text"
+            {...register('nome', { required: true })}
+          />
           <label htmlFor="email">E-mail</label>
-          <input id="email" type="email" {...register('email')} />{' '}
-          <div>
-            <label htmlFor="cpf">CPF</label>
-            <input
-              id="cpf"
-              type="text"
-              {...register('cpf')}
-              onChange={cpfMask}
-            />{' '}
-            <label htmlFor="telefone">Telefone</label>
-            <input id="telefone" type="text" {...register('telefone')} />{' '}
-            <label htmlFor="cep">CEP</label>
-            <input
-              id="cep"
-              type="text"
-              {...register('cep')}
-              onBlur={(e) => handleCep(e)}
-              onChange={cepMask}
-            />
-            <label htmlFor="logradouro">Logradouro</label>
-            <input
-              id="logradouro"
-              type="text"
-              {...register('logradouro')}
-              value={address.logradouro}
-            />
-            <label htmlFor="bairro">Bairro</label>
-            <input
-              id="bairro"
-              type="text"
-              {...register('bairro')}
-              value={address.bairro}
-            />{' '}
-            <label htmlFor="cidade">Cidade</label>
-            <input
-              id="cidade"
-              type="text"
-              {...register('cidade')}
-              value={address.localidade}
-            />
-            <label htmlFor="complemento">Complemento</label>
-            <input
-              id="complemento"
-              type="text"
-              {...register('complemento')}
-              value={address.complemento}
-            />
-            <label htmlFor="pref">Ponto de Referência</label>
-            <input id="pref" type="text" {...register('ponto_referencia')} />
+          <input
+            id="email"
+            type="email"
+            {...register('email', { required: true })}
+          />{' '}
+          <div className="half">
+            <div>
+              <label htmlFor="cpf">CPF</label>
+              <input
+                id="cpf"
+                type="text"
+                {...register('cpf', { required: true })}
+                onChange={cpfMask}
+              />{' '}
+            </div>
+            <div>
+              <label htmlFor="telefone">Telefone</label>
+              <input
+                id="telefone"
+                type="text"
+                {...register('telefone', { required: true })}
+              />{' '}
+            </div>
           </div>
-          <button type="submit">Enviar</button>
+          <div className="half">
+            <div>
+              <label htmlFor="cep">CEP</label>
+              <input
+                id="cep"
+                type="text"
+                {...register('cep')}
+                onBlur={(e) => handleCep(e)}
+                onChange={cepMask}
+              />
+            </div>
+            <div>
+              <label htmlFor="logradouro">Logradouro</label>
+              <input
+                id="logradouro"
+                type="text"
+                {...register('logradouro')}
+                value={address.logradouro}
+              />
+            </div>
+          </div>
+          <div className="half">
+            <div>
+              <label htmlFor="bairro">Bairro</label>
+              <input
+                id="bairro"
+                type="text"
+                {...register('bairro')}
+                value={address.bairro}
+              />{' '}
+            </div>
+            <div>
+              <label htmlFor="cidade">Cidade</label>
+              <input
+                id="cidade"
+                type="text"
+                {...register('cidade')}
+                value={address.localidade}
+              />
+            </div>
+          </div>
+          <div className="half">
+            <div>
+              <label htmlFor="complemento">Complemento</label>
+              <input
+                id="complemento"
+                type="text"
+                {...register('complemento')}
+                value={address.complemento}
+              />
+            </div>
+            <div>
+              <label htmlFor="pref">Ponto de Referência</label>
+              <input id="pref" type="text" {...register('ponto_referencia')} />
+            </div>
+          </div>
+          <div className="flex-row btn-add-client">
+            <button
+              type="submit"
+              className="btn-pink-border flex-row items-center content-center"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              className="btn-pink-light flex-row items-center content-center"
+              disabled={!isValid || !isDirty}
+            >
+              Adicionar Cliente
+            </button>
+          </div>
         </form>
       </div>
     </div>
