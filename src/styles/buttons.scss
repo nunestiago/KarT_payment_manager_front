@@ -1,4 +1,16 @@
 .btn-pink {
+  padding: 11px 60px;
+  background-color: #da0175;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17px;
+  text-align: center;
+  color: #f7f7f7;
+  cursor: pointer;
+  height: 39px;
+  width: 226px;
+  border-radius: 20px;
   &-light {
     padding: 11px 60px;
     background-color: #da0175;
@@ -19,7 +31,6 @@
     padding: 11px 60px;
     border-radius: 20px;
     background-color: #fff;
-
     cursor: pointer;
     color: #da0175;
     font-weight: bold;
