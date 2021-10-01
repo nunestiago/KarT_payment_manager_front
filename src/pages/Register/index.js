@@ -5,13 +5,13 @@ import '../../styles/alignments.scss';
 import '../../styles/form.scss';
 import '../../styles/buttons.scss';
 import CubosAcademyLogo from '../../assets/cubos-academy.svg';
-import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import registerValidations from './validations';
 import baseUrl from '../../utils/baseUrl';
 import PasswordInput from '../../components/PasswordInput';
+import { useHistory } from 'react-router';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 function Register() {
   const history = useHistory();
