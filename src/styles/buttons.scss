@@ -1,17 +1,34 @@
-.btn-pink-light {
-  padding: 11px 60px;
-  background-color: #da0175;
-  cursor: pointer;
-  border: none;
-  border-radius: 20px;
-  font-family: Montserrat;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 17px;
-  text-align: center;
-  color: #f7f7f7;
+.btn-pink {
+  &-light {
+    padding: 11px 60px;
+    background-color: #da0175;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 17px;
+    text-align: center;
+    color: #f7f7f7;
+    &:disabled {
+      background-color: rgba(218, 1, 117, 0.35);
+    }
+  }
+  &-border {
+    padding: 11px 60px;
+    border-radius: 20px;
+    background-color: #fff;
+
+    cursor: pointer;
+    color: #da0175;
+    font-weight: bold;
+    border: 2px solid #da0175;
+  }
 }
 
-.btn-pink-light:disabled {
-  background-color: rgba(218, 1, 117, 0.35);
+.btn-add-client {
+  justify-content: center;
+  gap: 50px;
+  margin-left: 100px;
 }
