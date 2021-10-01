@@ -57,12 +57,12 @@ function ClientRegister() {
   console.log(isDirty, isValid);
   return (
     <div className="client_register__container">
-      Adicionar Cliente{' '}
+     {'//'} ADICIONAR CLIENTE {' '}
       <div className="client_register">
         <form
           noValidate
           autoComplete="off"
-          className="form"
+          className="form-client"
           onSubmit={handleSubmit(handleAddClient)}
         >
           <label htmlFor="nome">Nome</label>
