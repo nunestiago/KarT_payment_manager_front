@@ -29,12 +29,12 @@ function Routes() {
         <Switch>
           <Route path="/" exact component={Login} />
           <Route path="/cadastro" component={Register} />
-          <Route path="/atualizar-usuario" component={EditUser} />
-          <Route path="/cadastrar-cliente" component={ClientRegister} />
+          <Route path="/atualizar-usuario" component={EditUser} />          
           {/* <ProtectedRoutes> */}
           <Sidebar>
             <Route path="/home" component={Home} />
             <Route path="/teste" component={ModalEditUser} />
+            <Route path="/cadastrar-cliente" component={ClientRegister} />
           </Sidebar>
           {/* </ProtectedRoutes> */}
         </Switch>
