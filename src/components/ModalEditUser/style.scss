@@ -10,7 +10,10 @@
     align-items: center;
     justify-content: center;
     overflow: auto;
+  button {
+    margin-top: 30px;
   }
+}  
   &_padding {
     padding: 50px 72px;
     height: 650px;
