@@ -10,6 +10,9 @@
     align-items: center;
     justify-content: center;
     overflow: auto;
+
+    animation: apear 0.5s;
+
   button {
     margin-top: 30px;
   }
@@ -31,5 +34,13 @@
     font-size: 18px;
     font-weight: 600;
     color: #374952;
+  }
+}
+@keyframes apear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

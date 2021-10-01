@@ -32,12 +32,8 @@ function Navbar() {
             <p> Editar </p>
           </div>
 
-          <div onClick={(logout, () => history.push('/'))}>
-            <img
-              src={logoutIcon}
-              alt="icone de deslogar"
-              onClick={() => logout}
-            />
+          <div onClick={logout}>
+            <img src={logoutIcon} alt="icone de deslogar" />
             <p>Deslogar</p>
           </div>
         </div>

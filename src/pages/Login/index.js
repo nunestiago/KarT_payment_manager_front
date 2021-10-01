@@ -30,7 +30,7 @@ function Login() {
     }
   }, []);
 
-  const handleLogin = async (data) => {
+  const handleLogin = async data => {
     if (!data.email || !data.senha) {
       toast.error('Email e senha são obrigatórios.');
       return;
@@ -49,7 +49,8 @@ function Login() {
       }
 
       const dados = await response.json();
-      login(dados.token);
+      login(dados);
+
       history.push('/home');
     } catch (error) {
       toast.error(error.message);

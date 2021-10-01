@@ -1,28 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import baseUrl from '../../utils/baseUrl';
 import cpfMask from '../../utils/cpfMask';
 import phoneMask from '../../utils/phoneMask';
 import PasswordInput from '../PasswordInput';
+import useAuth from '../../hooks/useAuth';
 import './style.scss';
 
 function ModalEditUser({ setOpenModal, openModal }) {
-  const {
-    register,
-    handleSubmit,
-    formState: { isDirty, isValid },
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     mode: 'onChange',
   });
+  const { token, user } = useAuth();
+  console.log(user);
 
   const closeModal = () => {
     setOpenModal(!openModal);
   };
 
-  // TODO apagar
-
-  const handleEditUser = async (data) => {
+  const handleEditUser = async data => {
     const onlyUpdatedData = Object.fromEntries(
       Object.entries(data).filter(([, value]) => value),
     );
@@ -33,7 +30,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
         body: JSON.stringify(onlyUpdatedData),
         headers: {
           'Content-Type': 'application/json',
-          // Authorization: 'Bearer ' + token,
+          Authorization: 'Bearer ' + token,
         },
       });
 
@@ -42,6 +39,8 @@ function ModalEditUser({ setOpenModal, openModal }) {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
+      closeModal();
+      toast.success(registerInDB);
     } catch (error) {
       toast.error(error.message);
     }
@@ -51,7 +50,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
     <>
       <div className="modal_container" onClick={() => closeModal()}>
         <div
-          onClick={(e) => {
+          onClick={e => {
             e.stopPropagation();
           }}
         >
@@ -67,11 +66,21 @@ function ModalEditUser({ setOpenModal, openModal }) {
             </div>
             <div className="flex-column input">
               <label htmlFor="nome">Nome</label>
-              <input id="nome" type="text" {...register('nome')} />
+              <input
+                id="nome"
+                type="text"
+                {...register('nome')}
+                defaultValue={user?.nome}
+              />
             </div>
             <div className="flex-column input">
               <label htmlFor="email">E-mail</label>
-              <input id="email" type="email" {...register('email')} />{' '}
+              <input
+                id="email"
+                type="email"
+                {...register('email')}
+                defaultValue={user?.email}
+              />{' '}
             </div>
             <PasswordInput
               label="Senha"
@@ -87,6 +96,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
                 {...register('telefone')}
                 placeholder="(71) 9 9333-2222"
                 onChange={phoneMask}
+                defaultValue={user?.telefone}
               />{' '}
             </div>
             <div className="flex-column input">
@@ -97,11 +107,11 @@ function ModalEditUser({ setOpenModal, openModal }) {
                 type="text"
                 {...register('cpf')}
                 onChange={cpfMask}
+                defaultValue={user?.cpf}
               />{' '}
             </div>
             <button
               className={`btn-pink-light flex-row items-center content-center`}
-              disabled={!isDirty || !isValid}
               type="submit"
             >
               Editar Conta
