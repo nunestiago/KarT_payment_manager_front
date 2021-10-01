@@ -11,15 +11,13 @@ nav {
 }
 
 .content {
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-start;
     margin-top: 58px;
-    margin-left: 58px;
 }
 
 .content a {
     text-decoration: none;
-    font-family: Montserrat;
     font-size: 12px;
     font-weight: 700;
     line-height: 15px;
@@ -32,4 +30,11 @@ nav {
 .content img {
     border-right: 15px;
     margin-right: 20px;
+    margin-left: 48px;
+}
+
+.active {
+    background-color: #374952;
+    height: 47px;
+    width: 100%;
 }
