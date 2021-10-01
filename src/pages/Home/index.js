@@ -1,9 +1,53 @@
 import React from 'react';
+import './style.scss';
+import clientsIcon from '../../assets/clients.svg';
+import moneyIcon from '../..//assets/money.svg';
+import profileIcon from '../../assets/user.svg';
 
 function Home() {
   return (
-    <div className="container">
-      <h1>Home</h1>
+    <div className="home">
+      <div className="profile">
+        <img src={profileIcon} alt="user-icon" />
+      </div>
+      <div className="flex-row">
+        <div className="flex-column clients container-box">
+          <div className="flex-row content-center items-center topline">
+            <img src={clientsIcon} alt="clients-icon" />
+            <h1>Clientes</h1>
+          </div>
+          <div className=" flex-column data items-center">
+            <div className="flex-row green-box items-center">
+              <h2>Em dia</h2>
+              <span>0</span>
+            </div>
+            <div className="flex-row red-box items-center">
+              <h2>Inadimplentes</h2>
+              <span>0</span>
+            </div>
+          </div>
+        </div>
+        <div className="flex-column container-box charges">
+          <div className="flex-row content-center items-center topline">
+            <img src={moneyIcon} alt="money-icon" />
+            <h1>Cobranças</h1>
+          </div>
+          <div className="flex-column data items-center">
+            <div className="flex-row blue-box items-center">
+              <h2>Previstas</h2>
+              <span>0</span>
+            </div>
+            <div className="flex-row red-box items-center">
+              <h2>Vencidas</h2>
+              <span>0</span>
+            </div>
+            <div className="flex-row green-box items-center">
+              <h2>Pagas</h2>
+              <span>0</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
