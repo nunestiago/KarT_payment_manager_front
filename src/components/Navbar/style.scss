@@ -20,10 +20,21 @@
   flex-direction: column;
   row-gap: 15px;
   z-index: 2;
+  animation: grow-up 0.5s;
   div {
     cursor: pointer;
     display: flex;
     align-items: center;
     column-gap: 8px;
+  }
+}
+@keyframes grow-up {
+  from {
+    transform: translateY(-25%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
