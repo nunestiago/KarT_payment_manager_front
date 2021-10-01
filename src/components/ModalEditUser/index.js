@@ -38,7 +38,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
-      setUser(onlyUpdatedData, ...user);
+      setUser(onlyUpdatedData);
       closeModal();
       toast.success(registerInDB);
     } catch (error) {

@@ -9,7 +9,6 @@ function useAuthProvider() {
   const login = (userData, callback) => {
     setToken(userData.token);
     setUser(userData.usuario);
-    console.log(userData.usuario);
     localStorage.setItem('token', userData.token);
     localStorage.setItem('userData', JSON.stringify(userData.usuario));
     if (callback) callback();
