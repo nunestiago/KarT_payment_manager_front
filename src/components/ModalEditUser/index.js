@@ -13,7 +13,6 @@ function ModalEditUser({ setOpenModal, openModal }) {
     mode: 'onChange',
   });
   const { token, user } = useAuth();
-  console.log(user);
 
   const closeModal = () => {
     setOpenModal(!openModal);

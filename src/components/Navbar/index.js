@@ -4,13 +4,11 @@ import editIcon from '../../assets/edit.svg';
 import logoutIcon from '../../assets/logout.svg';
 import './style.scss';
 import useAuth from '../../hooks/useAuth';
-import { useHistory } from 'react-router';
 import ModalEditUser from '../ModalEditUser';
 
 function Navbar() {
   const [dropUserMenu, setDropUserMenu] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const history = useHistory();
   const { logout } = useAuth();
 
   function handleModal() {
