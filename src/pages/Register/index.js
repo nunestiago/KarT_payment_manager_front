@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './style.scss';
 import '../../styles/global.scss';
 import '../../styles/alignments.scss';
@@ -14,12 +14,20 @@ import baseUrl from '../../utils/baseUrl';
 import PasswordInput from '../../components/PasswordInput';
 
 function Register() {
-  const { register, handleSubmit } = useForm();
+
+  
   const [password, setPassword] = useState('');
   const history = useHistory();
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty, isValid },
+  } = useForm({
+    mode: 'onChange',
+  });
+
 
   async function handleRegister(data) {
-    console.log(data);
     registerValidations(data);
     try {
       const response = await fetch(`${baseUrl}user/register`, {
@@ -29,13 +37,12 @@ function Register() {
       });
 
       const registerInDB = await response.json();
-
       if (!response.ok) {
         throw new Error(registerInDB);
       }
       history.push('/home')
     } catch (error) {
-      toast.error(error);
+      toast.error(error.message);
     }
   }
   return (
@@ -49,34 +56,34 @@ function Register() {
         <img src={CubosAcademyLogo} alt="logo" />
         <div className="flex-column register">
           <div className="flex-column input">
-            <label>Nome</label> 
+            <label>Nome</label>
             <input
               id="user"
               type="text"
               placeholder="Novo Usuário"
-              {...register('nome')}
+              {...register('nome', { required: true })}
             />
           </div>
           <div className="flex-column input">
-            <label>E-mail</label>            
+            <label>E-mail</label>
             <input
               id="email"
               type="email"
               label="E-mail"
               placeholder="exemplo@gmail.com"
-              {...register('email')}
+              {...register('email', { required: true })}
             />
           </div>
           <PasswordInput
             label="Senha"
             placeholder="minhasenha"
-            value={password}
-            setValue={setPassword}
+            register={register}
           />
         </div>
         <button
           type="submit"
           className="btn-pink-light flex-row items-center content-center"
+          disabled={!isDirty || !isValid}
         >
           ENTRAR
         </button>

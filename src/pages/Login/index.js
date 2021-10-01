@@ -1,40 +1,59 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import './style.scss';
 import '../../styles/global.scss';
 import '../../styles/alignments.scss';
 import '../../styles/form.scss';
 import '../../styles/buttons.scss';
 import CubosAcademyLogo from '../../assets/cubos-academy.svg';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import baseUrl from '../../utils/baseUrl';
 import PasswordInput from '../../components/PasswordInput';
-
+import useAuth from '../../hooks/useAuth';
 
 function Login() {
-  const { register, handleSubmit } = useForm();
-  const [password, setPassword] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty, isValid },
+  } = useForm({
+    mode: 'onChange',
+  });
+
+  // const buttonWatch = watch();
+  const history = useHistory();
+  const { login, token } = useAuth();
+
+  useEffect(() => {
+    if (token) {
+      history.push('/home');
+    }
+  }, []);
 
   const handleLogin = async (data) => {
     if (!data.email || !data.senha) {
       toast.error('Email e senha são obrigatórios.');
       return;
     }
+
     try {
       const response = await fetch(`${baseUrl}user/login`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' },
       });
+
       if (!response.ok) {
         toast.error('Email ou senha incorretos.');
         return;
       }
+
       const dados = await response.json();
-      console.log(dados);
+      login(dados.token);
+      history.push('/home');
     } catch (error) {
-      toast.error(error);
+      toast.error(error.message);
     }
   };
 
@@ -52,22 +71,22 @@ function Login() {
               id="email"
               type="email"
               placeholder="exemplo@gmail.com"
-              {...register('email')}
+              {...register('email', { required: true })}
             />
           </div>
           <PasswordInput
             label="Senha"
             placeholder="minhasenha"
-            value={password}
-            setValue={setPassword}
+            register={register}
           />
         </div>
         <button
-          className="btn-pink-light flex-row items-center content-center"
+          className={`btn-pink-light flex-row items-center content-center`}
+          disabled={!isDirty || !isValid}
           type="submit"
         >
           ENTRAR
-        </button>
+        </button>{' '}
       </form>
       <h1>
         Não tem uma conta? <Link to="/cadastro">Cadastre-se</Link>
