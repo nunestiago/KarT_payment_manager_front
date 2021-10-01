@@ -24,7 +24,6 @@ function Routes() {
           <Route path="/cadastrar-cliente" component={ClientRegister} />
           <Sidebar>
             <Route path="/home" component={Home} />
-
             <Route path="/teste" component={ModalEditUser} />
           </Sidebar>
         </Switch>
