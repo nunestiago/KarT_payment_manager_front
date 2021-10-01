@@ -36,7 +36,7 @@ function Register() {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
-      history.push('/home');
+      history.push('/');
     } catch (error) {
       toast.error(error.message);
     }
@@ -74,6 +74,7 @@ function Register() {
             label="Senha"
             placeholder="minhasenha"
             register={register}
+            reqBool={true}
           />
         </div>
         <button

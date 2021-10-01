@@ -21,7 +21,6 @@ function Login() {
     mode: 'onChange',
   });
 
-  // const buttonWatch = watch();
   const history = useHistory();
   const { login, token } = useAuth();
 
@@ -78,6 +77,7 @@ function Login() {
             label="Senha"
             placeholder="minhasenha"
             register={register}
+            reqBool={true}
           />
         </div>
         <button
