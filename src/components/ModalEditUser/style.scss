@@ -1,0 +1,46 @@
+.modal {
+  &_container {
+    background: rgba(0, 0, 0, 0.53);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+
+    animation: apear 0.5s;
+
+  button {
+    margin-top: 30px;
+  }
+}  
+  &_padding {
+    padding: 50px 72px;
+    height: 650px;
+    width: 405px;
+    font-size: 24px;
+  }
+  &_close {
+    position: relative;
+    right: -40px;
+    top: -70px;
+    cursor: pointer;
+    align-self: flex-end;
+
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 600;
+    color: #374952;
+  }
+}
+@keyframes apear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

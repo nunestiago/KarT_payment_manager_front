@@ -1,6 +1,6 @@
 nav {
     background: #263238;
-    height: 100vh;
+    height: 900px;
     width: 264px;    
     padding-top: 32px;
 }
@@ -11,15 +11,11 @@ nav {
 }
 
 .content {
-    justify-content: space-between;
-    align-items: flex-start;
     margin-top: 58px;
-    margin-left: 58px;
 }
 
 .content a {
     text-decoration: none;
-    font-family: Montserrat;
     font-size: 12px;
     font-weight: 700;
     line-height: 15px;
@@ -27,9 +23,16 @@ nav {
     height: 47px;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
 }
 
 .content img {
-    border-right: 15px;
     margin-right: 20px;
+    margin-left: 48px;
+}
+
+.active {
+    background-color: #374952;
+    height: 47px;
+    width: 100%;
 }

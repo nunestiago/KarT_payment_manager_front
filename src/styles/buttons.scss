@@ -11,6 +11,7 @@
   height: 39px;
   width: 226px;
   border-radius: 20px;
+  margin-top: 220px;
   &-light {
     padding: 11px 60px;
     background-color: #da0175;
@@ -33,8 +34,10 @@
     background-color: #fff;
     cursor: pointer;
     color: #da0175;
+    font-size: 14px;
     font-weight: bold;
     border: 2px solid #da0175;
+    margin-right: 16px;
   }
 }
 

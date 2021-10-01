@@ -1,15 +1,11 @@
 import React from 'react';
 import './style.scss';
 import clientsIcon from '../../assets/clients.svg';
-import moneyIcon from '../..//assets/money.svg';
-import profileIcon from '../../assets/user.svg';
+import moneyIcon from '../../assets/money.svg';
 
 function Home() {
   return (
     <div className="home">
-      <div className="profile">
-        <img src={profileIcon} alt="user-icon" />
-      </div>
       <div className="flex-row">
         <div className="flex-column clients container-box">
           <div className="flex-row content-center items-center topline">

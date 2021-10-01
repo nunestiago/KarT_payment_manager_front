@@ -21,7 +21,6 @@ function Login() {
     mode: 'onChange',
   });
 
-  // const buttonWatch = watch();
   const history = useHistory();
   const { login, token } = useAuth();
 
@@ -31,7 +30,7 @@ function Login() {
     }
   }, []);
 
-  const handleLogin = async (data) => {
+  const handleLogin = async data => {
     if (!data.email || !data.senha) {
       toast.error('Email e senha são obrigatórios.');
       return;
@@ -50,7 +49,8 @@ function Login() {
       }
 
       const dados = await response.json();
-      login(dados.token);
+      login(dados);
+
       history.push('/home');
     } catch (error) {
       toast.error(error.message);
@@ -78,6 +78,7 @@ function Login() {
             label="Senha"
             placeholder="minhasenha"
             register={register}
+            reqBool={true}
           />
         </div>
         <button
