@@ -58,7 +58,7 @@ function ClientRegister() {
   return (
     <div className="client_register__container">
       Adicionar Cliente{' '}
-      <div>
+      <div className="client_register">
         <form
           noValidate
           autoComplete="off"
