@@ -12,8 +12,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
   const { register, handleSubmit } = useForm({
     mode: 'onChange',
   });
-  const { token, user } = useAuth();
-  console.log(user);
+  const { token, user, setUser } = useAuth();
 
   const closeModal = () => {
     setOpenModal(!openModal);
@@ -39,6 +38,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
+      setUser(onlyUpdatedData);
       closeModal();
       toast.success(registerInDB);
     } catch (error) {
