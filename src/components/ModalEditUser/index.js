@@ -23,6 +23,9 @@ function ModalEditUser({ setOpenModal, openModal }) {
       Object.entries(data).filter(([, value]) => value),
     );
 
+    if (data.telefone) data.telefone = data.telefone.replace(/[^0-9]/g, '');
+    if (data.cpf) data.cpf = data.cpf.replace(/[^0-9]/g, '');
+
     try {
       const response = await fetch(`${baseUrl}user/edit`, {
         method: 'PUT',
