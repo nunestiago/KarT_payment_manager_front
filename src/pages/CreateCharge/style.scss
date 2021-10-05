@@ -1,0 +1,60 @@
+.input-help {
+  vertical-align: top;
+  display: inline-block;
+}
+
+.select {
+  border-radius: 8px;
+  border: 1px solid #374952;
+  margin-bottom: 32px;
+  margin-top: 8px;
+  padding: 12px 20px;
+  width: 625px;
+  // TODO corrigir width
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  letter-spacing: 0.25px;
+  color: #323232;
+}
+
+.vencimento_container {
+  flex: 2;
+}
+.valor {
+  position: relative;
+}
+.valor input {
+  padding: 10px;
+  text-align: center;
+}
+
+.valor:before {
+  position: absolute;
+  content: 'R$';
+  padding: 1px 15px;
+  font-size: 12px;
+  top: 35px;
+}
+
+.input-help-text {
+  font-weight: 500;
+  font-size: 12px;
+  color: #636363;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  margin-top: -30px;
+  margin-bottom: 25px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}

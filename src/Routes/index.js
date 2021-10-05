@@ -17,6 +17,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../components/Sidebar';
 import ModalEditUser from '../components/ModalEditUser';
 import useAuth from '../hooks/useAuth';
+import Charges from '../pages/Charges';
+import CreateCharge from '../pages/CreateCharge';
 
 function ProtectedRoutes({ children }) {
   const { token } = useAuth();
@@ -39,6 +41,8 @@ function Routes() {
               <Route path="/clientes" component={ViewClients} />
               <Route path="/cadastrar-cliente" component={ClientRegister} />
               <Route path="/editar-cliente" component={EditClient} />
+              <Route path="/cobrancas" component={Charges} />
+              <Route path="/nova-cobranca" component={CreateCharge} />
             </Sidebar>
           </ProtectedRoutes>
         </Switch>
