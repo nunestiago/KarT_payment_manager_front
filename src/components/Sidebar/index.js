@@ -20,27 +20,33 @@ function Sidebar({ children }) {
           alt="Logo branco Cubos Academy"
         />
         <div className="flex-column content">
-          <Link
+          <div className="home">
+            <Link
             to="/home"
             className={location.pathname.includes('/home') ? 'active' : ''}
           >
             <img src={homeIcon} alt="ícone home" />
             HOME
           </Link>
-          <Link
+          </div>
+          <div className="cobrancas">
+            <Link
             to="/cobrancas"
             className={location.pathname.includes('/cobrancas') ? 'active' : ''}
           >
             <img src={moneyIcon} alt="ícone money" />
             COBRANÇAS
           </Link>
-          <Link
+          </div>
+          <div className="clientes">
+            <Link
             to="/cadastrar-cliente"
             className={location.pathname.includes('/cadastrar-cliente') ? 'active' : ''}
           >
             <img src={clientsIcon} alt="ícone clients" />
             CLIENTES
           </Link>
+          </div>
         </div>
         <div className="flex-row items-center content-center">
           <button className="btn-pink">Criar cobrança</button>

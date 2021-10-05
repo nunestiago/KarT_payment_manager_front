@@ -1,13 +1,14 @@
 nav {
     background: #263238;
-    height: 900px;
+    height: 1000px;
     width: 264px;    
     padding-top: 32px;
 }
 
-.cubos img {
+.cubos {
     height: 32px;
     width: 135px;
+    margin-left: 48px;
 }
 
 .content {
@@ -29,6 +30,14 @@ nav {
 .content img {
     margin-right: 20px;
     margin-left: 48px;
+}
+
+.home {
+    margin-left: 4px;
+}
+
+.clientes {
+    margin-left: 3px;
 }
 
 .active {

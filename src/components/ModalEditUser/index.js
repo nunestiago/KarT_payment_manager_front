@@ -12,8 +12,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
   const { register, handleSubmit } = useForm({
     mode: 'onChange',
   });
-  const { token, user } = useAuth();
-  console.log(user);
+  const { token, user, setUser } = useAuth();
 
   const closeModal = () => {
     setOpenModal(!openModal);
@@ -23,6 +22,9 @@ function ModalEditUser({ setOpenModal, openModal }) {
     const onlyUpdatedData = Object.fromEntries(
       Object.entries(data).filter(([, value]) => value),
     );
+
+    if (data.telefone) data.telefone = data.telefone.replace(/[^0-9]/g, '');
+    if (data.cpf) data.cpf = data.cpf.replace(/[^0-9]/g, '');
 
     try {
       const response = await fetch(`${baseUrl}user/edit`, {
@@ -39,6 +41,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
+      setUser(onlyUpdatedData);
       closeModal();
       toast.success(registerInDB);
     } catch (error) {
@@ -96,6 +99,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
                 {...register('telefone')}
                 placeholder="(71) 9 9333-2222"
                 onChange={phoneMask}
+                maxLength="15"
                 defaultValue={user?.telefone}
               />{' '}
             </div>
@@ -106,6 +110,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
                 id="cpf"
                 type="text"
                 {...register('cpf')}
+                maxLength="14"
                 onChange={cpfMask}
                 defaultValue={user?.cpf}
               />{' '}

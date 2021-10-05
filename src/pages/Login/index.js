@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.scss';
 import '../../styles/global.scss';
 import '../../styles/alignments.scss';
@@ -11,6 +11,15 @@ import { toast } from 'react-toastify';
 import baseUrl from '../../utils/baseUrl';
 import PasswordInput from '../../components/PasswordInput';
 import useAuth from '../../hooks/useAuth';
+import { Backdrop, Button, CircularProgress } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#000000',
+  },    
+}));
 
 function Login() {
   const {
@@ -21,8 +30,10 @@ function Login() {
     mode: 'onChange',
   });
 
+  const classes = useStyles();
   const history = useHistory();
   const { login, token } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (token) {
@@ -36,12 +47,16 @@ function Login() {
       return;
     }
 
+    setIsLoading(true);
+
     try {
       const response = await fetch(`${baseUrl}user/login`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' },
       });
+
+      setIsLoading(false);
 
       if (!response.ok) {
         toast.error('Email ou senha incorretos.');
@@ -54,6 +69,7 @@ function Login() {
       history.push('/home');
     } catch (error) {
       toast.error(error.message);
+      setIsLoading(false);
     }
   };
 
@@ -89,10 +105,14 @@ function Login() {
           ENTRAR
         </button>{' '}
       </form>
+      <Backdrop className={classes.backdrop} open={isLoading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <h1>
         Não tem uma conta? <Link to="/cadastro">Cadastre-se</Link>
-      </h1>
+      </h1>      
     </div>
+    
   );
 }
 

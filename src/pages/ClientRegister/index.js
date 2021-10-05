@@ -6,16 +6,20 @@ import cepMask from '../../utils/cepMask';
 import cpfMask from '../../utils/cpfMask';
 import './style.scss';
 import useAuth from '../../hooks/useAuth';
+import { useHistory } from 'react-router';
+import phoneMask from '../../utils/phoneMask';
 
 function ClientRegister() {
   const [address, setAddress] = useState({});
   const { token } = useAuth();
+  const history = useHistory();
   const {
     register,
     handleSubmit,
     formState: { isDirty, isValid },
+    setValue,
   } = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
   });
 
   const handleCep = async e => {
@@ -29,35 +33,47 @@ function ClientRegister() {
 
     try {
       const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      setValue('cep', cep);
       const viaCep = await response.json();
+      setValue('logradouro', viaCep.logradouro);
+      setValue('bairro', viaCep.bairro);
+      setValue('cidade', viaCep.localidade);
+      setValue('complemento', viaCep.complemento);
       setAddress(viaCep);
     } catch (error) {
-      toast.error(error);
+      toast.error(error.message);
     }
   };
 
   const handleAddClient = async data => {
+    data.cpf = data.cpf.replace(/[^0-9]/g, '');
+    data.telefone = data.telefone.replace(/[^0-9]/g, '');
+    data.cep = data.cep.replace(/[^0-9]/g, '');
+
     try {
       const response = await fetch(`${baseUrl}client/register`, {
         method: 'POST',
         body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' },
-        Authorization: 'Bearer ' + token,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
       });
 
       const registerInDB = await response.json();
 
       if (!response.ok) {
-        throw new Error(registerInDB.errors);
+        throw new Error(registerInDB);
       }
+      history.push('/');
+      toast.success(registerInDB);
     } catch (error) {
       toast.error(error.message);
     }
   };
-  console.log(isDirty, isValid);
   return (
     <div className="client_register__container">
-     {'//'} ADICIONAR CLIENTE {' '}
+      {'//'} ADICIONAR CLIENTE{' '}
       <div className="client_register">
         <form
           noValidate
@@ -84,6 +100,7 @@ function ClientRegister() {
                 id="cpf"
                 type="text"
                 {...register('cpf', { required: true })}
+                maxLength="14"
                 onChange={cpfMask}
               />{' '}
             </div>
@@ -93,6 +110,8 @@ function ClientRegister() {
                 id="telefone"
                 type="text"
                 {...register('telefone', { required: true })}
+                maxLength="15"
+                onChange={phoneMask}
               />{' '}
             </div>
           </div>
@@ -103,6 +122,7 @@ function ClientRegister() {
                 id="cep"
                 type="text"
                 {...register('cep')}
+                maxLength="9"
                 onBlur={e => handleCep(e)}
                 onChange={cepMask}
               />
@@ -161,7 +181,7 @@ function ClientRegister() {
             </button>
             <button
               type="submit"
-              className="btn-pink-light flex-row items-center content-center"
+              className="btn-pink-light"
               disabled={!isValid || !isDirty}
             >
               Adicionar Cliente
