@@ -5,23 +5,20 @@ import { toast } from 'react-toastify';
 import baseUrl from '../../utils/baseUrl';
 import cepMask from '../../utils/cepMask';
 import cpfMask from '../../utils/cpfMask';
-import './style.scss';
-import useAuth from '../../hooks/useAuth';
-import { useHistory } from 'react-router';
 import phoneMask from '../../utils/phoneMask';
+import useAuth from '../../hooks/useAuth';
+import './style.scss';
 
-function ClientRegister() {
+function ModalEditClient({ setOpenModal, openModal }) {
   const [address, setAddress] = useState({});
-  const { token } = useAuth();
-  const history = useHistory();
-  const {
-    register,
-    handleSubmit,
-    formState: { isDirty, isValid },
-    setValue,
-  } = useForm({
-    mode: 'onBlur',
+  const { register, handleSubmit, setValue } = useForm({
+    mode: 'onChange',
   });
+  const { token, client, setClient } = useAuth();
+
+  const closeModal = () => {
+    setOpenModal(!openModal);
+  };
 
   const handleCep = async e => {
     const insertedCep = e.target.value;
@@ -30,7 +27,6 @@ function ClientRegister() {
     if (insertedCep?.length < 9) {
       return;
     }
-
     try {
       const response = await fetch(
         `https://viacep.com.br/ws/${insertedCep?.replace(/[^0-9]/g, '')}/json/`,
@@ -46,15 +42,19 @@ function ClientRegister() {
     }
   };
 
-  const handleAddClient = async data => {
-    data.cpf = data.cpf.replace(/[^0-9]/g, '');
-    data.telefone = data.telefone.replace(/[^0-9]/g, '');
-    data.cep = data.cep.replace(/[^0-9]/g, '');
+  const handleEditClient = async data => {
+    const onlyUpdatedData = Object.fromEntries(
+      Object.entries(data).filter(([, value]) => value),
+    );
+    
+    if (data.cpf) data.cpf = data.cpf.replace(/[^0-9]/g, '');  
+    if (data.telefone) data.telefone = data.telefone.replace(/[^0-9]/g, '');
+    if (data.cpf) data.cpf = data.cpf.replace(/[^0-9]/g, '');
 
     try {
-      const response = await fetch(`${baseUrl}client/register`, {
-        method: 'POST',
-        body: JSON.stringify(data),
+      const response = await fetch(`${baseUrl}client/edit`, {
+        method: 'PUT',
+        body: JSON.stringify(onlyUpdatedData),
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + token,
@@ -66,35 +66,48 @@ function ClientRegister() {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
-      history.push('/');
+      setClient(onlyUpdatedData);
+      closeModal();
       toast.success(registerInDB);
     } catch (error) {
       toast.error(error.message);
     }
   };
+
   return (
-    <div className="client_register__container">
-      {'//'} ADICIONAR CLIENTE{' '}
-      <div className="client_register">
-        <form
-          noValidate
-          autoComplete="off"
-          className="form-client"
-          onSubmit={handleSubmit(handleAddClient)}
+    <>
+      <div className="modal_container" onClick={() => closeModal()}>
+        <div
+          onClick={e => {
+            e.stopPropagation();
+          }}
         >
-          <label htmlFor="nome">Nome</label>
-          <input
-            id="nome"
-            type="text"
-            {...register('nome', { required: true })}
-          />
-          <label htmlFor="email">E-mail</label>
-          <input
-            id="email"
-            type="email"
-            {...register('email', { required: true })}
-          />{' '}
-          <div className="half">
+          <form
+            noValidate
+            autoComplete="off"
+            className="form-edit-user modal_padding"
+            onSubmit={handleSubmit(handleEditClient)}
+          >
+            <div onClick={() => closeModal()} className="modal_close">
+              X
+            </div>
+            <div className="flex-column all-size">
+              <label htmlFor="nome">Nome</label>
+              <input
+                id="nome"
+                type="text"
+                {...register('nome', { required: true })}
+                defaultValue={client?.nome}
+              />
+              <label htmlFor="email">E-mail</label>
+              <input
+                id="email"
+                type="email"
+                {...register('email', { required: true })}
+                defaultValue={client?.email}
+              />{' '}
+            </div>
+            <div className="half">
             <div>
               <label htmlFor="cpf">CPF</label>
               <input
@@ -180,7 +193,7 @@ function ClientRegister() {
             </div>
           </div>
           <div className="flex-row btn-add-client">
-            <Link to="/clientes">
+            <Link to="/home">
               <button
                 type="submit"
                 className="btn-pink-border flex-row items-center content-center"
@@ -191,15 +204,15 @@ function ClientRegister() {
             <button
               type="submit"
               className="btn-pink-light"
-              disabled={!isValid || !isDirty}
             >
-              Adicionar Cliente
+              Editar Cliente
             </button>
           </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
-export default ClientRegister;
+export default ModalEditClient;

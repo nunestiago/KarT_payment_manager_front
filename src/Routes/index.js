@@ -8,7 +8,9 @@ import Login from '../pages/Login';
 import Home from '../pages/Home';
 import Register from '../pages/Register';
 import EditUser from '../pages/EditUser';
-import ClientRegister from '..//pages/ClientRegister';
+import ViewClients from '../pages/ViewClients';
+import ClientRegister from '../pages/ClientRegister';
+import EditClient from '../pages/EditClient';
 import { AuthProvider } from '../contexts/AuthContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -36,7 +38,9 @@ function Routes() {
             <Sidebar>
               <Route path="/home" component={Home} />
               <Route path="/teste" component={ModalEditUser} />
+              <Route path="/clientes" component={ViewClients} />
               <Route path="/cadastrar-cliente" component={ClientRegister} />
+              <Route path="/editar-cliente" component={EditClient} />
               <Route path="/cobrancas" component={Charges} />
               <Route path="/nova-cobranca" component={CreateCharge} />
             </Sidebar>
