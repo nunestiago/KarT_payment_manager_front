@@ -17,6 +17,7 @@ function ClientRegister() {
     register,
     handleSubmit,
     formState: { isDirty, isValid },
+    setValue,
   } = useForm({
     mode: 'onBlur',
   });
@@ -32,7 +33,12 @@ function ClientRegister() {
 
     try {
       const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      setValue('cep', cep);
       const viaCep = await response.json();
+      setValue('logradouro', viaCep.logradouro);
+      setValue('bairro', viaCep.bairro);
+      setValue('cidade', viaCep.localidade);
+      setValue('complemento', viaCep.complemento);
       setAddress(viaCep);
     } catch (error) {
       toast.error(error.message);
@@ -40,6 +46,10 @@ function ClientRegister() {
   };
 
   const handleAddClient = async data => {
+    data.cpf = data.cpf.replace(/[^0-9]/g, '');
+    data.telefone = data.telefone.replace(/[^0-9]/g, '');
+    data.cep = data.cep.replace(/[^0-9]/g, '');
+
     try {
       const response = await fetch(`${baseUrl}client/register`, {
         method: 'POST',
