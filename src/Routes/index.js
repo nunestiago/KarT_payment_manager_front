@@ -16,6 +16,7 @@ import Sidebar from '../components/Sidebar';
 import ModalEditUser from '../components/ModalEditUser';
 import useAuth from '../hooks/useAuth';
 import Charges from '../pages/Charges';
+import CreateCharge from '../pages/CreateCharge';
 
 function ProtectedRoutes({ children }) {
   const { token } = useAuth();
@@ -37,6 +38,7 @@ function Routes() {
               <Route path="/teste" component={ModalEditUser} />
               <Route path="/cadastrar-cliente" component={ClientRegister} />
               <Route path="/cobrancas" component={Charges} />
+              <Route path="/nova-cobranca" component={CreateCharge} />
             </Sidebar>
           </ProtectedRoutes>
         </Switch>
