@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import baseUrl from '../../utils/baseUrl';
 import cepMask from '../../utils/cepMask';
