@@ -26,7 +26,6 @@ function registerValidations(data) {
 
   if (!regexEmail.test(data.email.toLowerCase())) {
     throw new Error('Email inválido.');
-    // return false;
   }
 
   if (!data.senha) {
