@@ -23,6 +23,9 @@ function ModalEditUser({ setOpenModal, openModal }) {
       Object.entries(data).filter(([, value]) => value),
     );
 
+    if (data.telefone) data.telefone = data.telefone.replace(/[^0-9]/g, '');
+    if (data.cpf) data.cpf = data.cpf.replace(/[^0-9]/g, '');
+
     try {
       const response = await fetch(`${baseUrl}user/edit`, {
         method: 'PUT',
@@ -96,6 +99,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
                 {...register('telefone')}
                 placeholder="(71) 9 9333-2222"
                 onChange={phoneMask}
+                maxLength="15"
                 defaultValue={user?.telefone}
               />{' '}
             </div>
@@ -106,6 +110,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
                 id="cpf"
                 type="text"
                 {...register('cpf')}
+                maxLength="14"
                 onChange={cpfMask}
                 defaultValue={user?.cpf}
               />{' '}

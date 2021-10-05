@@ -25,8 +25,7 @@ function registerValidations(data) {
   }
 
   if (!regexEmail.test(data.email.toLowerCase())) {
-    toast.error('Email inválido.', toastOpts);
-    return false;
+    throw new Error('Email inválido.');
   }
 
   if (!data.senha) {

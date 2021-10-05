@@ -24,8 +24,8 @@ function Register() {
   });
 
   async function handleRegister(data) {
-    registerValidations(data);
     try {
+      registerValidations(data);
       const response = await fetch(`${baseUrl}user/register`, {
         method: 'POST',
         body: JSON.stringify(data),
@@ -33,12 +33,14 @@ function Register() {
       });
 
       const registerInDB = await response.json();
+      console.log(registerInDB);
       if (!response.ok) {
         throw new Error(registerInDB);
+        // ver com monitor pq dá 2 erros qndo o e-mail é inválido
       }
       history.push('/');
     } catch (error) {
-      toast.error(error.message);
+      return toast.error(error.message);
     }
   }
   return (
