@@ -15,11 +15,11 @@ function Home() {
           <div className=" flex-column data items-center">
             <div className="flex-row green-box items-center">
               <h2>Em dia</h2>
-              <span>{clientDebt?.true || 0}</span>
+              <span>0</span>
             </div>
             <div className="flex-row red-box items-center">
               <h2>Inadimplentes</h2>
-              <span>{clientDebt?.false || 0}</span>
+              <span>0</span>
             </div>
           </div>
         </div>
