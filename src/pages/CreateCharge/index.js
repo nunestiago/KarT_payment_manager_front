@@ -5,7 +5,7 @@ import './style.scss';
 import baseUrl from '../../utils/baseUrl';
 import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
-import moneyMask from '../../utils/moneyValueMask';
+// import moneyMask from '../../utils/moneyValueMask';
 
 function CreateCharge() {
   const { token } = useAuth();
@@ -109,7 +109,6 @@ function CreateCharge() {
             id="status"
             className="select"
             {...register('status', { required: true })}
-            maxLength="14"
           >
             <option label="Selecione o um status" disabled selected>
               Selecione o um status
@@ -128,10 +127,11 @@ function CreateCharge() {
                 className="valor_container"
                 id="valor"
                 type="text"
-                onChange={moneyMask}
-                //TODO forçar input a só aceitar número
                 {...register('valor')}
+                step=".01"
+                // onChange={moneyMask}
               />
+              {/* // TODO forçar input a só aceitar número */}
             </div>
             <div>
               <label htmlFor="vencimento">Vencimento</label>
