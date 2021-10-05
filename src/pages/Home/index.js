@@ -1,41 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './style.scss';
 import clientsIcon from '../../assets/clients.svg';
 import moneyIcon from '../../assets/money.svg';
-import { toast } from 'react-toastify';
-import baseUrl from '../../utils/baseUrl';
-import useAuth from '../../hooks/useAuth';
 
-function Home() {
-  const { token, setClients } = useAuth();
-  const [clientDebt, setClientDebt] = useState();
-
-  const handleClients = async () => {
-    try {
-      const response = await fetch(`${baseUrl}client/getAll`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
-        },
-      });
-
-      const clients = await response.json();
-      setClients(clients);
-
-      const counts = clients.reduce(
-        (c, { em_dia: key }) => ((c[key] = (c[key] || 0) + 1), c),
-        {},
-      );
-      setClientDebt(counts);
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-
-  useEffect(() => {
-    handleClients();
-  }, []);
-
+function Home() { 
   return (
     <div className="home">
       <div className="flex-row">
