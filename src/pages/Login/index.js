@@ -58,8 +58,7 @@ function Login() {
       setIsLoading(false);
 
       if (!response.ok) {
-        toast.error('Email ou senha incorretos.');
-        return;
+        throw new Error(response);
       }
 
       const dados = await response.json();
