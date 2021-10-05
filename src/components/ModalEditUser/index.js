@@ -99,6 +99,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
                 {...register('telefone')}
                 placeholder="(71) 9 9333-2222"
                 onChange={phoneMask}
+                maxLength="15"
                 defaultValue={user?.telefone}
               />{' '}
             </div>
@@ -109,6 +110,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
                 id="cpf"
                 type="text"
                 {...register('cpf')}
+                maxLength="14"
                 onChange={cpfMask}
                 defaultValue={user?.cpf}
               />{' '}

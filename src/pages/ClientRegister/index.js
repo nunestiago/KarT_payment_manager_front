@@ -100,6 +100,7 @@ function ClientRegister() {
                 id="cpf"
                 type="text"
                 {...register('cpf', { required: true })}
+                maxLength="14"
                 onChange={cpfMask}
               />{' '}
             </div>
@@ -109,6 +110,7 @@ function ClientRegister() {
                 id="telefone"
                 type="text"
                 {...register('telefone', { required: true })}
+                maxLength="15"
                 onChange={phoneMask}
               />{' '}
             </div>
@@ -120,6 +122,7 @@ function ClientRegister() {
                 id="cep"
                 type="text"
                 {...register('cep')}
+                maxLength="9"
                 onBlur={e => handleCep(e)}
                 onChange={cepMask}
               />
