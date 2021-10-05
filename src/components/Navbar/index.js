@@ -17,14 +17,19 @@ function Navbar() {
   }
 
   return (
-    <div className="profile">
+    <div className="profile" onMouseLeave={() => setDropUserMenu(false)}>
       <img
         src={profileIcon}
         alt="user-icon"
         onClick={() => setDropUserMenu(!dropUserMenu)}
+        onMouseEnter={() => setDropUserMenu(true)}
       />
       {dropUserMenu && (
-        <div className="user-menu">
+        <div
+          className="user-menu"
+          onMouseEnter={() => setDropUserMenu(true)}
+          onMouseLeave={() => setDropUserMenu(false)}
+        >
           <div onClick={() => handleModal()}>
             <img src={editIcon} alt="icone de editar" />
             <p> Editar </p>
