@@ -25,15 +25,15 @@ function ClientRegister() {
   const handleCep = async e => {
     const insertedCep = e.target.value;
 
-    const cep = insertedCep?.replace(/[^0-9]/g, '');
-
-    if (cep?.length !== 8) {
+    console.log(insertedCep);
+    if (insertedCep?.length < 9) {
       return;
     }
 
     try {
-      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-      setValue('cep', cep);
+      const response = await fetch(
+        `https://viacep.com.br/ws/${insertedCep?.replace(/[^0-9]/g, '')}/json/`,
+      );
       const viaCep = await response.json();
       setValue('logradouro', viaCep.logradouro);
       setValue('bairro', viaCep.bairro);
@@ -123,8 +123,10 @@ function ClientRegister() {
                 type="text"
                 {...register('cep')}
                 maxLength="9"
-                onBlur={e => handleCep(e)}
-                onChange={cepMask}
+                onChange={e => {
+                  handleCep(e);
+                  cepMask(e);
+                }}
               />
             </div>
             <div>
@@ -134,6 +136,7 @@ function ClientRegister() {
                 type="text"
                 {...register('logradouro')}
                 value={address.logradouro}
+                onChange={e => setAddress({ logradouro: e.target.value })}
               />
             </div>
           </div>
@@ -145,6 +148,7 @@ function ClientRegister() {
                 type="text"
                 {...register('bairro')}
                 value={address.bairro}
+                onChange={e => setAddress({ bairro: e.target.value })}
               />{' '}
             </div>
             <div>
@@ -154,6 +158,7 @@ function ClientRegister() {
                 type="text"
                 {...register('cidade')}
                 value={address.localidade}
+                onChange={e => setAddress({ cidade: e.target.value })}
               />
             </div>
           </div>
@@ -165,6 +170,7 @@ function ClientRegister() {
                 type="text"
                 {...register('complemento')}
                 value={address.complemento}
+                onChange={e => setAddress({ complemento: e.target.value })}
               />
             </div>
             <div>
