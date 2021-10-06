@@ -9,6 +9,7 @@ import './style.scss';
 import useAuth from '../../hooks/useAuth';
 import { useHistory } from 'react-router';
 import phoneMask from '../../utils/phoneMask';
+import registerValidations from './validations';
 
 function ClientRegister() {
   const [address, setAddress] = useState({});
@@ -52,6 +53,7 @@ function ClientRegister() {
     data.cep = data.cep.replace(/[^0-9]/g, '');
 
     try {
+      registerValidations(data);
       const response = await fetch(`${baseUrl}client/register`, {
         method: 'POST',
         body: JSON.stringify(data),
