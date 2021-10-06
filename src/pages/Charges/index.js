@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import baseUrl from '../../utils/baseUrl';
 import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
+import './style.scss';
 
 function Charges() {
   const { token } = useAuth();
@@ -24,12 +25,20 @@ function Charges() {
 
       const dados = await response.json();
       setCharges(dados);
-      console.log(charges);
-      console.log(dados);
     } catch (error) {
       toast.error(error.message);
     }
   };
+
+  function handleStatus(status, due) {
+    if (status) {
+      return 'PAGO';
+    }
+    if (new Date(due).getTime() < Date.now()) {
+      return 'VENCIDO';
+    }
+    return 'PENDENTE';
+  }
 
   useEffect(() => {
     handleGetCharges();
@@ -44,14 +53,23 @@ function Charges() {
         <h1>Status</h1>
         <h1>Vencimento</h1>
       </div>
-      <div className="table-body">
+      <div>
         {charges.map(key => (
-          <div key={key}>
-            {key.id}
-            {key.nome}
-            {key.valor}
-            {key.status}
-            {key.vencimento}
+          <div key={key.id} className="charges-body flex-row items-center">
+            <div className="charges-list-id">#{key.id}</div>
+            <div className="charges-list-nome">{key.nome}</div>
+            <div className="charges-list-valor">R$ {key.valor.toFixed(2)}</div>
+            <div
+              className={`charges-list-status ${handleStatus(
+                key.status,
+                key.vencimento,
+              ).toLowerCase()}`}
+            >
+              {handleStatus(key.status, key.vencimento)}
+            </div>
+            <div className="charges-list-vencimento">
+              {new Date(key.vencimento).toLocaleDateString('pt-BR')}
+            </div>
           </div>
         ))}
       </div>
