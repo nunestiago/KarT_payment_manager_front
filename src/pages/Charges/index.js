@@ -34,7 +34,19 @@ function Charges() {
   useEffect(() => {
     handleGetCharges();
   }, []);
-  return <div></div>;
+  return (
+    <div>
+      <div className="table-head flex-row items-center">
+        <h1>ID</h1>
+        <h1>Cliente</h1>
+        <h1>Descrição</h1>
+        <h1>Valor</h1>
+        <h1>Status</h1>
+        <h1>Vencimento</h1>
+      </div>
+      <div className="table-body"></div>
+    </div>
+  );
 }
 
 export default Charges;
