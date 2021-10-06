@@ -42,7 +42,7 @@ function Sidebar({ children }) {
           </div>
           <div className="clientes">
             <Link
-              to="/cadastrar-cliente"
+              to="/clientes"
               className={
                 location.pathname.includes('/cadastrar-cliente') ? 'active' : ''
               }
