@@ -58,21 +58,23 @@ function ViewClients () {
         <h1>Status</h1>
         <span></span>
       </div>
-      <div className="table-body flex-row items-center">
+      <div className="table-body flex-column">
         {clients.map(client => (
-        <div className="id-client" key={client.id}>
-          <div className="client-column flex-column">
-            <p>{client.name}</p>
-            <div>
+        <div className="id-client flex-row" key={client.id}>
+          <div className="client-column flex-column content-center">
+            <Link to="/detalhe-cliente">
+              <p>{client.nome}</p>
+            </Link>
+            <div className="flex-row">
               <img src={mailIcon}alt="mail-icon" />
               <span>{client.email}</span>
             </div>
-            <div>
+            <div className="flex-row">
               <img src={phonelIcon} alt="phone-icon" />
-              <span>{client.phone}</span>
+              <span>{client.telefone}</span>
             </div>
           </div>
-          <div className="flex-row">
+          <div className="flex-row items-center content-center">
             <span>R$</span>
             <span></span>
           </div>
@@ -81,7 +83,7 @@ function ViewClients () {
             <span></span>
           </div>
           <div className="flex-row">
-            <span>{client.status === 'emdia' ? 'emdia' : 'inadimplentes'}</span>
+            <span>{client.em_dia === true ? <span className="emdia">EM DIA</span> : <span className="inadimplente">INADIMPLENTE</span>}</span>
           </div>
           <div className="flex-row">
             <Link to="/editar-cliente">
