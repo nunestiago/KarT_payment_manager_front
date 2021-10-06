@@ -49,7 +49,6 @@ function ModalEditClient({ setOpenModal, openModal }) {
     
     if (data.cpf) data.cpf = data.cpf.replace(/[^0-9]/g, '');  
     if (data.telefone) data.telefone = data.telefone.replace(/[^0-9]/g, '');
-    if (data.cpf) data.cpf = data.cpf.replace(/[^0-9]/g, '');
 
     try {
       const response = await fetch(`${baseUrl}client/edit`, {
@@ -116,6 +115,7 @@ function ModalEditClient({ setOpenModal, openModal }) {
                 {...register('cpf', { required: true })}
                 maxLength="14"
                 onChange={cpfMask}
+                defaultValue={client?.cpf}
               />{' '}
             </div>
             <div>
@@ -126,6 +126,7 @@ function ModalEditClient({ setOpenModal, openModal }) {
                 {...register('telefone', { required: true })}
                 maxLength="15"
                 onChange={phoneMask}
+                defaultValue={client?.telefone}
               />{' '}
             </div>
           </div>
@@ -141,6 +142,7 @@ function ModalEditClient({ setOpenModal, openModal }) {
                   handleCep(e);
                   cepMask(e);
                 }}
+                defaultValue={client?.cep}
               />
             </div>
             <div>
@@ -151,6 +153,7 @@ function ModalEditClient({ setOpenModal, openModal }) {
                 {...register('logradouro')}
                 value={address.logradouro}
                 onChange={e => setAddress({ logradouro: e.target.value })}
+                defaultValue={client?.logradouro}
               />
             </div>
           </div>
@@ -163,6 +166,7 @@ function ModalEditClient({ setOpenModal, openModal }) {
                 {...register('bairro')}
                 value={address.bairro}
                 onChange={e => setAddress({ bairro: e.target.value })}
+                defaultValue={client?.bairro}
               />{' '}
             </div>
             <div>
@@ -185,11 +189,17 @@ function ModalEditClient({ setOpenModal, openModal }) {
                 {...register('complemento')}
                 value={address.complemento}
                 onChange={e => setAddress({ complemento: e.target.value })}
+                defaultValue={client?.complemento}
               />
             </div>
             <div>
               <label htmlFor="pref">Ponto de Referência</label>
-              <input id="pref" type="text" {...register('ponto_referencia')} />
+              <input 
+                id="pref" 
+                type="text" 
+                {...register('ponto_referencia')}
+                defaultValue={client?.ponto_referencia} 
+              />
             </div>
           </div>
           <div className="flex-row btn-add-client">
