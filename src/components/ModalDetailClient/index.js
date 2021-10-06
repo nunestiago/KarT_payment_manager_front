@@ -46,11 +46,10 @@ function ModalEditClient({ setOpenModal, openModal }) {
             e.stopPropagation();
           }}
         >
-            <div onClick={() => closeModal()} className="modal_close">
-              X
-            </div>
-            <div className="flex-column all-size">
-            </div>  
+          <div onClick={() => closeModal()} className="modal_close">
+            X
+          </div>
+          <div className="flex-column all-size"></div>
         </div>
       </div>
     </>
