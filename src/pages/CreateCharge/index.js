@@ -5,19 +5,20 @@ import './style.scss';
 import baseUrl from '../../utils/baseUrl';
 import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
-// import moneyMask from '../../utils/moneyValueMask';
+import { TextInputMask } from 'tp-react-web-masked-text';
 
 function CreateCharge() {
   const { token } = useAuth();
   const {
     register,
     handleSubmit,
-    // setValue,
+    setValue,
     formState: { isDirty, isValid },
   } = useForm({
     mode: 'onChange',
   });
-  const [clients, setClients] = useState({});
+  const [clients, setClients] = useState([]);
+  const [money, setMoney] = useState();
 
   async function handleGetClients() {
     try {
@@ -36,11 +37,15 @@ function CreateCharge() {
 
       const dados = await response.json();
       setClients(dados);
+      console.log(clients);
     } catch (error) {
       toast.error(error.message);
     }
   }
+
   async function handleAddCharge(data) {
+    setValue('valor', money.replace(/[^0-9]/g, ''));
+
     try {
       const response = await fetch(`${baseUrl}charges/newCharge`, {
         method: 'POST',
@@ -55,7 +60,7 @@ function CreateCharge() {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
-      // history.push('/cobrancas');
+      history.push('/cobrancas');
       toast.success(registerInDB);
     } catch (error) {
       toast.error(error.message);
@@ -80,14 +85,14 @@ function CreateCharge() {
             className="select"
             id="cliente"
             {...register('cliente_id', { required: true })}
+            defaultValue="default"
           >
-            <option label="Selecione o cliente" disabled selected>
+            <option label="Selecione o cliente" disabled value="default" hidden>
               Selecione o cliente
             </option>
-            ;
-            {Object.entries(clients).map(([key]) => (
-              <option key={clients[key].id} value={clients[key].id}>
-                {clients[key].nome}
+            {clients.map(key => (
+              <option key={key.id} value={key.id}>
+                {key.nome}
               </option>
             ))}
           </select>
@@ -109,8 +114,14 @@ function CreateCharge() {
             id="status"
             className="select"
             {...register('status', { required: true })}
+            defaultValue="default2"
           >
-            <option label="Selecione o um status" disabled selected>
+            <option
+              label="Selecione o um status"
+              disabled
+              value="default2"
+              hidden
+            >
               Selecione o um status
             </option>
             <option label="Pago" value={true}>
@@ -123,15 +134,21 @@ function CreateCharge() {
           <div className="half">
             <div className="valor">
               <label htmlFor="valor">Valor</label>
-              <input
+              <TextInputMask
                 className="valor_container"
                 id="valor"
-                type="text"
                 {...register('valor')}
-                step=".01"
-                // onChange={moneyMask}
+                kind={'money'}
+                options={{
+                  precision: 2,
+                  separator: ',',
+                  delimiter: '.',
+                  unit: 'R$ ',
+                  suffixUnit: '',
+                }}
+                value={money}
+                onChange={e => setMoney(e)}
               />
-              {/* // TODO forçar input a só aceitar número */}
             </div>
             <div>
               <label htmlFor="vencimento">Vencimento</label>
