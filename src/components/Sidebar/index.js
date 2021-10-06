@@ -52,9 +52,12 @@ function Sidebar({ children }) {
             </Link>
           </div>
         </div>
-        <div className="flex-row items-center content-center">
+        <Link
+          to="/nova-cobranca"
+          className="flex-row items-center content-center"
+        >
           <button className="btn-pink">Criar cobrança</button>
-        </div>
+        </Link>
       </nav>
       <div className="flex-column">
         <Navbar />

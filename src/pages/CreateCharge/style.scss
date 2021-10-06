@@ -26,15 +26,7 @@
 }
 .valor input {
   padding: 10px;
-  text-align: center;
-}
-
-.valor:before {
-  position: absolute;
-  content: 'R$';
-  padding: 1px 15px;
-  font-size: 12px;
-  top: 35px;
+  text-align: left;
 }
 
 .input-help-text {
