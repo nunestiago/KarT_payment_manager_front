@@ -11,6 +11,7 @@ import EditUser from '../pages/EditUser';
 import ViewClients from '../pages/ViewClients';
 import ClientRegister from '../pages/ClientRegister';
 import EditClient from '../pages/EditClient';
+import DetailClient from '../pages/DetailClient';
 import { AuthProvider } from '../contexts/AuthContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -41,6 +42,7 @@ function Routes() {
               <Route path="/clientes" component={ViewClients} />
               <Route path="/cadastrar-cliente" component={ClientRegister} />
               <Route path="/editar-cliente" component={EditClient} />
+              <Route path="/detalhe-cliente" component={DetailClient} />
               <Route path="/cobrancas" component={Charges} />
               <Route path="/nova-cobranca" component={CreateCharge} />
             </Sidebar>
