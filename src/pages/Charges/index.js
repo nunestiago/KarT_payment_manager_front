@@ -44,7 +44,17 @@ function Charges() {
         <h1>Status</h1>
         <h1>Vencimento</h1>
       </div>
-      <div className="table-body"></div>
+      <div className="table-body">
+        {charges.map(key => (
+          <div key={key}>
+            {key.id}
+            {key.nome}
+            {key.valor}
+            {key.status}
+            {key.vencimento}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
