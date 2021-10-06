@@ -1,5 +1,8 @@
 .button-register {
-    margin: 100px 0px 60px 70px;
+    margin: 100px 0px 0px 70px;
+}
+
+.button-register button {
     background-color: #E5E5E5;
 }
 
@@ -8,15 +11,17 @@
     width: 958px;
     background-color: #9DBBC3;
     border-radius: 8px;
+    justify-content: space-around;
+    margin: 50px 250px 24px 70px;
+}
+
+.table-head h1 {
     font-size: 14px;
     font-weight: 600;
     line-height: 20px;
     letter-spacing: 0.005em;
     text-align: left;
     color: #FFFFFF;
-    justify-content: space-around;
-    margin-left: 70px;
-    margin-bottom: 24px;
 }
 
 .table-body {
@@ -24,4 +29,33 @@
     width: 958px;
     border-radius: 8px;
     background-color: #FFFFFF;
+    margin-left: 70px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.005em;
+    text-align: left;
+    color: #4C4C4C;
+    justify-content: space-between;
+    padding: 16px 56px 16px 24px;
+}
+
+.table-body p {
+    font-weight: 600;
+}
+
+.emdia {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 15px;
+    text-align: left;
+    color: #4EC06E;
+}
+
+.inadimplentes {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 15px;
+    text-align: left;
+    color: #FF4D4D;
 }
