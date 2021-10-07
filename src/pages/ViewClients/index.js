@@ -56,7 +56,7 @@ function ViewClients () {
         <h1>Cobranças Feitas</h1>
         <h1>Cobranças Recebidas</h1>
         <h1>Status</h1>
-        <span></span>
+        <div className="empty-space"></div>
       </div>
       <div className="table-body flex-column">
         {clients.map(client => (

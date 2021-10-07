@@ -24,9 +24,13 @@
     color: #FFFFFF;
 }
 
+.empty-space {
+    width: 150px;
+}
+
 .table-body {   
     width: 958px;
-    height: 131px; 
+    height: 450px; 
     margin-left: 70px;
 }
 
@@ -41,7 +45,7 @@
     text-align: left;
     color: #4C4C4C;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     gap: 120px;
     padding: 16px 56px 16px 24px;
 }
