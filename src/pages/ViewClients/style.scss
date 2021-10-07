@@ -11,12 +11,7 @@
     width: 958px;
     background-color: #9DBBC3;
     border-radius: 8px;
-    justify-content: flex-start;
-    gap: 30;
     margin: 50px 0px 24px 70px;
-    flex-basis: 0;
-    flex-grow: 0;
-    flex-shrink: 1;
 }
 
 .table-head h1 {
@@ -26,24 +21,26 @@
     letter-spacing: 0.005em;
     text-align: left;
     color: #FFFFFF;
-    margin-right: 190px;
     margin-left: 24px;
 }
 
 .th-middle {
-    justify-content: flex-start;
-    flex-basis: 0;
+    width: 500px;
+    justify-content: space-between;
+    margin-left: 150px;
 }
 
 .empty-space {
-    width: 233px;
-    margin-right: 200px;
+    width: 50px;
+    margin-left: 200px;
 }
 
 .table-body {   
     width: 958px;
     height: 450px; 
     margin-left: 70px;
+    justify-content: flex-start;
+    gap: 80px;
 }
 
 .id-client {
@@ -57,8 +54,6 @@
     text-align: left;
     color: #4C4C4C;
     align-items: center;
-    justify-content: space-between;
-    gap: 120px;
     padding: 16px 56px 16px 24px;
 }
 
@@ -89,6 +84,21 @@
     margin-bottom: 7px;
 }
 
+.cob-feitas {
+    position: absolute;
+    left: 590px;
+}
+
+.cob-recebidas {
+    position: absolute;
+    left: 780px;
+}
+
+.status {
+    position: absolute;
+    left: 1000px;
+}
+
 .emdia {
     font-size: 16px;
     font-weight: 600;
@@ -103,4 +113,9 @@
     line-height: 15px;
     text-align: left;
     color: #FF4D4D;
+}
+
+.edit {
+    position: absolute;
+    left: 1200px;
 }
