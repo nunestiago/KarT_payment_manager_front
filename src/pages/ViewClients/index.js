@@ -53,8 +53,8 @@ function ViewClients() {
         <div className="th-middle flex-row items-center">
           <h1>Cobranças Feitas</h1>
           <h1>Cobranças Recebidas</h1>
-          <h1>Status</h1>        
-        </div>        
+          <h1>Status</h1>
+        </div>
         <div className="empty-space">xxx</div>
       </div>
       <div className="table-body flex-column">
@@ -64,7 +64,7 @@ function ViewClients() {
               <Link to="/detalhe-cliente">
                 <p>{client.nome}</p>
               </Link>
-              <div className="flex-row">
+              <div className="flex-row mail">
                 <img src={mailIcon} alt="mail-icon" />
                 <span>{client.email}</span>
               </div>
@@ -75,12 +75,11 @@ function ViewClients() {
             </div>
             <div className="flex-row items-center content-center">
               <span>R$</span>
-              <span></span>
+              <span>{client.valor}</span>
             </div>
             <div className="flex-row">
               <span>R$</span>
               <span></span>
-
             </div>
             <div className="flex-row">
               <span>
@@ -96,24 +95,6 @@ function ViewClients() {
                 <img src={editIcon} alt="edit-icon" />
               </Link>
             </div>
-
-          </div>
-          <div className="flex-row items-center content-center">
-            <span>R$</span>
-            <span>{client.valor}</span>
-          </div>
-          <div className="flex-row">
-            <span>R$</span>
-            <span></span>
-          </div>
-          <div className="flex-row">
-            <span>{client.em_dia === true ? <span className="emdia">EM DIA</span> : <span className="inadimplente">INADIMPLENTE</span>}</span>
-          </div>
-          <div className="flex-row">
-            <Link to="/editar-cliente">
-              <img src={editIcon} alt="edit-icon" />
-            </Link>          
-          </div>
           </div>
         ))}
       </div>
