@@ -45,7 +45,7 @@ function Charges() {
   }, []);
   return (
     <div>
-      <div className="table-head flex-row items-center">
+      <div className="table-head-charges flex-row items-center">
         <h1>ID</h1>
         <h1>Cliente</h1>
         <h1>Descrição</h1>

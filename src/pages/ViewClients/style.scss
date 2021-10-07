@@ -11,8 +11,12 @@
     width: 958px;
     background-color: #9DBBC3;
     border-radius: 8px;
-    justify-content: space-around;
-    margin: 50px 250px 24px 70px;
+    justify-content: flex-start;
+    gap: 30;
+    margin: 50px 0px 24px 70px;
+    flex-basis: 0;
+    flex-grow: 0;
+    flex-shrink: 1;
 }
 
 .table-head h1 {
@@ -22,11 +26,23 @@
     letter-spacing: 0.005em;
     text-align: left;
     color: #FFFFFF;
+    margin-right: 190px;
+    margin-left: 24px;
+}
+
+.th-middle {
+    justify-content: flex-start;
+    flex-basis: 0;
+}
+
+.empty-space {
+    width: 233px;
+    margin-right: 200px;
 }
 
 .table-body {   
     width: 958px;
-    height: 131px; 
+    height: 450px; 
     margin-left: 70px;
 }
 
@@ -41,19 +57,19 @@
     text-align: left;
     color: #4C4C4C;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     gap: 120px;
     padding: 16px 56px 16px 24px;
 }
 
 .id-client p {
     font-weight: 600;
-    margin-bottom: 0;
+    margin-bottom: 7px;
+    margin-top: 0px;
 }
 
 .client-column {
     justify-content: space-between;
-    gap: 5px;
 }
 
 .client-column a {
@@ -63,6 +79,14 @@
     letter-spacing: 0.005em;
     text-align: left;
     color: #4C4C4C;
+}
+
+.client-column img {
+    margin-right: 7px;
+}
+
+.mail {
+    margin-bottom: 7px;
 }
 
 .emdia {
