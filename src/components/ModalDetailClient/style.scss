@@ -21,6 +21,9 @@
       letter-spacing: 0.005em;
       color: #4c4c4c;
     }
+    h4 {
+      font-weight: 600;
+    }
     strong {
       font-weight: 600;
       color: #374952;
@@ -36,7 +39,12 @@
     margin-right: 28px;
   }
 }
-
+.between {
+  justify-content: space-between;
+}
+.right {
+  text-align: right;
+}
 .charge_card {
   &-container {
     min-width: 410px;

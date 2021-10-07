@@ -7,10 +7,15 @@ import './style.scss';
 import mailIcon from '../../assets/mail.svg';
 import phonelIcon from '../../assets/phone.svg';
 import editIcon from '../../assets/edit.svg';
+import ModalDetailClient from '../../components/ModalDetailClient';
+import ModalEditClient from '../../components/ModalEditClient';
 
 function ViewClients() {
   const { token } = useAuth();
   const [clients, setClients] = useState([]);
+  const [client, setClient] = useState();
+  const [modalViewClient, setModalViewClient] = useState(false);
+  const [modalEditClient, setModalEditClient] = useState(false);
 
   const handleGetClients = async () => {
     try {
@@ -28,15 +33,25 @@ function ViewClients() {
 
       const dados = await response.json();
       setClients(dados);
-      console.log(clients);
-      console.log(dados);
     } catch (error) {
       toast.error(error.message);
     }
   };
 
+  const handleClickViewClient = selectedClient => {
+    setModalViewClient(!modalViewClient);
+    setClient(selectedClient);
+  };
+  const handleClickEditClient = selectedClient => {
+    setModalEditClient(!modalEditClient);
+    setClient(selectedClient);
+  };
   useEffect(() => {
     handleGetClients();
+    return () => {
+      setModalViewClient(false);
+      setModalEditClient(false);
+    };
   }, []);
 
   return (
@@ -61,9 +76,7 @@ function ViewClients() {
         {clients.map(client => (
           <div className="id-client flex-row" key={client.id}>
             <div className="client-column flex-column content-center">
-              <Link to="/detalhe-cliente">
-                <p>{client.nome}</p>
-              </Link>
+              <p onClick={() => handleClickViewClient(client)}>{client.nome}</p>
               <div className="flex-row mail">
                 <img src={mailIcon} alt="mail-icon" />
                 <span>{client.email}</span>
@@ -91,13 +104,28 @@ function ViewClients() {
               </span>
             </div>
             <div className="flex-row">
-              <Link to="/editar-cliente">
-                <img src={editIcon} alt="edit-icon" />
-              </Link>
+              <img
+                src={editIcon}
+                alt="edit-icon"
+                onClick={() => handleClickEditClient(client)}
+              />
             </div>
           </div>
         ))}
       </div>
+      {modalViewClient && (
+        <ModalDetailClient
+          client={client}
+          closeModal={() => setModalViewClient(false)}
+        />
+      )}
+      {modalEditClient && (
+        <ModalEditClient
+          client={client}
+          setClient={setClient}
+          closeModal={() => setModalEditClient(false)}
+        />
+      )}
     </div>
   );
 }
