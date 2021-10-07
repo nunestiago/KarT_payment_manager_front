@@ -70,7 +70,7 @@ function ViewClients() {
           <h1>Cobranças Recebidas</h1>
           <h1>Status</h1>
         </div>
-        <div className="empty-space">xxx</div>
+        <div className="empty-space"></div>
       </div>
       <div className="table-body flex-column">
         {clients.map(client => (
@@ -86,15 +86,15 @@ function ViewClients() {
                 <span>{client.telefone}</span>
               </div>
             </div>
-            <div className="flex-row items-center content-center">
+            <div className="flex-row cob-feitas">
               <span>R$</span>
               <span>{client.valor}</span>
             </div>
-            <div className="flex-row">
+            <div className="flex-row cob-recebidas">
               <span>R$</span>
               <span></span>
             </div>
-            <div className="flex-row">
+            <div className="flex-row status">
               <span>
                 {client.em_dia === true ? (
                   <span className="emdia">EM DIA</span>
@@ -103,7 +103,7 @@ function ViewClients() {
                 )}
               </span>
             </div>
-            <div className="flex-row">
+            <div className="flex-row edit">
               <img
                 src={editIcon}
                 alt="edit-icon"
