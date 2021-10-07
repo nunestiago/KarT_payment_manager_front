@@ -40,13 +40,29 @@
       display: flex;
       margin-left: 50px;
     }
+    &-nome {
+      position: absolute;
+      left: 515px;
+    }
+    &-descricao {
+      position: absolute;
+      left: 680px;
+    }
+    &-valor {
+      position: absolute;
+      left: 855px;
+    }
     &-status {
       font-size: 16px;
       line-height: 15px;
       font-weight: 600;
-      margin-right: 50px;
+      position: absolute;
+      left: 1000px;
     }
-  }
+    &-vencimento {
+      margin-right: 66px;
+    }
+  }  
 }
 .vencido {
   color: #ff4d4d;
