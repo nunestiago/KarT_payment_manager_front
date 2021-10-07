@@ -16,10 +16,10 @@ import { AuthProvider } from '../contexts/AuthContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../components/Sidebar';
-import ModalEditUser from '../components/ModalEditUser';
 import useAuth from '../hooks/useAuth';
 import Charges from '../pages/Charges';
 import CreateCharge from '../pages/CreateCharge';
+import ModalDetailClient from '../components/ModalDetailClient';
 
 function ProtectedRoutes({ children }) {
   const { token } = useAuth();
@@ -38,7 +38,7 @@ function Routes() {
           <ProtectedRoutes>
             <Sidebar>
               <Route path="/home" component={Home} />
-              <Route path="/teste" component={ModalEditUser} />
+              <Route path="/teste" component={ModalDetailClient} />
               <Route path="/clientes" component={ViewClients} />
               <Route path="/cadastrar-cliente" component={ClientRegister} />
               <Route path="/editar-cliente" component={EditClient} />
