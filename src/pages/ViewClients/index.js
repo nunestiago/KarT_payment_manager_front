@@ -75,7 +75,7 @@ function ViewClients() {
       <div className="table-body flex-column">
         {clients.map(client => (
           <div className="id-client flex-row" key={client.id}>
-            <div className="client-column flex-column content-center">
+            <div className="client-column flex-column">
               <p onClick={() => handleClickViewClient(client)}>{client.nome}</p>
               <div className="flex-row mail">
                 <img src={mailIcon} alt="mail-icon" />
