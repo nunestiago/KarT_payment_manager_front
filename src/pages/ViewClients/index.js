@@ -88,11 +88,11 @@ function ViewClients() {
             </div>
             <div className="flex-row cob-feitas">
               <span>R$</span>
-              <span>{client.valor}</span>
+              <span>{client.feitas || 0}</span>
             </div>
             <div className="flex-row cob-recebidas">
               <span>R$</span>
-              <span></span>
+              <span>{client.recebidas || 0}</span>
             </div>
             <div className="flex-row status">
               <span>
