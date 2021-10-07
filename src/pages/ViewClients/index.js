@@ -8,7 +8,7 @@ import mailIcon from '../../assets/mail.svg';
 import phonelIcon from '../../assets/phone.svg';
 import editIcon from '../../assets/edit.svg';
 
-function ViewClients () {
+function ViewClients() {
   const { token } = useAuth();
   const [clients, setClients] = useState([]);
 
@@ -43,10 +43,7 @@ function ViewClients () {
     <div>
       <div className="button-register">
         <Link to="/cadastrar-cliente">
-          <button
-            type="submit"
-            className="btn-pink-border"
-          >
+          <button type="submit" className="btn-pink-border">
             Adicionar cliente
           </button>
         </Link>
@@ -62,19 +59,44 @@ function ViewClients () {
       </div>
       <div className="table-body flex-column">
         {clients.map(client => (
-        <div className="id-client flex-row" key={client.id}>
-          <div className="client-column flex-column content-center">
-            <Link to="/detalhe-cliente">
-              <p>{client.nome}</p>
-            </Link>
-            <div className="flex-row mail">
-              <img src={mailIcon}alt="mail-icon" />
-              <span>{client.email}</span>
+          <div className="id-client flex-row" key={client.id}>
+            <div className="client-column flex-column content-center">
+              <Link to="/detalhe-cliente">
+                <p>{client.nome}</p>
+              </Link>
+              <div className="flex-row">
+                <img src={mailIcon} alt="mail-icon" />
+                <span>{client.email}</span>
+              </div>
+              <div className="flex-row">
+                <img src={phonelIcon} alt="phone-icon" />
+                <span>{client.telefone}</span>
+              </div>
+            </div>
+            <div className="flex-row items-center content-center">
+              <span>R$</span>
+              <span></span>
             </div>
             <div className="flex-row">
-              <img src={phonelIcon} alt="phone-icon" />
-              <span>{client.telefone}</span>
+              <span>R$</span>
+              <span></span>
+
             </div>
+            <div className="flex-row">
+              <span>
+                {client.em_dia === true ? (
+                  <span className="emdia">EM DIA</span>
+                ) : (
+                  <span className="inadimplente">INADIMPLENTE</span>
+                )}
+              </span>
+            </div>
+            <div className="flex-row">
+              <Link to="/editar-cliente">
+                <img src={editIcon} alt="edit-icon" />
+              </Link>
+            </div>
+
           </div>
           <div className="flex-row items-center content-center">
             <span>R$</span>
@@ -94,10 +116,9 @@ function ViewClients () {
           </div>
           </div>
         ))}
-        
       </div>
     </div>
-  )
+  );
 }
 
 export default ViewClients;
