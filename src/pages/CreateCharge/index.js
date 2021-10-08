@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import './style.scss';
 import baseUrl from '../../utils/baseUrl';
@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { TextInputMask } from 'tp-react-web-masked-text';
 
 function CreateCharge() {
+  const history = useHistory();
   const { token } = useAuth();
   const {
     register,
@@ -22,17 +23,16 @@ function CreateCharge() {
 
   async function handleGetClients() {
     try {
-      const response = await fetch(`${baseUrl}client/getAll`, {
+      const response = await fetch(`${baseUrl}client/listName`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + token,
         },
       });
-
+      console.log(response);
       if (!response.ok) {
-        toast.error('Email ou senha incorretos.');
-        return;
+        throw new Error(response);
       }
 
       const dados = await response.json();
@@ -43,7 +43,7 @@ function CreateCharge() {
   }
 
   async function handleAddCharge(data) {
-    setValue('valor', money.replace(/[^0-9]/g, ''));
+    console.log(data);
 
     try {
       const response = await fetch(`${baseUrl}charges/newCharge`, {
@@ -59,12 +59,18 @@ function CreateCharge() {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
-      history.push('/cobrancas');
       toast.success(registerInDB);
+      history.push('/cobrancas');
     } catch (error) {
       toast.error(error.message);
     }
   }
+
+  function handleSetValue(e) {
+    setMoney(e);
+    setValue('valor', e.replace(/[^0-9]/g, ''));
+  }
+
   useEffect(() => {
     handleGetClients();
   }, []);
@@ -146,7 +152,7 @@ function CreateCharge() {
                   suffixUnit: '',
                 }}
                 value={money}
-                onChange={e => setMoney(e)}
+                onChange={e => handleSetValue(e)}
               />
             </div>
             <div>
