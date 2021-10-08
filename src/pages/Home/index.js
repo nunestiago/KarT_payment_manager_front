@@ -35,7 +35,7 @@ function Home() {
 
   useEffect(() => {
     handleClientsInfo();
-  });
+  }, []);
 
   return (
     <div className="home">
