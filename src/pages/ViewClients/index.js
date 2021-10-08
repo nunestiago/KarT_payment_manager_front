@@ -87,16 +87,18 @@ function ViewClients() {
               </div>
             </div>
             <div className="flex-row cob-feitas">
-              <span>R$</span>
-              <span>{client.feitas || 0}</span>
+              <span>
+                R$ {client.feitas ? (client.feitas / 100).toFixed(2) : 0}
+              </span>
             </div>
             <div className="flex-row cob-recebidas">
-              <span>R$</span>
-              <span>{client.recebidas || 0}</span>
+              <span>
+                R$ {client.recebidas ? (client.recebidas / 100).toFixed(2) : 0}
+              </span>
             </div>
             <div className="flex-row status">
               <span>
-                {client.em_dia === true ? (
+                {client.feitas - client.recebidas === 0 ? (
                   <span className="emdia">EM DIA</span>
                 ) : (
                   <span className="inadimplente">INADIMPLENTE</span>
