@@ -59,7 +59,9 @@ function Charges() {
             <div className="charges-list-id">#{key.id}</div>
             <div className="charges-list-nome">{key.nome}</div>
             <div className="charges-list-descricao">{key.descricao}</div>
-            <div className="charges-list-valor">R$ {key.valor.toFixed(2)}</div>
+            <div className="charges-list-valor">
+              R$ {(key.valor / 100).toFixed(2)}
+            </div>
             <div
               className={`charges-list-status ${handleStatus(
                 key.status,
