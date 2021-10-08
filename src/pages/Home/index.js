@@ -20,12 +20,13 @@ function Home() {
         },
       });
 
+      const dados = await response.json();
+
       if (!response.ok) {
-        toast.error('Email ou senha incorretos.');
+        toast.error(dados);
         return;
       }
 
-      const dados = await response.json();
       setHomeInfo(dados);
     } catch (error) {
       toast.error(error.message);
