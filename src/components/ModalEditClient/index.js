@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import InputMask from 'react-input-mask';
 import baseUrl from '../../utils/baseUrl';
-import cepMask from '../../utils/cepMask';
-import cpfMask from '../../utils/cpfMask';
-import phoneMask from '../../utils/phoneMask';
 import useAuth from '../../hooks/useAuth';
 import './style.scss';
 
-function ModalEditClient({ closeModal, client, setClient }) {
+function ModalEditClient({ closeModal, client, setClient, handleGetClients }) {
   const [address, setAddress] = useState({});
-  const { register, handleSubmit, setValue } = useForm({
+  const { register, handleSubmit, setValue, control } = useForm({
     mode: 'onChange',
   });
   const { token } = useAuth();
-  const handleCep = async e => {
-    const insertedCep = e.target.value;
+  const [handleClient, setHandleClient] = useState(client);
 
-    if (insertedCep?.length < 9) {
+  const handleCep = async e => {
+    const insertedCep = e.target.value.replace(/[^0-9]/g, '');
+
+    if (insertedCep?.length < 8) {
       return;
     }
     try {
       const response = await fetch(
-        `https://viacep.com.br/ws/${insertedCep?.replace(/[^0-9]/g, '')}/json/`,
+        `https://viacep.com.br/ws/${insertedCep}/json/`,
       );
       const viaCep = await response.json();
       setValue('logradouro', viaCep.logradouro);
@@ -34,20 +34,18 @@ function ModalEditClient({ closeModal, client, setClient }) {
       toast.error(error.message);
     }
   };
-
   const handleEditClient = async data => {
-    const onlyUpdatedData = Object.fromEntries(
-      Object.entries(data).filter(([, value]) => value),
-    );
+    console.log(data);
 
-    if (data.cpf) data.cpf = data.cpf.replace(/[^0-9]/g, '');
-    if (data.telefone) data.telefone = data.telefone.replace(/[^0-9]/g, '');
-    onlyUpdatedData.id = client.id;
+    if (handleClient.cpf)
+      handleClient.cpf = handleClient.cpf.replace(/[^0-9]/g, '');
+    if (handleClient.telefone)
+      handleClient.telefone = handleClient.telefone.replace(/[^0-9]/g, '');
 
     try {
       const response = await fetch(`${baseUrl}client/edit`, {
         method: 'PUT',
-        body: JSON.stringify(onlyUpdatedData),
+        body: JSON.stringify(handleClient),
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + token,
@@ -59,8 +57,10 @@ function ModalEditClient({ closeModal, client, setClient }) {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
-      setClient(onlyUpdatedData);
+
       closeModal();
+      handleGetClients();
+      setClient(handleClient);
       toast.success(registerInDB);
     } catch (error) {
       toast.error(error.message);
@@ -90,109 +90,163 @@ function ModalEditClient({ closeModal, client, setClient }) {
                 id="nome"
                 type="text"
                 {...register('nome', { required: true })}
-                defaultValue={client?.nome}
+                defaultValue={handleClient?.nome}
               />
               <label htmlFor="email">E-mail</label>
               <input
                 id="email"
                 type="email"
                 {...register('email', { required: true })}
-                defaultValue={client?.email}
+                defaultValue={handleClient?.email}
               />{' '}
             </div>
             <div className="half">
-              <div>
+              <div className="half_div">
                 <label htmlFor="cpf">CPF</label>
-                <input
-                  id="cpf"
-                  type="text"
-                  {...register('cpf', { required: true })}
-                  maxLength="14"
-                  onChange={cpfMask}
-                  defaultValue={client?.cpf}
-                />{' '}
+                <Controller
+                  control={control}
+                  name="cpf"
+                  rule={{ required: true }}
+                  render={({ field }) => (
+                    <InputMask
+                      mask="999.999.999-99"
+                      onChange={e =>
+                        setHandleClient({
+                          ...handleClient,
+                          'cpf': e.target.value,
+                        })
+                      }
+                      value={handleClient.cpf}
+                      selected={field.value}
+                    />
+                  )}
+                />
               </div>
-              <div>
+              <div className="half_div">
                 <label htmlFor="telefone">Telefone</label>
-                <input
-                  id="telefone"
-                  type="text"
-                  {...register('telefone', { required: true })}
-                  maxLength="15"
-                  onChange={phoneMask}
-                  defaultValue={client?.telefone}
-                />{' '}
+                <Controller
+                  control={control}
+                  name="telefone"
+                  rule={{ required: true }}
+                  render={({ field }) => (
+                    <InputMask
+                      mask="(99)99999-9999"
+                      onChange={e =>
+                        setHandleClient({
+                          ...handleClient,
+                          'telefone': e.target.value,
+                        })
+                      }
+                      value={handleClient?.telefone}
+                      selected={field.value}
+                    />
+                  )}
+                />
               </div>
             </div>
             <div className="half">
-              <div>
+              <div className="half_div">
                 <label htmlFor="cep">CEP</label>
-                <input
-                  id="cep"
-                  type="text"
-                  {...register('cep')}
-                  maxLength="9"
-                  onChange={e => {
-                    handleCep(e);
-                    cepMask(e);
-                  }}
-                  defaultValue={client?.cep}
+                <Controller
+                  control={control}
+                  name="cep"
+                  rule={{ required: true }}
+                  render={({ field }) => (
+                    <InputMask
+                      mask="99-999.999"
+                      onChange={e => {
+                        setHandleClient({
+                          ...handleClient,
+                          'cep': e.target.value,
+                        });
+                        handleCep(e);
+                      }}
+                      value={handleClient?.cep}
+                      selected={field.value}
+                    />
+                  )}
                 />
               </div>
-              <div>
+              <div className="half_div">
                 <label htmlFor="logradouro">Logradouro</label>
                 <input
                   id="logradouro"
                   type="text"
                   {...register('logradouro')}
                   value={address.logradouro}
-                  onChange={e => setAddress({ logradouro: e.target.value })}
-                  defaultValue={client?.logradouro}
+                  onChange={e =>
+                    setHandleClient({
+                      ...handleClient,
+                      'logradouro': e.target.value,
+                    })
+                  }
+                  defaultValue={handleClient?.logradouro}
                 />
               </div>
             </div>
             <div className="half">
-              <div>
+              <div className="half_div">
                 <label htmlFor="bairro">Bairro</label>
                 <input
                   id="bairro"
                   type="text"
                   {...register('bairro')}
                   value={address.bairro}
-                  onChange={e => setAddress({ bairro: e.target.value })}
-                  defaultValue={client?.bairro}
+                  onChange={e =>
+                    setHandleClient({
+                      ...handleClient,
+                      'bairro': e.target.value,
+                    })
+                  }
+                  defaultValue={handleClient?.bairro}
                 />{' '}
               </div>
-              <div>
+              <div className="half_div">
                 <label htmlFor="cidade">Cidade</label>
                 <input
                   id="cidade"
                   type="text"
                   {...register('cidade')}
-                  value={client?.cidade}
-                  onChange={e => setAddress({ cidade: e.target.value })}
+                  value={handleClient?.cidade}
+                  onChange={e =>
+                    setHandleClient({
+                      ...handleClient,
+                      'cidade': e.target.value,
+                    })
+                  }
                 />
               </div>
             </div>
             <div className="half">
-              <div>
+              <div className="half_div">
                 <label htmlFor="complemento">Complemento</label>
                 <input
                   id="complemento"
                   type="text"
                   {...register('complemento')}
-                  value={client?.complemento}
-                  onChange={e => setAddress({ complemento: e.target.value })}
-                  defaultValue={client?.complemento}
+                  value={handleClient?.complemento}
+                  onChange={e =>
+                    setHandleClient({
+                      ...handleClient,
+                      'complemento': e.target.value,
+                    })
+                  }
+                  defaultValue={handleClient?.complemento}
                 />
               </div>
-              <div>
+              <div className="half_div">
                 <label htmlFor="pref">Ponto de Referência</label>
                 <input
                   id="pref"
                   type="text"
                   {...register('ponto_referencia')}
-                  defaultValue={client?.ponto_referencia}
+                  defaultValue={handleClient?.ponto_referencia}
+                  onChange={e =>
+                    setHandleClient({
+                      ...handleClient,
+                      'ponto_referencia': e.target.value,
+                    })
+                  }
                 />
               </div>
             </div>
