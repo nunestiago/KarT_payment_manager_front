@@ -50,7 +50,7 @@ function ClientRegister() {
     data.cpf = data.cpf.replace(/[^0-9]/g, '');
     data.telefone = data.telefone.replace(/[^0-9]/g, '');
     data.cep = data.cep.replace(/[^0-9]/g, '');
-
+    console.log(data);
     try {
       registerValidations(data);
       const response = await fetch(`${baseUrl}client/register`, {
@@ -67,7 +67,7 @@ function ClientRegister() {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
-      history.push('/');
+      history.push('/clientes');
       toast.success(registerInDB);
     } catch (error) {
       toast.error(error.message);
