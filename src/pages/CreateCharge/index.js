@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import './style.scss';
+import DatePicker, { registerLocale } from 'react-datepicker';
 import baseUrl from '../../utils/baseUrl';
 import useAuth from '../../hooks/useAuth';
+import { Link, useHistory } from 'react-router-dom';
+import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { TextInputMask } from 'tp-react-web-masked-text';
-import DatePicker, { registerLocale } from 'react-datepicker';
-import pt from 'date-fns/locale/pt';
+import './style.scss';
 import 'react-datepicker/dist/react-datepicker.css';
+import pt from 'date-fns/locale/pt';
 
 registerLocale('pt', pt);
 
@@ -19,13 +19,14 @@ function CreateCharge() {
     register,
     handleSubmit,
     setValue,
+    control,
     formState: { isDirty, isValid },
   } = useForm({
     mode: 'onChange',
   });
   const [clients, setClients] = useState([]);
-  const [money, setMoney] = useState();
-  const [startDate, setStartDate] = useState(new Date());
+  const [valor, setValor] = useState(0);
+  const [startDate] = useState(new Date());
 
   async function handleGetClients() {
     try {
@@ -50,8 +51,9 @@ function CreateCharge() {
   }
 
   async function handleAddCharge(data) {
-    console.log(data);
+    setValue('vencimento', startDate);
 
+    console.log(data);
     try {
       const response = await fetch(`${baseUrl}charges/newCharge`, {
         method: 'POST',
@@ -73,14 +75,13 @@ function CreateCharge() {
     }
   }
 
-  function handleSetValue(e) {
-    setMoney(e);
-    setValue('valor', e.replace(/[^0-9]/g, ''));
+  function handleSetValue() {
+    setValue('valor', valor?.replace(/[^0-9]/g, ''));
   }
 
   useEffect(() => {
     handleGetClients();
-  }, []);
+  });
 
   return (
     <div className="client_register__container">
@@ -146,39 +147,48 @@ function CreateCharge() {
           <div className="half">
             <div className="valor">
               <label htmlFor="valor">Valor</label>
-              <TextInputMask
-                className="valor_container"
-                id="valor"
-                {...register('valor')}
-                kind={'money'}
-                options={{
-                  precision: 2,
-                  separator: ',',
-                  delimiter: '.',
-                  unit: 'R$ ',
-                  suffixUnit: '',
-                }}
-                value={money}
-                onChange={e => handleSetValue(e)}
+              <Controller
+                control={control}
+                name="valor"
+                // rules={{ required: true }}
+                render={({ field }) => (
+                  <TextInputMask
+                    className="valor_container"
+                    id="valor"
+                    kind={'money'}
+                    options={{
+                      precision: 2,
+                      separator: ',',
+                      delimiter: '.',
+                      unit: 'R$ ',
+                      suffixUnit: '',
+                    }}
+                    value={valor}
+                    onChange={date => setValor(date)}
+                    onBlur={() => handleSetValue()}
+                    selected={field.value}
+                  />
+                )}
               />
             </div>
-            <div>
+            <div className="flex-column ">
               <label htmlFor="vencimento">Vencimento</label>
-              <input
-                id="vencimento"
-                type="date"
-                className="vencimento_container"
-                {...register('vencimento')}
+              <Controller
+                control={control}
+                name="vencimento"
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <DatePicker
+                    placeholderText="Selecione data"
+                    locale="pt"
+                    dateFormat="dd 'de' MMMM 'de' yyyy"
+                    onChange={date => field.onChange(date)}
+                    selected={field.value}
+                  />
+                )}
               />
             </div>
           </div>
-          <DatePicker
-            className="vencimento_container"
-            locale="pt"
-            selected={startDate}
-            onChange={date => setStartDate(date)}
-            dateFormat="dd 'de' MMMM 'de' yyyy"
-          />
           <div className="flex-row btn-add-client">
             <Link to="/home">
               <button
@@ -191,8 +201,9 @@ function CreateCharge() {
             <button
               type="submit"
               className="btn-pink-light"
-              disabled={!isValid || !isDirty}
+              // disabled={!isValid || !isDirty}
             >
+              {console.log(isValid, isDirty)}
               Criar Cobrança
             </button>
           </div>
