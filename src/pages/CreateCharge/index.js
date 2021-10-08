@@ -6,6 +6,11 @@ import baseUrl from '../../utils/baseUrl';
 import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import { TextInputMask } from 'tp-react-web-masked-text';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import pt from 'date-fns/locale/pt';
+import 'react-datepicker/dist/react-datepicker.css';
+
+registerLocale('pt', pt);
 
 function CreateCharge() {
   const history = useHistory();
@@ -20,6 +25,7 @@ function CreateCharge() {
   });
   const [clients, setClients] = useState([]);
   const [money, setMoney] = useState();
+  const [startDate, setStartDate] = useState(new Date());
 
   async function handleGetClients() {
     try {
@@ -30,12 +36,13 @@ function CreateCharge() {
           Authorization: 'Bearer ' + token,
         },
       });
-      console.log(response);
-      if (!response.ok) {
-        throw new Error(response);
-      }
 
       const dados = await response.json();
+
+      if (!response.ok) {
+        throw new Error(dados);
+      }
+
       setClients(dados);
     } catch (error) {
       toast.error(error.message);
@@ -165,6 +172,13 @@ function CreateCharge() {
               />
             </div>
           </div>
+          <DatePicker
+            className="vencimento_container"
+            locale="pt"
+            selected={startDate}
+            onChange={date => setStartDate(date)}
+            dateFormat="dd 'de' MMMM 'de' yyyy"
+          />
           <div className="flex-row btn-add-client">
             <Link to="/home">
               <button
