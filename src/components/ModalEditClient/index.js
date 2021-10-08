@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import InputMask from 'react-input-mask';
@@ -6,7 +6,7 @@ import baseUrl from '../../utils/baseUrl';
 import useAuth from '../../hooks/useAuth';
 import './style.scss';
 
-function ModalEditClient({ closeModal, client, setClient, handleGetClients }) {
+function ModalEditClient({ closeModal, client, handleGetClients }) {
   const [address, setAddress] = useState({});
   const { register, handleSubmit, setValue, control } = useForm({
     mode: 'onChange',
@@ -35,17 +35,10 @@ function ModalEditClient({ closeModal, client, setClient, handleGetClients }) {
     }
   };
   const handleEditClient = async data => {
-    console.log(data);
-
-    if (handleClient.cpf)
-      handleClient.cpf = handleClient.cpf.replace(/[^0-9]/g, '');
-    if (handleClient.telefone)
-      handleClient.telefone = handleClient.telefone.replace(/[^0-9]/g, '');
-
     try {
       const response = await fetch(`${baseUrl}client/edit`, {
         method: 'PUT',
-        body: JSON.stringify(handleClient),
+        body: JSON.stringify(data),
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + token,
@@ -60,12 +53,24 @@ function ModalEditClient({ closeModal, client, setClient, handleGetClients }) {
 
       closeModal();
       handleGetClients();
-      setClient(handleClient);
       toast.success(registerInDB);
     } catch (error) {
       toast.error(error.message);
     }
   };
+
+  useEffect(() => {
+    if (handleClient.cpf)
+      handleClient.cpf = handleClient.cpf.replace(/[^0-9]/g, '');
+    if (handleClient.cep)
+      handleClient.cep = handleClient.cep.replace(/[^0-9]/g, '');
+    if (handleClient.telefone)
+      handleClient.telefone = handleClient.telefone.replace(/[^0-9]/g, '');
+    setValue('cpf', handleClient.cpf);
+    setValue('cep', handleClient.cep);
+    setValue('telefone', handleClient.telefone);
+    setValue('id', handleClient.id);
+  }, []);
 
   return (
     <>
@@ -110,6 +115,7 @@ function ModalEditClient({ closeModal, client, setClient, handleGetClients }) {
                   render={({ field }) => (
                     <InputMask
                       mask="999.999.999-99"
+                      {...register('cpf')}
                       onChange={e =>
                         setHandleClient({
                           ...handleClient,
@@ -131,6 +137,7 @@ function ModalEditClient({ closeModal, client, setClient, handleGetClients }) {
                   render={({ field }) => (
                     <InputMask
                       mask="(99)99999-9999"
+                      {...register('telefone')}
                       onChange={e =>
                         setHandleClient({
                           ...handleClient,
@@ -154,6 +161,7 @@ function ModalEditClient({ closeModal, client, setClient, handleGetClients }) {
                   render={({ field }) => (
                     <InputMask
                       mask="99-999.999"
+                      {...register('cep')}
                       onChange={e => {
                         setHandleClient({
                           ...handleClient,
