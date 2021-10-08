@@ -67,7 +67,7 @@ function ClientRegister() {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
-      history.push('/');
+      history.push('/clientes');
       toast.success(registerInDB);
     } catch (error) {
       toast.error(error.message);
