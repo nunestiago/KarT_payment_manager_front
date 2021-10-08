@@ -33,7 +33,6 @@ function Register() {
       });
 
       const registerInDB = await response.json();
-      console.log(registerInDB);
       if (!response.ok) {
         throw new Error(registerInDB);
       }

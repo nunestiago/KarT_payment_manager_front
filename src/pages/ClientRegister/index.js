@@ -27,7 +27,6 @@ function ClientRegister() {
   const handleCep = async e => {
     const insertedCep = e.target.value;
 
-    console.log(insertedCep);
     if (insertedCep?.length < 9) {
       return;
     }

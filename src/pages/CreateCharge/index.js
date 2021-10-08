@@ -37,7 +37,6 @@ function CreateCharge() {
 
       const dados = await response.json();
       setClients(dados);
-      console.log(clients);
     } catch (error) {
       toast.error(error.message);
     }

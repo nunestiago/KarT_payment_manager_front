@@ -29,7 +29,6 @@ function ModalDetailClient({ client, closeModal }) {
 
       const dados = await response.json();
       setCharges(dados);
-      console.log(client);
     } catch (error) {
       toast.error(error.message);
     }
