@@ -98,7 +98,7 @@ function ViewClients() {
             </div>
             <div className="flex-row status">
               <span>
-                {client.feitas - client.recebidas === 0 ? (
+                {(client.feitas || 0) - (client.recebidas || 0) === 0 ? (
                   <span className="emdia">EM DIA</span>
                 ) : (
                   <span className="inadimplente">INADIMPLENTE</span>
@@ -124,7 +124,8 @@ function ViewClients() {
       {modalEditClient && (
         <ModalEditClient
           client={client}
-          setClient={setClient}
+          setClient={() => setClient()}
+          handleGetClients={handleGetClients}
           closeModal={() => setModalEditClient(false)}
         />
       )}
