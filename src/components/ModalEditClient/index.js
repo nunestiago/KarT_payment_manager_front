@@ -14,7 +14,6 @@ function ModalEditClient({ closeModal, client, setClient }) {
     mode: 'onChange',
   });
   const { token } = useAuth();
-
   const handleCep = async e => {
     const insertedCep = e.target.value;
 
@@ -43,6 +42,7 @@ function ModalEditClient({ closeModal, client, setClient }) {
 
     if (data.cpf) data.cpf = data.cpf.replace(/[^0-9]/g, '');
     if (data.telefone) data.telefone = data.telefone.replace(/[^0-9]/g, '');
+    onlyUpdatedData.id = client.id;
 
     try {
       const response = await fetch(`${baseUrl}client/edit`, {
@@ -169,7 +169,7 @@ function ModalEditClient({ closeModal, client, setClient }) {
                   id="cidade"
                   type="text"
                   {...register('cidade')}
-                  value={address.localidade}
+                  value={client?.cidade}
                   onChange={e => setAddress({ cidade: e.target.value })}
                 />
               </div>
@@ -181,7 +181,7 @@ function ModalEditClient({ closeModal, client, setClient }) {
                   id="complemento"
                   type="text"
                   {...register('complemento')}
-                  value={address.complemento}
+                  value={client?.complemento}
                   onChange={e => setAddress({ complemento: e.target.value })}
                   defaultValue={client?.complemento}
                 />
