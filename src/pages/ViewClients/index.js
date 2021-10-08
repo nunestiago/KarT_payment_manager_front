@@ -9,7 +9,6 @@ import phonelIcon from '../../assets/phone.svg';
 import editIcon from '../../assets/edit.svg';
 import ModalDetailClient from '../../components/ModalDetailClient';
 import ModalEditClient from '../../components/ModalEditClient';
-import phoneMask from '../../utils/phoneMask';
 import showPhone from '../../utils/showProperPhone';
 
 function ViewClients() {
