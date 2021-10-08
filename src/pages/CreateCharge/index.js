@@ -81,7 +81,7 @@ function CreateCharge() {
 
   useEffect(() => {
     handleGetClients();
-  });
+  }, []);
 
   return (
     <div className="client_register__container">
@@ -201,9 +201,8 @@ function CreateCharge() {
             <button
               type="submit"
               className="btn-pink-light"
-              // disabled={!isValid || !isDirty}
+              disabled={!isValid || !isDirty}
             >
-              {console.log(isValid, isDirty)}
               Criar Cobrança
             </button>
           </div>
