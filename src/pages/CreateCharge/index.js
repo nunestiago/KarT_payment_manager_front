@@ -52,8 +52,10 @@ function CreateCharge() {
 
   async function handleAddCharge(data) {
     setValue('vencimento', startDate);
+    if (data.status !== 'true' && data.status !== 'false') {
+      return toast.error('Favor selecionar status da cobrança');
+    }
 
-    console.log(data);
     try {
       const response = await fetch(`${baseUrl}charges/newCharge`, {
         method: 'POST',
@@ -132,7 +134,7 @@ function CreateCharge() {
             <option
               label="Selecione o um status"
               disabled
-              value="default2"
+              value={'default2'}
               hidden
             >
               Selecione o um status
