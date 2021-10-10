@@ -3,10 +3,12 @@ import baseUrl from '../../utils/baseUrl';
 import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import './style.scss';
+import SearchInput from '../../components/SearchInput';
 
 function Charges() {
   const { token } = useAuth();
   const [charges, setCharges] = useState([]);
+  const [filteredCharges, setFilteredCharges] = useState([]);
 
   const handleGetCharges = async () => {
     try {
@@ -24,7 +26,7 @@ function Charges() {
         toast.error(dados);
         return;
       }
-
+      setFilteredCharges(dados);
       setCharges(dados);
     } catch (error) {
       toast.error(error.message);
@@ -46,6 +48,7 @@ function Charges() {
   }, []);
   return (
     <div>
+      <SearchInput data={charges} setCharges={setFilteredCharges} />
       <div className="table-head-charges flex-row items-center">
         <h1>ID</h1>
         <h1>Cliente</h1>
@@ -55,7 +58,7 @@ function Charges() {
         <h1>Vencimento</h1>
       </div>
       <div>
-        {charges.map(key => (
+        {filteredCharges.map(key => (
           <div key={key.id} className="charges-body flex-row items-center">
             <div className="charges-list-id">#{key.id}</div>
             <div className="charges-list-nome">{key.nome}</div>

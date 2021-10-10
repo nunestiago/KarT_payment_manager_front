@@ -10,10 +10,12 @@ import editIcon from '../../assets/edit.svg';
 import ModalDetailClient from '../../components/ModalDetailClient';
 import ModalEditClient from '../../components/ModalEditClient';
 import showPhone from '../../utils/showProperPhone';
+import SearchInput from '../../components/SearchInput';
 
 function ViewClients() {
   const { token } = useAuth();
   const [clients, setClients] = useState([]);
+  const [filteredClients, setFilteredClients] = useState([]);
   const [client, setClient] = useState();
   const [modalViewClient, setModalViewClient] = useState(false);
   const [modalEditClient, setModalEditClient] = useState(false);
@@ -33,6 +35,7 @@ function ViewClients() {
       }
 
       const dados = await response.json();
+      setFilteredClients(dados);
       setClients(dados);
     } catch (error) {
       toast.error(error.message);
@@ -63,6 +66,7 @@ function ViewClients() {
             Adicionar cliente
           </button>
         </Link>
+        <SearchInput data={clients} setCharges={setFilteredClients} />
       </div>
       <div className="table-head flex-row items-center">
         <h1>Cliente</h1>
@@ -74,7 +78,7 @@ function ViewClients() {
         <div className="empty-space"></div>
       </div>
       <div className="table-body flex-column">
-        {clients.map(client => (
+        {filteredClients.map(client => (
           <div className="id-client flex-row" key={client.id}>
             <div className="client-column flex-column">
               <p onClick={() => handleClickViewClient(client)}>{client.nome}</p>
