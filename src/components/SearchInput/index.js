@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import './style.scss';
 import searchIcon from '../../assets/search.svg';
+import { toast } from 'react-toastify';
 
 function SearchInput({ data, setCharges }) {
   const [search, setSearch] = useState();
   function handleSubmit(e) {
     e.preventDefault();
-    const value = e.target.value;
-    let test = (arr, str) => {
+
+    let searchResult = (arr, str) => {
       return arr.filter(x =>
         Object.values(x).join(' ').toLowerCase().includes(str.toLowerCase()),
       );
     };
-    return setCharges(test(data, search));
+
+    const result = searchResult(data, search);
+
+    if (result.length === 0)
+      return toast.warn('Não existe resultado para busca feita');
+
+    return setCharges(result);
   }
   return (
     <form className="search_container" onSubmit={handleSubmit}>
