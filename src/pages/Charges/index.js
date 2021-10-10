@@ -4,6 +4,7 @@ import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import './style.scss';
 import SearchInput from '../../components/SearchInput';
+import SortNameButton from '../../components/SortNameButton';
 
 function Charges() {
   const { token } = useAuth();
@@ -48,10 +49,13 @@ function Charges() {
   }, []);
   return (
     <div>
-      <SearchInput data={charges} setCharges={setFilteredCharges} />
+      <SearchInput data={charges} setListState={setFilteredCharges} />
       <div className="table-head-charges flex-row items-center">
         <h1>ID</h1>
-        <h1>Cliente</h1>
+        <div className="flex-row items-center">
+          <h1>Cliente</h1>
+          <SortNameButton data={charges} setListState={setFilteredCharges} />
+        </div>
         <h1>Descrição</h1>
         <h1>Valor</h1>
         <h1>Status</h1>
