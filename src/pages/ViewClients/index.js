@@ -11,6 +11,7 @@ import ModalDetailClient from '../../components/ModalDetailClient';
 import ModalEditClient from '../../components/ModalEditClient';
 import showPhone from '../../utils/showProperPhone';
 import SearchInput from '../../components/SearchInput';
+import SortNameButton from '../../components/SortNameButton';
 
 function ViewClients() {
   const { token } = useAuth();
@@ -58,6 +59,10 @@ function ViewClients() {
     };
   }, []);
 
+  useEffect(() => {
+    filteredClients;
+  }, [filteredClients]);
+
   return (
     <div>
       <div className="button-register">
@@ -66,10 +71,13 @@ function ViewClients() {
             Adicionar cliente
           </button>
         </Link>
-        <SearchInput data={clients} setCharges={setFilteredClients} />
+        <SearchInput data={clients} setListState={setFilteredClients} />
       </div>
       <div className="table-head flex-row items-center">
-        <h1>Cliente</h1>
+        <div className="flex-row items-center">
+          <h1>Cliente</h1>
+          <SortNameButton data={clients} setListState={setFilteredClients} />
+        </div>
         <div className="th-middle flex-row items-center">
           <h1>Cobranças Feitas</h1>
           <h1>Cobranças Recebidas</h1>
