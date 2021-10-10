@@ -85,12 +85,6 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
 
   useEffect(() => {
     errors?.email && toast.error(errors.email.message);
-
-    // setValue('cep', handleClient.cep);
-    // setAddress(handleClient);
-    // setValue('cpf', handleClient.cpf);
-    // setValue('telefone', handleClient.telefone);
-    // setValue('id', handleClient.id);
   }, [errors.email]);
 
   return (
