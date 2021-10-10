@@ -20,7 +20,7 @@ function CreateCharge() {
     handleSubmit,
     setValue,
     control,
-    formState: { isDirty, isValid },
+    formState: { isDirty, isValid, errors },
   } = useForm({
     mode: 'onChange',
   });
@@ -52,9 +52,12 @@ function CreateCharge() {
 
   async function handleAddCharge(data) {
     setValue('vencimento', startDate);
+    if (valor === 0 || valor.replace(/[^0-9]/g, '') < 0.01)
+      return toast.error('Valor deve ser maior que zero');
     if (data.status !== 'true' && data.status !== 'false') {
       return toast.error('Favor selecionar status da cobrança');
     }
+    data.valor = valor.replace(/[^0-9]/g, '');
 
     try {
       const response = await fetch(`${baseUrl}charges/newCharge`, {
@@ -77,13 +80,13 @@ function CreateCharge() {
     }
   }
 
-  function handleSetValue() {
-    setValue('valor', valor?.replace(/[^0-9]/g, ''));
-  }
-
   useEffect(() => {
     handleGetClients();
   }, []);
+
+  useEffect(() => {
+    errors?.descricao && toast.error('A cobrança deve ter uma descrição');
+  }, [errors.descricao]);
 
   return (
     <div className="client_register__container">
@@ -118,7 +121,12 @@ function CreateCharge() {
               id="descricao"
               type="descricao"
               className="descricao"
-              {...register('descricao', { required: true })}
+              {...register('descricao', {
+                required: {
+                  value: true,
+                  message: 'A cobrança deve ter uma descrição',
+                },
+              })}
             />
             <span className="input-help-text">
               A descrição informada será impressa no boleto.
@@ -152,7 +160,6 @@ function CreateCharge() {
               <Controller
                 control={control}
                 name="valor"
-                // rules={{ required: true }}
                 render={({ field }) => (
                   <TextInputMask
                     className="valor_container"
@@ -166,8 +173,10 @@ function CreateCharge() {
                       suffixUnit: '',
                     }}
                     value={valor}
-                    onChange={date => setValor(date)}
-                    onBlur={() => handleSetValue()}
+                    onChange={date => {
+                      setValor(date);
+                      field.onChange(date);
+                    }}
                     selected={field.value}
                   />
                 )}
