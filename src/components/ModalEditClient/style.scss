@@ -26,6 +26,7 @@
   &_close {
     width: 100%;
     text-align: right;
+    cursor: pointer;
   }
 }
 @keyframes apear {
@@ -78,8 +79,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  &_div{
-    width:45%
+  &_div {
+    width: 45%;
   }
 }
 
