@@ -49,17 +49,21 @@ function Charges() {
   }, []);
   return (
     <div>
-      <SearchInput data={charges} setListState={setFilteredCharges} />
-      <div className="table-head-charges flex-row items-center">
-        <h1>ID</h1>
-        <div className="flex-row items-center">
-          <h1>Cliente</h1>
-          <SortNameButton data={charges} setListState={setFilteredCharges} />
+      <div className="flex-column">
+        <div className="charges_search-input">
+          <SearchInput data={charges} setListState={setFilteredCharges} />
         </div>
-        <h1>Descrição</h1>
-        <h1>Valor</h1>
-        <h1>Status</h1>
-        <h1>Vencimento</h1>
+        <div className="table-head-charges flex-row items-center">
+          <h1>ID</h1>
+          <div className="flex-row items-center">
+            <h1>Cliente</h1>
+            <SortNameButton data={charges} setListState={setFilteredCharges} />
+          </div>
+          <h1>Descrição</h1>
+          <h1>Valor</h1>
+          <h1>Status</h1>
+          <h1>Vencimento</h1>
+        </div>
       </div>
       <div>
         {filteredCharges.map(key => (
