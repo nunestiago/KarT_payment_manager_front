@@ -17,7 +17,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../components/Sidebar';
 import useAuth from '../hooks/useAuth';
-import Charges from '../pages/Charges';
+import Charges from '../pages/ViewCharges';
 import CreateCharge from '../pages/CreateCharge';
 import ModalDetailClient from '../components/ModalDetailClient';
 
