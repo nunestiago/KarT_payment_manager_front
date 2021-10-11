@@ -201,7 +201,7 @@ function CreateCharge() {
             </div>
           </div>
           <div className="flex-row btn-add-client">
-            <Link to="/home">
+            <Link to="/cobrancas">
               <button
                 type="submit"
                 className="btn-pink-border flex-row items-center content-center"

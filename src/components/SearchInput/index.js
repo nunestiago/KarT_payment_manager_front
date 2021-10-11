@@ -8,12 +8,12 @@ function SearchInput({ data, setListState }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(data);
     const result = data.filter(
       item =>
         item.nome?.toLocaleLowerCase().includes(search.toLowerCase()) ||
         item.email?.toLocaleLowerCase().includes(search.toLowerCase()) ||
-        (item.status ? item.id === parseInt(search) : item.cpf === search),
+        item?.id === parseInt(search) ||
+        item?.cpf === search,
     );
     if (result.length === 0)
       return toast.warn('Não existe resultado para busca feita');

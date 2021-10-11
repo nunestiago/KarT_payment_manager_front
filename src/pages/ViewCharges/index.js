@@ -5,11 +5,14 @@ import { toast } from 'react-toastify';
 import './style.scss';
 import SearchInput from '../../components/SearchInput';
 import SortNameButton from '../../components/SortNameButton';
+import ModalEditCharge from '../../components/ModalEditCharge';
 
 function Charges() {
   const { token } = useAuth();
   const [charges, setCharges] = useState([]);
+  const [charge, setCharge] = useState([]);
   const [filteredCharges, setFilteredCharges] = useState([]);
+  const [modalEdit, setModalEdit] = useState(false);
 
   const handleGetCharges = async () => {
     try {
@@ -44,6 +47,11 @@ function Charges() {
     return 'PENDENTE';
   }
 
+  function handleModal(selectedCharge) {
+    setModalEdit(!modalEdit);
+    setCharge(selectedCharge);
+  }
+
   useEffect(() => {
     handleGetCharges();
   }, []);
@@ -69,7 +77,9 @@ function Charges() {
         {filteredCharges.map(key => (
           <div key={key.id} className="charges-body flex-row items-center">
             <div className="charges-list-id">#{key.id}</div>
-            <div className="charges-list-nome">{key.nome}</div>
+            <div className="charges-list-nome" onClick={() => handleModal(key)}>
+              {key.nome}
+            </div>
             <div className="charges-list-descricao">{key.descricao}</div>
             <div className="charges-list-valor">
               R$ {(key.valor / 100).toFixed(2)}
@@ -88,6 +98,13 @@ function Charges() {
           </div>
         ))}
       </div>
+      {modalEdit && (
+        <ModalEditCharge
+          charge={charge}
+          closeModal={setModalEdit}
+          handleGetCharges={handleGetCharges}
+        />
+      )}
     </div>
   );
 }
