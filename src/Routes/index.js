@@ -8,13 +8,18 @@ import Login from '../pages/Login';
 import Home from '../pages/Home';
 import Register from '../pages/Register';
 import EditUser from '../pages/EditUser';
-import ClientRegister from '..//pages/ClientRegister';
+import ViewClients from '../pages/ViewClients';
+import ClientRegister from '../pages/ClientRegister';
+import EditClient from '../pages/EditClient';
+import DetailClient from '../pages/DetailClient';
 import { AuthProvider } from '../contexts/AuthContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../components/Sidebar';
-import ModalEditUser from '../components/ModalEditUser';
 import useAuth from '../hooks/useAuth';
+import Charges from '../pages/Charges';
+import CreateCharge from '../pages/CreateCharge';
+import ModalDetailClient from '../components/ModalDetailClient';
 
 function ProtectedRoutes({ children }) {
   const { token } = useAuth();
@@ -33,8 +38,13 @@ function Routes() {
           <ProtectedRoutes>
             <Sidebar>
               <Route path="/home" component={Home} />
-              <Route path="/teste" component={ModalEditUser} />
+              <Route path="/teste" component={ModalDetailClient} />
+              <Route path="/clientes" component={ViewClients} />
               <Route path="/cadastrar-cliente" component={ClientRegister} />
+              <Route path="/editar-cliente" component={EditClient} />
+              <Route path="/detalhe-cliente" component={DetailClient} />
+              <Route path="/cobrancas" component={Charges} />
+              <Route path="/nova-cobranca" component={CreateCharge} />
             </Sidebar>
           </ProtectedRoutes>
         </Switch>

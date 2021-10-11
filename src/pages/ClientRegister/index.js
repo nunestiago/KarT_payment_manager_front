@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import baseUrl from '../../utils/baseUrl';
 import cepMask from '../../utils/cepMask';
@@ -8,6 +9,7 @@ import './style.scss';
 import useAuth from '../../hooks/useAuth';
 import { useHistory } from 'react-router';
 import phoneMask from '../../utils/phoneMask';
+import registerValidations from './validations';
 
 function ClientRegister() {
   const [address, setAddress] = useState({});
@@ -25,15 +27,14 @@ function ClientRegister() {
   const handleCep = async e => {
     const insertedCep = e.target.value;
 
-    const cep = insertedCep?.replace(/[^0-9]/g, '');
-
-    if (cep?.length !== 8) {
+    if (insertedCep?.length < 9) {
       return;
     }
 
     try {
-      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-      setValue('cep', cep);
+      const response = await fetch(
+        `https://viacep.com.br/ws/${insertedCep?.replace(/[^0-9]/g, '')}/json/`,
+      );
       const viaCep = await response.json();
       setValue('logradouro', viaCep.logradouro);
       setValue('bairro', viaCep.bairro);
@@ -51,6 +52,7 @@ function ClientRegister() {
     data.cep = data.cep.replace(/[^0-9]/g, '');
 
     try {
+      registerValidations(data);
       const response = await fetch(`${baseUrl}client/register`, {
         method: 'POST',
         body: JSON.stringify(data),
@@ -65,7 +67,7 @@ function ClientRegister() {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
-      history.push('/');
+      history.push('/clientes');
       toast.success(registerInDB);
     } catch (error) {
       toast.error(error.message);
@@ -123,8 +125,10 @@ function ClientRegister() {
                 type="text"
                 {...register('cep')}
                 maxLength="9"
-                onBlur={e => handleCep(e)}
-                onChange={cepMask}
+                onChange={e => {
+                  handleCep(e);
+                  cepMask(e);
+                }}
               />
             </div>
             <div>
@@ -134,6 +138,7 @@ function ClientRegister() {
                 type="text"
                 {...register('logradouro')}
                 value={address.logradouro}
+                onChange={e => setAddress({ logradouro: e.target.value })}
               />
             </div>
           </div>
@@ -145,6 +150,7 @@ function ClientRegister() {
                 type="text"
                 {...register('bairro')}
                 value={address.bairro}
+                onChange={e => setAddress({ bairro: e.target.value })}
               />{' '}
             </div>
             <div>
@@ -154,6 +160,7 @@ function ClientRegister() {
                 type="text"
                 {...register('cidade')}
                 value={address.localidade}
+                onChange={e => setAddress({ cidade: e.target.value })}
               />
             </div>
           </div>
@@ -165,6 +172,7 @@ function ClientRegister() {
                 type="text"
                 {...register('complemento')}
                 value={address.complemento}
+                onChange={e => setAddress({ complemento: e.target.value })}
               />
             </div>
             <div>
@@ -173,12 +181,14 @@ function ClientRegister() {
             </div>
           </div>
           <div className="flex-row btn-add-client">
-            <button
-              type="submit"
-              className="btn-pink-border flex-row items-center content-center"
-            >
-              Cancelar
-            </button>
+            <Link to="/clientes">
+              <button
+                type="submit"
+                className="btn-pink-border flex-row items-center content-center"
+              >
+                Cancelar
+              </button>
+            </Link>
             <button
               type="submit"
               className="btn-pink-light"

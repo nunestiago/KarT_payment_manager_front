@@ -1,0 +1,75 @@
+.table-head-charges {
+  width: 960px;
+  height: 32px;
+  background-color: #9DBBC3;
+  border-radius: 8px;
+  margin: 218px 70px 4px 70px;
+  justify-content: space-around;
+  h1 {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0.005em;
+    text-align: left;
+    color: #FFFFFF;
+  }
+}
+
+.charges {
+  &-body {
+    border-radius: 8px;
+    background-color: #ffffff;
+    margin-left: 70px;
+    margin-bottom: 19px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.005em;
+    text-align: left;
+    color: #4c4c4c;
+    display: flex;
+    justify-content: space-between;
+    margin: 17px 32px 11px 70px;
+    width: 960px;
+    height: 48px;
+  }
+  &-list {
+    &-id {
+      font-weight: bold;
+      min-height: 20px;
+      display: flex;
+      margin-left: 50px;
+    }
+    &-nome {
+      position: absolute;
+      left: 515px;
+    }
+    &-descricao {
+      position: absolute;
+      left: 680px;
+    }
+    &-valor {
+      position: absolute;
+      left: 855px;
+    }
+    &-status {
+      font-size: 16px;
+      line-height: 15px;
+      font-weight: 600;
+      position: absolute;
+      left: 1000px;
+    }
+    &-vencimento {
+      margin-right: 66px;
+    }
+  }  
+}
+.vencido {
+  color: #ff4d4d;
+}
+.pendente {
+  color: #5197b5;
+}
+.pago {
+  color: #4ec06e;
+}

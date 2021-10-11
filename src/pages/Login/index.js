@@ -11,14 +11,13 @@ import { toast } from 'react-toastify';
 import baseUrl from '../../utils/baseUrl';
 import PasswordInput from '../../components/PasswordInput';
 import useAuth from '../../hooks/useAuth';
-import { Backdrop, Button, CircularProgress } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: '#000000',
-  },    
+  },
 }));
 
 function Login() {
@@ -59,8 +58,7 @@ function Login() {
       setIsLoading(false);
 
       if (!response.ok) {
-        toast.error('Email ou senha incorretos.');
-        return;
+        throw new Error(response);
       }
 
       const dados = await response.json();
@@ -110,9 +108,8 @@ function Login() {
       </Backdrop>
       <h1>
         Não tem uma conta? <Link to="/cadastro">Cadastre-se</Link>
-      </h1>      
+      </h1>
     </div>
-    
   );
 }
 

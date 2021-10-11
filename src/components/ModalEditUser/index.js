@@ -6,7 +6,6 @@ import cpfMask from '../../utils/cpfMask';
 import phoneMask from '../../utils/phoneMask';
 import PasswordInput from '../PasswordInput';
 import useAuth from '../../hooks/useAuth';
-import './style.scss';
 
 function ModalEditUser({ setOpenModal, openModal }) {
   const { register, handleSubmit } = useForm({
@@ -63,10 +62,10 @@ function ModalEditUser({ setOpenModal, openModal }) {
             className="form modal_padding"
             onSubmit={handleSubmit(handleEditUser)}
           >
-            {'//'} Editar usuário{' '}
             <div onClick={() => closeModal()} className="modal_close">
               X
             </div>
+            {'//'} Editar usuário{' '}
             <div className="flex-column input">
               <label htmlFor="nome">Nome</label>
               <input
