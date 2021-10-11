@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import InputMask from 'react-input-mask';
 import baseUrl from '../../utils/baseUrl';
@@ -10,15 +10,12 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
   const {
     register,
     handleSubmit,
-    setValue,
-    control,
     formState: { errors },
   } = useForm({
     mode: 'onBlur',
   });
   const { token } = useAuth();
   const [handleClient, setHandleClient] = useState(client);
-  const [address, setAddress] = useState({});
 
   const handleCep = async e => {
     const insertedCep = e.target.value.replace(/[^0-9]/g, '');
@@ -43,7 +40,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
       toast.error(error.message);
     }
   };
-  const handleEditClient = async data => {
+  const handleEditClient = async () => {
     if (handleClient.cpf)
       handleClient.cpf = handleClient.cpf.replace(/[^0-9]/g, '');
     if (handleClient.cep)
