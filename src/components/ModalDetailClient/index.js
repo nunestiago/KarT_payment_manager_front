@@ -5,6 +5,8 @@ import useAuth from '../../hooks/useAuth';
 import phoneIcon from '../../assets/phone.svg';
 import mailIcon from '../../assets/mail.svg';
 import './style.scss';
+import showCpf from '../../utils/showCPF';
+import showPhone from '../../utils/showProperPhone';
 
 function ModalDetailClient({ client, closeModal }) {
   const { token } = useAuth();
@@ -50,52 +52,52 @@ function ModalDetailClient({ client, closeModal }) {
             <div onClick={() => closeModal()} className="modal_close">
               X
             </div>
-            <div className="flex-row items-center">
-              <div>
-                <div>
-                  <h1>{client.nome}</h1>
-                </div>
-                <h2>{client.cpf}</h2>
-              </div>
+            <div className="show_client-title">
+              <h1 className="show_client-h1">{client.nome}</h1>
+              <h2 className="show_client-h2">{showCpf(client.cpf)}</h2>
             </div>
             <div className="flex-row">
-              <div>
+              <div className="flex-column between">
                 <div className="flex-row">
                   <div className="flex-row">
-                    <img src={mailIcon} alt="" />
-                    <h2>{client.email}</h2>
+                    <img src={mailIcon} alt="" className="show_client-img" />
+                    <h2 className="show_client-h2 mr">{client.email}</h2>
                   </div>
                   <div className="flex-row">
-                    <img src={phoneIcon} alt="" />
-                    <h2>{client.telefone}</h2>
+                    <img src={phoneIcon} alt="" className="show_client-img" />
+                    <h2 className="show_client-h2">
+                      {showPhone(client.telefone)}
+                    </h2>
                   </div>
                 </div>
                 <div className="flex-row between">
                   <div>
-                    <strong>CEP</strong>
-                    <h2>{client.cep}</h2>
+                    <strong className="show_client-strong">CEP</strong>
+                    <h2 className="show_client-h2">{client.cep}</h2>
                   </div>
                   <div>
-                    <strong>Bairro</strong>
-                    <h2>{client.bairro}</h2>
+                    <strong className="show_client-strong">Bairro</strong>
+                    <h2 className="show_client-h2">{client.bairro}</h2>
                   </div>{' '}
                   <div>
-                    <strong>Cidade</strong>
-                    <h2>{client.cidade}</h2>
+                    <strong className="show_client-strong">Cidade</strong>
+                    <h2 className="show_client-h2">{client.cidade}</h2>
                   </div>
                 </div>
                 <div>
-                  <strong>Logradouro</strong>
-                  <h2>{client.logradouro}</h2>
+                  <strong className="show_client-strong">Logradouro</strong>
+                  <h2 className="show_client-h2">{client.logradouro}</h2>
                 </div>
                 <div className="flex-row between">
-                  <div>
-                    <strong>Complemento</strong>
-                    <h2>{client.complemento}</h2>
+                  <div className="mr">
+                    <strong className="show_client-strong">Complemento</strong>
+                    <h2 className="show_client-h2">{client.complemento}</h2>
                   </div>{' '}
                   <div>
-                    <strong>Ponto de Referência</strong>
-                    <h2>{client.bairro}</h2>
+                    <strong className="show_client-strong">
+                      Ponto de Referência
+                    </strong>
+                    <h2 className="show_client-h2">{client.bairro}</h2>
                   </div>
                 </div>
               </div>
@@ -104,31 +106,31 @@ function ModalDetailClient({ client, closeModal }) {
                 {charges &&
                   charges.map(charge => (
                     <div key={charge.id} className="charge_card-container">
-                      <div className="flex-row between ">
-                        <div>
-                          <div className="flex-row items-center between ">
-                            <h2>
-                              <strong>#{charge.id} </strong>
-                              {charge.descricao}
-                            </h2>
-                          </div>
-                          <h3>
-                            {new Date(charge.vencimento).toLocaleDateString(
-                              'pt-BR',
-                            )}
-                          </h3>
-                        </div>
-                        <div>
-                          <strong>R$ {(charge.valor / 100).toFixed(2)}</strong>
-                          <h4
-                            className={`charges-list-status ${(charge.status
-                              ? 'PAGO'
-                              : 'PENDENTE'
-                            ).toLowerCase()}`}
-                          >
-                            {charge.status ? 'PAGO' : 'PENDENTE'}
-                          </h4>
-                        </div>
+                      <div className="flex-row align-center between">
+                        <h2 className="show_client-h2">
+                          <strong className="show_client-strong">
+                            #{charge.id}{' '}
+                          </strong>
+                          {charge.descricao}
+                        </h2>
+                        <strong className="show_client-strong">
+                          R$ {(charge.valor / 100).toFixed(2)}
+                        </strong>
+                      </div>
+                      <div className="flex-row items-center between">
+                        <h3 className="show_client-h3">
+                          {new Date(charge.vencimento).toLocaleDateString(
+                            'pt-BR',
+                          )}
+                        </h3>
+                        <h4
+                          className={`show_client-h4 ${(charge.status
+                            ? 'PAGO'
+                            : 'PENDENTE'
+                          ).toLowerCase()}`}
+                        >
+                          {charge.status ? 'PAGO' : 'PENDENTE'}
+                        </h4>
                       </div>
                     </div>
                   ))}

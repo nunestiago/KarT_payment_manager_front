@@ -66,12 +66,17 @@ function ViewClients() {
   return (
     <div>
       <div className="button-register">
-        <Link to="/cadastrar-cliente">
-          <button type="submit" className="btn-pink-border">
-            Adicionar cliente
-          </button>
-        </Link>
-        <SearchInput data={clients} setListState={setFilteredClients} />
+        <div className="flex-row items-center between">
+          <Link to="/cadastrar-cliente">
+            <button
+              type="submit"
+              className="btn-pink-border button-register-button"
+            >
+              Adicionar cliente
+            </button>
+          </Link>
+          <SearchInput data={clients} setListState={setFilteredClients} />
+        </div>
       </div>
       <div className="table-head flex-row items-center">
         <div className="flex-row items-center">

@@ -5,22 +5,18 @@
     max-width: 432px;
   }
   &input {
-    flex-grow: 2;
     background: #f7f7f7;
     border: 1px solid #374952;
     box-sizing: border-box;
     border-radius: 8px;
-    padding: 20px 50px;
+    padding: 15px 80px 15px 30px;
     &:focus {
-      /* removing the input focus blue box. Put this on the form if you like. */
       outline: none;
-    }
-    &::placeholder {
-      display: none;
     }
   }
   &button {
     background: #374952;
+    border: none;
     border-radius: 8px;
     color: white;
     margin-left: -50px;
