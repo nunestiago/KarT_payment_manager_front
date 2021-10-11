@@ -24,6 +24,9 @@ function ModalEditUser({ setOpenModal, openModal }) {
 
     if (data.telefone) data.telefone = data.telefone.replace(/[^0-9]/g, '');
     if (data.cpf) data.cpf = data.cpf.replace(/[^0-9]/g, '');
+    if (data.telefone.length !== 11 && data.telefone.length !== 10) {
+      return toast.error('(DDD) e telefone com 8 ou 9 dígitos');
+    }
 
     try {
       const response = await fetch(`${baseUrl}user/edit`, {

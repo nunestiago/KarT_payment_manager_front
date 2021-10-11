@@ -1,53 +1,68 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import InputMask from 'react-input-mask';
 import baseUrl from '../../utils/baseUrl';
-import cepMask from '../../utils/cepMask';
-import cpfMask from '../../utils/cpfMask';
-import phoneMask from '../../utils/phoneMask';
 import useAuth from '../../hooks/useAuth';
 import './style.scss';
 
-function ModalEditClient({ closeModal, client, setClient }) {
-  const [address, setAddress] = useState({});
-  const { register, handleSubmit, setValue } = useForm({
-    mode: 'onChange',
+function ModalEditClient({ closeModal, client, handleGetClients }) {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    control,
+    formState: { errors },
+  } = useForm({
+    mode: 'onBlur',
   });
   const { token } = useAuth();
-  const handleCep = async e => {
-    const insertedCep = e.target.value;
+  const [handleClient, setHandleClient] = useState(client);
+  const [address, setAddress] = useState({});
 
-    if (insertedCep?.length < 9) {
+  const handleCep = async e => {
+    const insertedCep = e.target.value.replace(/[^0-9]/g, '');
+
+    if (insertedCep?.length < 8) {
       return;
     }
     try {
       const response = await fetch(
-        `https://viacep.com.br/ws/${insertedCep?.replace(/[^0-9]/g, '')}/json/`,
+        `https://viacep.com.br/ws/${insertedCep}/json/`,
       );
       const viaCep = await response.json();
-      setValue('logradouro', viaCep.logradouro);
-      setValue('bairro', viaCep.bairro);
-      setValue('cidade', viaCep.localidade);
-      setValue('complemento', viaCep.complemento);
-      setAddress(viaCep);
+      setHandleClient({
+        ...handleClient,
+        'cep': insertedCep,
+        'logradouro': viaCep.logradouro,
+        'bairro': viaCep.bairro,
+        'cidade': viaCep.localidade,
+        'complemento': viaCep.complemento,
+      });
     } catch (error) {
       toast.error(error.message);
     }
   };
-
   const handleEditClient = async data => {
-    const onlyUpdatedData = Object.fromEntries(
-      Object.entries(data).filter(([, value]) => value),
-    );
-
-    if (data.cpf) data.cpf = data.cpf.replace(/[^0-9]/g, '');
-    if (data.telefone) data.telefone = data.telefone.replace(/[^0-9]/g, '');
-    onlyUpdatedData.id = client.id;
-
+    if (handleClient.cpf)
+      handleClient.cpf = handleClient.cpf.replace(/[^0-9]/g, '');
+    if (handleClient.cep)
+      handleClient.cep = handleClient.cep.replace(/[^0-9]/g, '');
+    if (handleClient.telefone)
+      handleClient.telefone = handleClient.telefone.replace(/[^0-9]/g, '');
+    if (handleClient.cpf.length !== 11) {
+      return toast.error('CPF deve conter 11 dígitos');
+    }
+    if (
+      handleClient.telefone.length !== 11 &&
+      handleClient.telefone.length !== 10
+    ) {
+      return toast.error('(DDD) e telefone com 8 ou 9 dígitos');
+    }
     try {
       const response = await fetch(`${baseUrl}client/edit`, {
         method: 'PUT',
-        body: JSON.stringify(onlyUpdatedData),
+        body: JSON.stringify(handleClient),
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + token,
@@ -59,13 +74,18 @@ function ModalEditClient({ closeModal, client, setClient }) {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
-      setClient(onlyUpdatedData);
+
       closeModal();
+      handleGetClients();
       toast.success(registerInDB);
     } catch (error) {
       toast.error(error.message);
     }
   };
+
+  useEffect(() => {
+    errors?.email && toast.error(errors.email.message);
+  }, [errors.email]);
 
   return (
     <>
@@ -90,109 +110,161 @@ function ModalEditClient({ closeModal, client, setClient }) {
                 id="nome"
                 type="text"
                 {...register('nome', { required: true })}
-                defaultValue={client?.nome}
+                value={handleClient?.nome}
+                onChange={e =>
+                  setHandleClient({
+                    ...handleClient,
+                    'nome': e.target.value,
+                  })
+                }
               />
               <label htmlFor="email">E-mail</label>
               <input
                 id="email"
                 type="email"
-                {...register('email', { required: true })}
-                defaultValue={client?.email}
+                {...register('email', {
+                  required: 'required',
+                  pattern: {
+                    value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/,
+                    message: 'E-mail inválido',
+                  },
+                })}
+                value={handleClient?.email}
+                onChange={e =>
+                  setHandleClient({
+                    ...handleClient,
+                    'email': e.target.value,
+                  })
+                }
               />{' '}
             </div>
             <div className="half">
-              <div>
+              <div className="half_div">
                 <label htmlFor="cpf">CPF</label>
-                <input
-                  id="cpf"
-                  type="text"
-                  {...register('cpf', { required: true })}
-                  maxLength="14"
-                  onChange={cpfMask}
-                  defaultValue={client?.cpf}
-                />{' '}
+                <InputMask
+                  mask="999.999.999-99"
+                  {...register('cpf')}
+                  onChange={e =>
+                    setHandleClient({
+                      ...handleClient,
+                      'cpf': e.target.value,
+                    })
+                  }
+                  defaultValue={handleClient.cpf}
+                />
               </div>
-              <div>
+              <div className="half_div">
                 <label htmlFor="telefone">Telefone</label>
-                <input
-                  id="telefone"
-                  type="text"
-                  {...register('telefone', { required: true })}
-                  maxLength="15"
-                  onChange={phoneMask}
-                  defaultValue={client?.telefone}
-                />{' '}
+                <InputMask
+                  mask={
+                    handleClient.telefone.length === 11
+                      ? '(99) 99999-9999'
+                      : '(99) 9999-9999'
+                  }
+                  {...register('telefone')}
+                  onChange={e =>
+                    setHandleClient({
+                      ...handleClient,
+                      'telefone': e.target.value,
+                    })
+                  }
+                  value={handleClient?.telefone}
+                />
               </div>
             </div>
             <div className="half">
-              <div>
+              <div className="half_div">
                 <label htmlFor="cep">CEP</label>
-                <input
-                  id="cep"
-                  type="text"
+                <InputMask
+                  mask="99-999.999"
                   {...register('cep')}
-                  maxLength="9"
                   onChange={e => {
+                    setHandleClient({
+                      ...handleClient,
+                      'cep': e.target.value,
+                    });
                     handleCep(e);
-                    cepMask(e);
                   }}
-                  defaultValue={client?.cep}
+                  value={handleClient.cep}
                 />
               </div>
-              <div>
+              <div className="half_div">
                 <label htmlFor="logradouro">Logradouro</label>
                 <input
                   id="logradouro"
                   type="text"
                   {...register('logradouro')}
-                  value={address.logradouro}
-                  onChange={e => setAddress({ logradouro: e.target.value })}
-                  defaultValue={client?.logradouro}
+                  onChange={e =>
+                    setHandleClient({
+                      ...handleClient,
+                      'logradouro': e.target.value,
+                    })
+                  }
+                  value={handleClient?.logradouro}
                 />
               </div>
             </div>
             <div className="half">
-              <div>
+              <div className="half_div">
                 <label htmlFor="bairro">Bairro</label>
                 <input
                   id="bairro"
                   type="text"
                   {...register('bairro')}
-                  value={address.bairro}
-                  onChange={e => setAddress({ bairro: e.target.value })}
-                  defaultValue={client?.bairro}
+                  onChange={e =>
+                    setHandleClient({
+                      ...handleClient,
+                      'bairro': e.target.value,
+                    })
+                  }
+                  value={handleClient.bairro}
                 />{' '}
               </div>
-              <div>
+              <div className="half_div">
                 <label htmlFor="cidade">Cidade</label>
                 <input
                   id="cidade"
                   type="text"
                   {...register('cidade')}
-                  value={client?.cidade}
-                  onChange={e => setAddress({ cidade: e.target.value })}
+                  onChange={e =>
+                    setHandleClient({
+                      ...handleClient,
+                      'cidade': e.target.value,
+                    })
+                  }
+                  value={handleClient.cidade}
                 />
               </div>
             </div>
             <div className="half">
-              <div>
+              <div className="half_div">
                 <label htmlFor="complemento">Complemento</label>
                 <input
                   id="complemento"
                   type="text"
                   {...register('complemento')}
-                  value={client?.complemento}
-                  onChange={e => setAddress({ complemento: e.target.value })}
-                  defaultValue={client?.complemento}
+                  onChange={e =>
+                    setHandleClient({
+                      ...handleClient,
+                      'complemento': e.target.value,
+                    })
+                  }
+                  value={handleClient.complemento}
                 />
               </div>
-              <div>
+              <div className="half_div">
                 <label htmlFor="pref">Ponto de Referência</label>
                 <input
                   id="pref"
                   type="text"
                   {...register('ponto_referencia')}
-                  defaultValue={client?.ponto_referencia}
+                  onChange={e =>
+                    setHandleClient({
+                      ...handleClient,
+                      'ponto_referencia': e.target.value,
+                    })
+                  }
+                  value={handleClient.ponto_referencia}
                 />
               </div>
             </div>

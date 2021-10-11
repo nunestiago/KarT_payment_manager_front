@@ -3,10 +3,13 @@ import baseUrl from '../../utils/baseUrl';
 import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import './style.scss';
+import SearchInput from '../../components/SearchInput';
+import SortNameButton from '../../components/SortNameButton';
 
 function Charges() {
   const { token } = useAuth();
   const [charges, setCharges] = useState([]);
+  const [filteredCharges, setFilteredCharges] = useState([]);
 
   const handleGetCharges = async () => {
     try {
@@ -18,12 +21,13 @@ function Charges() {
         },
       });
 
+      const dados = await response.json();
+
       if (!response.ok) {
-        toast.error('Email ou senha incorretos.');
+        toast.error(dados);
         return;
       }
-
-      const dados = await response.json();
+      setFilteredCharges(dados);
       setCharges(dados);
     } catch (error) {
       toast.error(error.message);
@@ -45,16 +49,20 @@ function Charges() {
   }, []);
   return (
     <div>
+      <SearchInput data={charges} setListState={setFilteredCharges} />
       <div className="table-head-charges flex-row items-center">
         <h1>ID</h1>
-        <h1>Cliente</h1>
+        <div className="flex-row items-center">
+          <h1>Cliente</h1>
+          <SortNameButton data={charges} setListState={setFilteredCharges} />
+        </div>
         <h1>Descrição</h1>
         <h1>Valor</h1>
         <h1>Status</h1>
         <h1>Vencimento</h1>
       </div>
       <div>
-        {charges.map(key => (
+        {filteredCharges.map(key => (
           <div key={key.id} className="charges-body flex-row items-center">
             <div className="charges-list-id">#{key.id}</div>
             <div className="charges-list-nome">{key.nome}</div>

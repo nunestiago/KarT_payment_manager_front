@@ -57,11 +57,12 @@ function Login() {
 
       setIsLoading(false);
 
+      const dados = await response.json();
+
       if (!response.ok) {
-        throw new Error(response);
+        throw new Error(dados);
       }
 
-      const dados = await response.json();
       login(dados);
 
       history.push('/home');

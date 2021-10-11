@@ -1,0 +1,39 @@
+.search_ {
+  &container {
+    display: flex;
+    flex-direction: row;
+    max-width: 432px;
+  }
+  &input {
+    flex-grow: 2;
+    background: #f7f7f7;
+    border: 1px solid #374952;
+    box-sizing: border-box;
+    border-radius: 8px;
+    padding: 20px 50px;
+    &:focus {
+      /* removing the input focus blue box. Put this on the form if you like. */
+      outline: none;
+    }
+    &::placeholder {
+      display: none;
+    }
+  }
+  &button {
+    background: #374952;
+    border-radius: 8px;
+    color: white;
+    margin-left: -50px;
+    display: flex;
+    align-items: center;
+    &_message {
+      font-family: Montserrat;
+      font-weight: bold;
+      font-size: 12px;
+      padding: 12px;
+    }
+    &_img {
+      padding-left: 12px;
+    }
+  }
+}

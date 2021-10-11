@@ -9,10 +9,14 @@ import phonelIcon from '../../assets/phone.svg';
 import editIcon from '../../assets/edit.svg';
 import ModalDetailClient from '../../components/ModalDetailClient';
 import ModalEditClient from '../../components/ModalEditClient';
+import showPhone from '../../utils/showProperPhone';
+import SearchInput from '../../components/SearchInput';
+import SortNameButton from '../../components/SortNameButton';
 
 function ViewClients() {
   const { token } = useAuth();
   const [clients, setClients] = useState([]);
+  const [filteredClients, setFilteredClients] = useState([]);
   const [client, setClient] = useState();
   const [modalViewClient, setModalViewClient] = useState(false);
   const [modalEditClient, setModalEditClient] = useState(false);
@@ -32,6 +36,7 @@ function ViewClients() {
       }
 
       const dados = await response.json();
+      setFilteredClients(dados);
       setClients(dados);
     } catch (error) {
       toast.error(error.message);
@@ -54,6 +59,10 @@ function ViewClients() {
     };
   }, []);
 
+  useEffect(() => {
+    filteredClients;
+  }, [filteredClients]);
+
   return (
     <div>
       <div className="button-register">
@@ -62,9 +71,13 @@ function ViewClients() {
             Adicionar cliente
           </button>
         </Link>
+        <SearchInput data={clients} setListState={setFilteredClients} />
       </div>
       <div className="table-head flex-row items-center">
-        <h1>Cliente</h1>
+        <div className="flex-row items-center">
+          <h1>Cliente</h1>
+          <SortNameButton data={clients} setListState={setFilteredClients} />
+        </div>
         <div className="th-middle flex-row items-center">
           <h1>Cobranças Feitas</h1>
           <h1>Cobranças Recebidas</h1>
@@ -73,7 +86,7 @@ function ViewClients() {
         <div className="empty-space"></div>
       </div>
       <div className="table-body flex-column">
-        {clients.map(client => (
+        {filteredClients.map(client => (
           <div className="id-client flex-row" key={client.id}>
             <div className="client-column flex-column">
               <p onClick={() => handleClickViewClient(client)}>{client.nome}</p>
@@ -83,7 +96,7 @@ function ViewClients() {
               </div>
               <div className="flex-row">
                 <img src={phonelIcon} alt="phone-icon" />
-                <span>{client.telefone}</span>
+                <span>{showPhone(client.telefone)}</span>
               </div>
             </div>
             <div className="flex-row cob-feitas">
@@ -98,7 +111,7 @@ function ViewClients() {
             </div>
             <div className="flex-row status">
               <span>
-                {client.feitas - client.recebidas === 0 ? (
+                {(client.feitas || 0) - (client.recebidas || 0) === 0 ? (
                   <span className="emdia">EM DIA</span>
                 ) : (
                   <span className="inadimplente">INADIMPLENTE</span>
@@ -124,7 +137,8 @@ function ViewClients() {
       {modalEditClient && (
         <ModalEditClient
           client={client}
-          setClient={setClient}
+          setClient={() => setClient()}
+          handleGetClients={handleGetClients}
           closeModal={() => setModalEditClient(false)}
         />
       )}
