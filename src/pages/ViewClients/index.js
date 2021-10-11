@@ -67,7 +67,10 @@ function ViewClients() {
     <div>
       <div className="button-register">
         <Link to="/cadastrar-cliente">
-          <button type="submit" className="btn-pink-border">
+          <button
+            type="submit"
+            className="btn-pink-border button-register-button"
+          >
             Adicionar cliente
           </button>
         </Link>
