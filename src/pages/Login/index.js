@@ -24,7 +24,7 @@ function Login() {
   const {
     register,
     handleSubmit,
-    formState: { isDirty, isValid },
+    formState: { isDirty, isValid, errors },
   } = useForm({
     mode: 'onChange',
   });
@@ -72,6 +72,10 @@ function Login() {
     }
   };
 
+  useEffect(() => {
+    errors?.email && toast.error(errors.email.message);
+  }, [errors?.email]);
+
   return (
     <div className="container-form">
       <form
@@ -86,7 +90,13 @@ function Login() {
               id="email"
               type="email"
               placeholder="exemplo@gmail.com"
-              {...register('email', { required: true })}
+              {...register('email', {
+                required: 'E-mail e senha são obrigatórios',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: 'E-mail inválido',
+                },
+              })}
             />
           </div>
           <PasswordInput
