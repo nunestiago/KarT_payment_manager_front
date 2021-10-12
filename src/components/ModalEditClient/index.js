@@ -43,19 +43,22 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
   const handleEditClient = async () => {
     if (handleClient.cpf)
       handleClient.cpf = handleClient.cpf.replace(/[^0-9]/g, '');
+
     if (handleClient.cep)
       handleClient.cep = handleClient.cep.replace(/[^0-9]/g, '');
+
     if (handleClient.telefone)
       handleClient.telefone = handleClient.telefone.replace(/[^0-9]/g, '');
-    if (handleClient.cpf.length !== 11) {
+
+    if (handleClient.cpf.length !== 11)
       return toast.error('CPF deve conter 11 dígitos');
-    }
+
     if (
       handleClient.telefone.length !== 11 &&
       handleClient.telefone.length !== 10
-    ) {
+    )
       return toast.error('(DDD) e telefone com 8 ou 9 dígitos');
-    }
+
     try {
       const response = await fetch(`${baseUrl}client/edit`, {
         method: 'PUT',
