@@ -17,14 +17,12 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
   const {
     register,
     handleSubmit,
-    setValue,
+
     control,
-    formState: { errors },
   } = useForm({
     mode: 'onChange',
   });
   const [clients, setClients] = useState([]);
-  const [startDate] = useState(new Date());
   const [payload, setPayload] = useState();
 
   async function handleGetClients() {
