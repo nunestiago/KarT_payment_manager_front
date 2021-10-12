@@ -7,6 +7,8 @@ import SortNameButton from '../../components/SortNameButton';
 import showPhone from '../../utils/showProperPhone';
 import mailIcon from '../../assets/mail.svg';
 import phonelIcon from '../../assets/phone.svg';
+import { useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 
 function Reports() {
   const { token } = useAuth();
@@ -14,10 +16,11 @@ function Reports() {
   const [clients, setClients] = useState([]);
   const [filteredCharges, setFilteredCharges] = useState([]);
   const [filteredClients, setFilteredClients] = useState([]);
-
   const [which, setWhich] = useState({ charges: false, clients: false });
+  const toQuery = new URLSearchParams(useLocation().search);
+  let query = toQuery.get('relatorio');
 
-  const handleGetClients = async () => {
+  async function handleGetClients() {
     try {
       const response = await fetch(`${baseUrl}client/getAll`, {
         method: 'GET',
@@ -33,13 +36,13 @@ function Reports() {
 
       const dados = await response.json();
 
-      setClients(dados);
+      return setClients(dados);
     } catch (error) {
       toast.error(error.message);
     }
-  };
+  }
 
-  const handleGetCharges = async () => {
+  async function handleGetCharges() {
     try {
       const response = await fetch(`${baseUrl}charges/getAll`, {
         method: 'GET',
@@ -55,16 +58,42 @@ function Reports() {
         toast.error(dados);
         return;
       }
-      setCharges(dados);
+      return setCharges(dados);
     } catch (error) {
       toast.error(error.message);
     }
-  };
+  }
 
+  function getQuery() {
+    switch (query) {
+      case 'emdia':
+        handleEmDia();
+        break;
+      case 'inadimplente':
+        handleInadimplente();
+        break;
+      case 'previstas':
+        handlePrevistas();
+        break;
+      case 'pagas':
+        handlePagas();
+        break;
+      case 'vencidas':
+        handleVencidas();
+        break;
+
+      default:
+        break;
+    }
+  }
   useEffect(() => {
     handleGetClients();
     handleGetCharges();
   }, []);
+
+  useEffect(() => {
+    getQuery();
+  }, [query]);
 
   function handleEmDia() {
     setWhich({ charges: false, clients: true });
@@ -74,6 +103,7 @@ function Reports() {
       ),
     );
   }
+
   function handleInadimplente() {
     setWhich({ charges: false, clients: true });
     setFilteredClients(
@@ -82,6 +112,7 @@ function Reports() {
       ),
     );
   }
+
   function handlePrevistas() {
     setWhich({ charges: true, clients: false });
     setFilteredCharges(
@@ -92,10 +123,12 @@ function Reports() {
       ),
     );
   }
+
   function handlePagas() {
     setWhich({ charges: true, clients: false });
     setFilteredCharges(charges.filter(charge => charge.status === true));
   }
+
   function handleVencidas() {
     setWhich({ charges: true, clients: false });
     setFilteredCharges(
@@ -104,6 +137,7 @@ function Reports() {
       ),
     );
   }
+
   function handleStatus(status, due) {
     if (status) {
       return 'PAGO';
@@ -113,15 +147,26 @@ function Reports() {
     }
     return 'PENDENTE';
   }
-  console.log(filteredCharges, filteredClients);
+
   return (
     <div>
       <div>
-        <button onClick={handleEmDia}>Em dia</button>
-        <button onClick={handleInadimplente}>Inadimplente</button>
-        <button onClick={handlePrevistas}>Previstas</button>
-        <button onClick={handlePagas}>Pagas</button>
-        <button onClick={handleVencidas}>Vencidas</button>
+        <Link to="/relatorios?relatorio=emdia">
+          <button>Em dia</button>
+        </Link>
+
+        <Link to="/relatorios?relatorio=inadimplente">
+          <button>Inadimplente</button>
+        </Link>
+        <Link to="/relatorios?relatorio=previstas">
+          <button>Previstas</button>
+        </Link>
+        <Link to="/relatorios?relatorio=pagas">
+          <button>Pagas</button>
+        </Link>
+        <Link to="/relatorios?relatorio=vencidas">
+          <button>Vencidas</button>
+        </Link>
       </div>
       {which.clients && (
         <div>
