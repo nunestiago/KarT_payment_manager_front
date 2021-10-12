@@ -182,7 +182,7 @@ function CreateCharge() {
                 )}
               />
             </div>
-            <div className="flex-column ">
+            <div className="flex-column vencimento">
               <label htmlFor="vencimento">Vencimento</label>
               <Controller
                 control={control}
