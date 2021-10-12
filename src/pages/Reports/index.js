@@ -7,8 +7,7 @@ import SortNameButton from '../../components/SortNameButton';
 import showPhone from '../../utils/showProperPhone';
 import mailIcon from '../../assets/mail.svg';
 import phonelIcon from '../../assets/phone.svg';
-import { useLocation } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Reports() {
   const { token } = useAuth();
@@ -55,9 +54,9 @@ function Reports() {
       const dados = await response.json();
 
       if (!response.ok) {
-        toast.error(dados);
         return;
       }
+
       return setCharges(dados);
     } catch (error) {
       toast.error(error.message);
@@ -150,22 +149,22 @@ function Reports() {
 
   return (
     <div>
-      <div>
+      <div className="flex-row ">
         <Link to="/relatorios?relatorio=emdia">
-          <button>Em dia</button>
+          <button className="btn-pink-border">Em dia</button>
         </Link>
 
         <Link to="/relatorios?relatorio=inadimplente">
-          <button>Inadimplente</button>
+          <button className="btn-pink-border">Inadimplente</button>
         </Link>
         <Link to="/relatorios?relatorio=previstas">
-          <button>Previstas</button>
+          <button className="btn-pink-border">Previstas</button>
         </Link>
         <Link to="/relatorios?relatorio=pagas">
-          <button>Pagas</button>
+          <button className="btn-pink-border">Pagas</button>
         </Link>
         <Link to="/relatorios?relatorio=vencidas">
-          <button>Vencidas</button>
+          <button className="btn-pink-border">Vencidas</button>
         </Link>
       </div>
       {which.clients && (
@@ -189,7 +188,7 @@ function Reports() {
             <div className="empty-space"></div>
           </div>
           <div className="table-body flex-column">
-            {filteredClients.map(client => (
+            {filteredClients?.map(client => (
               <div className="id-client flex-row" key={client.id}>
                 <div className="client-column flex-column">
                   <p>{client.nome}</p>
@@ -222,7 +221,7 @@ function Reports() {
                     )}
                   </span>
                 </div>
-                <div className="flex-row edit">apagar</div>
+                <div className="flex-row edit"></div>
               </div>
             ))}
           </div>
@@ -248,7 +247,7 @@ function Reports() {
             </div>
           </div>
           <div>
-            {filteredCharges.map(key => (
+            {filteredCharges?.map(key => (
               <div key={key.id} className="charges-body flex-row items-center">
                 <div className="charges-list-id">#{key.id}</div>
                 <div className="charges-list-nome">{key.nome}</div>
