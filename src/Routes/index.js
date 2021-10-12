@@ -19,7 +19,8 @@ import Sidebar from '../components/Sidebar';
 import useAuth from '../hooks/useAuth';
 import Charges from '../pages/ViewCharges';
 import CreateCharge from '../pages/CreateCharge';
-import ModalDetailClient from '../components/ModalDetailClient';
+import ModalEditCharge from '../components/ModalEditCharge';
+import Reports from '../pages/Reports';
 
 function ProtectedRoutes({ children }) {
   const { token } = useAuth();
@@ -38,13 +39,14 @@ function Routes() {
           <ProtectedRoutes>
             <Sidebar>
               <Route path="/home" component={Home} />
-              <Route path="/teste" component={ModalDetailClient} />
+              <Route path="/teste" component={ModalEditCharge} />
               <Route path="/clientes" component={ViewClients} />
               <Route path="/cadastrar-cliente" component={ClientRegister} />
               <Route path="/editar-cliente" component={EditClient} />
               <Route path="/detalhe-cliente" component={DetailClient} />
               <Route path="/cobrancas" component={Charges} />
               <Route path="/nova-cobranca" component={CreateCharge} />
+              <Route path="/relatorio" component={Reports} />
             </Sidebar>
           </ProtectedRoutes>
         </Switch>
