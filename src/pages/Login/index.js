@@ -11,11 +11,11 @@ import { toast } from 'react-toastify';
 import baseUrl from '../../utils/baseUrl';
 import PasswordInput from '../../components/PasswordInput';
 import useAuth from '../../hooks/useAuth';
-import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core';
+import { Backdrop, CircularProgress } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
     color: '#000000',
   },
 }));
@@ -89,13 +89,10 @@ function Login() {
             <input
               id="email"
               type="email"
+              onInvalid={() => toast.error('E-mail inválido')}
               placeholder="exemplo@gmail.com"
               {...register('email', {
                 required: 'E-mail e senha são obrigatórios',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'E-mail inválido',
-                },
               })}
             />
           </div>
