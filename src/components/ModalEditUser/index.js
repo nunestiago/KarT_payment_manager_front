@@ -68,7 +68,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
             <div onClick={() => closeModal()} className="modal_close">
               X
             </div>
-            {'//'} Editar usuário{' '}
+            {'//'} EDITAR USUÁRIO{' '}
             <div className="flex-column input">
               <label htmlFor="nome">Nome</label>
               <input
