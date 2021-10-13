@@ -5,7 +5,7 @@ import moneyIcon from '../../assets/money.svg';
 import baseUrl from '../../utils/baseUrl';
 import { toast } from 'react-toastify';
 import useAuth from '../../hooks/useAuth';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 function Home() {
   const { token } = useAuth();
@@ -47,6 +47,7 @@ function Home() {
             <h1>Clientes</h1>
           </div>
           <div className=" flex-column data items-center">
+
             <Link
               to={{ pathname: '/relatorios', state: { relatorio: 'emdia' } }}
             >
@@ -66,6 +67,7 @@ function Home() {
                 <span>{homeInfo?.inadimplente || 0}</span>
               </div>
             </Link>
+
           </div>
         </div>
         <div className="flex-column container-box charges">
@@ -74,6 +76,7 @@ function Home() {
             <h1>Cobranças</h1>
           </div>
           <div className="flex-column data items-center">
+
             <Link
               to={{
                 pathname: '/relatorios',
@@ -101,6 +104,7 @@ function Home() {
                 <span>{homeInfo?.pagas || 0}</span>
               </div>
             </Link>
+
           </div>
         </div>
       </div>

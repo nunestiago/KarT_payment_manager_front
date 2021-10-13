@@ -65,7 +65,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
             className="form modal_padding"
             onSubmit={handleSubmit(handleEditUser)}
           >
-            <div onClick={() => closeModal()} className="modal_close">
+            <div onClick={() => closeModal()} className="edit_modal_close">
               X
             </div>
             {'//'} EDITAR USUÁRIO{' '}
