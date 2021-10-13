@@ -7,6 +7,7 @@ import SortNameButton from '../../components/SortNameButton';
 import showPhone from '../../utils/showProperPhone';
 import mailIcon from '../../assets/mail.svg';
 import phonelIcon from '../../assets/phone.svg';
+import { Link, useLocation } from 'react-router-dom';
 
 function Reports() {
   const { token } = useAuth();
@@ -14,10 +15,11 @@ function Reports() {
   const [clients, setClients] = useState([]);
   const [filteredCharges, setFilteredCharges] = useState([]);
   const [filteredClients, setFilteredClients] = useState([]);
-
   const [which, setWhich] = useState({ charges: false, clients: false });
+  const toQuery = new URLSearchParams(useLocation().search);
+  let query = toQuery.get('relatorio');
 
-  const handleGetClients = async () => {
+  async function handleGetClients() {
     try {
       const response = await fetch(`${baseUrl}client/getAll`, {
         method: 'GET',
@@ -33,13 +35,13 @@ function Reports() {
 
       const dados = await response.json();
 
-      setClients(dados);
+      return setClients(dados);
     } catch (error) {
       toast.error(error.message);
     }
-  };
+  }
 
-  const handleGetCharges = async () => {
+  async function handleGetCharges() {
     try {
       const response = await fetch(`${baseUrl}charges/getAll`, {
         method: 'GET',
@@ -52,19 +54,45 @@ function Reports() {
       const dados = await response.json();
 
       if (!response.ok) {
-        toast.error(dados);
         return;
       }
-      setCharges(dados);
+
+      return setCharges(dados);
     } catch (error) {
       toast.error(error.message);
     }
-  };
+  }
 
+  function getQuery() {
+    switch (query) {
+      case 'emdia':
+        handleEmDia();
+        break;
+      case 'inadimplente':
+        handleInadimplente();
+        break;
+      case 'previstas':
+        handlePrevistas();
+        break;
+      case 'pagas':
+        handlePagas();
+        break;
+      case 'vencidas':
+        handleVencidas();
+        break;
+
+      default:
+        break;
+    }
+  }
   useEffect(() => {
     handleGetClients();
     handleGetCharges();
   }, []);
+
+  useEffect(() => {
+    getQuery();
+  }, [query]);
 
   function handleEmDia() {
     setWhich({ charges: false, clients: true });
@@ -74,6 +102,7 @@ function Reports() {
       ),
     );
   }
+
   function handleInadimplente() {
     setWhich({ charges: false, clients: true });
     setFilteredClients(
@@ -82,6 +111,7 @@ function Reports() {
       ),
     );
   }
+
   function handlePrevistas() {
     setWhich({ charges: true, clients: false });
     setFilteredCharges(
@@ -92,10 +122,12 @@ function Reports() {
       ),
     );
   }
+
   function handlePagas() {
     setWhich({ charges: true, clients: false });
     setFilteredCharges(charges.filter(charge => charge.status === true));
   }
+
   function handleVencidas() {
     setWhich({ charges: true, clients: false });
     setFilteredCharges(
@@ -104,6 +136,7 @@ function Reports() {
       ),
     );
   }
+
   function handleStatus(status, due) {
     if (status) {
       return 'PAGO';
@@ -113,15 +146,26 @@ function Reports() {
     }
     return 'PENDENTE';
   }
-  console.log(filteredCharges, filteredClients);
+
   return (
     <div>
-      <div>
-        <button onClick={handleEmDia}>Em dia</button>
-        <button onClick={handleInadimplente}>Inadimplente</button>
-        <button onClick={handlePrevistas}>Previstas</button>
-        <button onClick={handlePagas}>Pagas</button>
-        <button onClick={handleVencidas}>Vencidas</button>
+      <div className="flex-row ">
+        <Link to="/relatorios?relatorio=emdia">
+          <button className="btn-pink-border">Em dia</button>
+        </Link>
+
+        <Link to="/relatorios?relatorio=inadimplente">
+          <button className="btn-pink-border">Inadimplente</button>
+        </Link>
+        <Link to="/relatorios?relatorio=previstas">
+          <button className="btn-pink-border">Previstas</button>
+        </Link>
+        <Link to="/relatorios?relatorio=pagas">
+          <button className="btn-pink-border">Pagas</button>
+        </Link>
+        <Link to="/relatorios?relatorio=vencidas">
+          <button className="btn-pink-border">Vencidas</button>
+        </Link>
       </div>
       {which.clients && (
         <div>
@@ -144,7 +188,7 @@ function Reports() {
             <div className="empty-space"></div>
           </div>
           <div className="table-body flex-column">
-            {filteredClients.map(client => (
+            {filteredClients?.map(client => (
               <div className="id-client flex-row" key={client.id}>
                 <div className="client-column flex-column">
                   <p>{client.nome}</p>
@@ -177,7 +221,7 @@ function Reports() {
                     )}
                   </span>
                 </div>
-                <div className="flex-row edit">apagar</div>
+                <div className="flex-row edit"></div>
               </div>
             ))}
           </div>
@@ -203,7 +247,7 @@ function Reports() {
             </div>
           </div>
           <div>
-            {filteredCharges.map(key => (
+            {filteredCharges?.map(key => (
               <div key={key.id} className="charges-body flex-row items-center">
                 <div className="charges-list-id">#{key.id}</div>
                 <div className="charges-list-nome">{key.nome}</div>

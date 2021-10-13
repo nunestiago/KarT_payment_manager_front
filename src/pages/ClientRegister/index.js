@@ -92,6 +92,7 @@ function ClientRegister() {
           <input
             id="email"
             type="email"
+            onInvalid={() => toast.error('E-mail inválido')}
             {...register('email', { required: true })}
           />{' '}
           <div className="half">

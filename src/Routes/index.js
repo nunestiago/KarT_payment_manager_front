@@ -46,7 +46,7 @@ function Routes() {
               <Route path="/detalhe-cliente" component={DetailClient} />
               <Route path="/cobrancas" component={Charges} />
               <Route path="/nova-cobranca" component={CreateCharge} />
-              <Route path="/relatorio" component={Reports} />
+              <Route path="/relatorios" component={Reports} />
             </Sidebar>
           </ProtectedRoutes>
         </Switch>
