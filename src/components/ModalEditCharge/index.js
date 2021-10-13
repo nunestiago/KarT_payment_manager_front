@@ -11,6 +11,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import pt from 'date-fns/locale/pt';
 registerLocale('pt', pt);
 
+import trashIcon from '../../assets/trash.svg'
+
 function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
   // const history = useHistory();
   const { token } = useAuth();
@@ -24,6 +26,7 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
   });
   const [clients, setClients] = useState([]);
   const [payload, setPayload] = useState();
+  const [openModal, setOpenModal] = useState(false);
 
   async function handleGetClients() {
     try {
@@ -85,6 +88,29 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
     setPayload(charge);
   }, []);
 
+  async function handleDeleteCharge() {
+    try {
+      const response = await fetch(`${baseUrl}charges/delete`, {
+        method: 'DELETE',
+        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+      });
+
+      const dados = await response.json();
+
+      if (!response.ok) {
+        throw new Error(dados);
+      }
+
+      setClients(dados);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
+
   return (
     <>
       <div className="modal_container" onClick={() => closeModal(false)}>
@@ -95,6 +121,9 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
         >
           {' '}
           <div className="client_register">
+            <div onClick={() => closeModal()} className="modal-close">
+              X
+            </div>
             <form
               noValidate
               autoComplete="off"
@@ -226,6 +255,27 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
                   />
                 </div>
               </div>
+              <div openModal={openModal} setOpenModal={setOpenModal} className="delete flex-row items-center">
+                <img src={trashIcon} alt= "trash-icon"/>
+                Excluir cobrança
+                <div  className="box2 sb11 flex-column content-center">
+                <div className="flex-column text-delete">
+                  <p>Apagar item?</p>              
+                <div className="flex-row buttons-y-n">
+                  <button onClick={() => handleDeleteCharge()} className="blue">Sim</button>
+                  <Link to="/cobrancas" onClick={() => closeModal(false)}>
+                  <button
+                    type="submit"
+                    className="red"
+                  >
+                    Não
+                  </button>
+                </Link>
+                </div>
+                </div>
+              </div>
+              </div>
+              
               <div className="flex-row btn-add-client">
                 <Link to="/cobrancas" onClick={() => closeModal(false)}>
                   <button

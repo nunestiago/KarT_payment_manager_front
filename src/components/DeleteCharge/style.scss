@@ -1,0 +1,61 @@
+.box2 {
+  width: 119px;
+  height: 46px;
+  background-color: #F8F8F8;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  font-family: Rubik;
+  font-size: 10px;
+  font-weight: 300;
+  line-height: 12px;
+  text-align: center;
+  position: relative;
+  }
+  
+  .sb11:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    left: -23px;
+  }
+  
+  .sb11:after {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-right: 10px solid #fff;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    left: -17px;
+  }
+
+.blue {
+    height: 15px;
+    width: 37px;
+    border-radius: 4px;
+    background-color: #3A9FF1;
+    font-family: Rubik;
+    font-size: 9px;
+    font-weight: 500;
+    line-height: 11px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.red {
+    height: 15px;
+    width: 37px;
+    border-radius: 4px;
+    background: #FF576B;
+    font-family: Rubik;
+    font-size: 9px;
+    font-weight: 500;
+    line-height: 11px;
+    text-align: center;
+    color: #ffffff;
+}
