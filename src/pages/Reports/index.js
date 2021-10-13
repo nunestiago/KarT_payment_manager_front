@@ -8,7 +8,6 @@ import showPhone from '../../utils/showProperPhone';
 import mailIcon from '../../assets/mail.svg';
 import phonelIcon from '../../assets/phone.svg';
 import { Link, useLocation } from 'react-router-dom';
-
 function Reports() {
   const { token } = useAuth();
   const [charges, setCharges] = useState([]);
@@ -16,8 +15,10 @@ function Reports() {
   const [filteredCharges, setFilteredCharges] = useState([]);
   const [filteredClients, setFilteredClients] = useState([]);
   const [which, setWhich] = useState({ charges: false, clients: false });
+  let data = useLocation();
   const toQuery = new URLSearchParams(useLocation().search);
-  let query = toQuery.get('relatorio');
+  let query = toQuery.get('relatorio') ?? data.state.relatorio;
+  console.log(query);
 
   async function handleGetClients() {
     try {
@@ -85,6 +86,7 @@ function Reports() {
         break;
     }
   }
+
   useEffect(() => {
     handleGetClients();
     handleGetCharges();
