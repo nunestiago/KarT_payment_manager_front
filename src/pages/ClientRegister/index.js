@@ -124,7 +124,7 @@ function ClientRegister() {
                 id="cep"
                 type="text"
                 {...register('cep')}
-                maxLength="9"
+                maxLength="10"
                 onChange={e => {
                   handleCep(e);
                   cepMask(e);
