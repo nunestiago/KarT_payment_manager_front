@@ -98,7 +98,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
           <form
             noValidate
             autoComplete="off"
-            className="form-edit-user modal_padding"
+            className="form-edit-client modal_padding"
             onSubmit={handleSubmit(handleEditClient)}
           >
             <div onClick={() => closeModal()} className="modal_close">
