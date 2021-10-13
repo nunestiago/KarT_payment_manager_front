@@ -49,15 +49,15 @@ function ModalDetailClient({ client, closeModal }) {
           }}
         >
           <div className="show_client-container">
-            <div onClick={() => closeModal()} className="modal_close">
+            <div onClick={() => closeModal()} className="edit_modal_close">
               X
             </div>
             <div className="show_client-title">
               <h1 className="show_client-h1">{client.nome}</h1>
               <h2 className="show_client-h2">{showCpf(client.cpf)}</h2>
             </div>
-            <div className="flex-row">
-              <div className="flex-column between">
+            <div className="flex-row content-center">
+              <div className="flex-column between max250">
                 <div className="flex-row tel-mail items-center">
                   <div className="flex-row items-center ">
                     <img src={mailIcon} alt="" className="show_client-img" />
@@ -106,7 +106,7 @@ function ModalDetailClient({ client, closeModal }) {
                 {charges &&
                   charges.map(charge => (
                     <div key={charge.id} className="charge_card-container">
-                      <div className="flex-row align-center between">
+                      <div className="flex-row items-center between">
                         <h2 className="show_charges-h2">
                           <strong className="show_charges-strong">
                             #{charge.id}{' '}

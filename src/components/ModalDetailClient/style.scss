@@ -1,10 +1,10 @@
 .show_client {
   &-container {
     background: white;
-    padding: 10px 41px 60px;
+    padding: 60px 40px;
     border-radius: 16px;
-    height: 533px;
-    width: 958px;
+    height: auto;
+    width: auto;
   }
   &-h1 {
     font-weight: 600;
@@ -20,9 +20,6 @@
     letter-spacing: 0.25px;
     color: #323232;
     justify-content: flex-end;
-    margin-bottom: 26px;
-    margin-top: 40px;
-
   }
   &-h3 {
     font-weight: 500;
@@ -73,11 +70,11 @@
   }
 }
 
-.tel-mail{
+.tel-mail {
   margin-bottom: 46px;
 }
 
-.charge_card-container{
+.charge_card-container {
   width: 410px;
   margin-bottom: 32px;
   display: flex;
@@ -90,7 +87,7 @@
   font-weight: 400;
   line-height: 20px;
   letter-spacing: 0.005em;
-  color: #4C4C4C;
+  color: #4c4c4c;
 }
 
 .show_charges-h3 {
@@ -98,7 +95,7 @@
   font-weight: 500;
   line-height: 20px;
   letter-spacing: 0.005em;
-  color: #4C4C4C;
+  color: #4c4c4c;
 }
 
 .show_charges-h4 {
@@ -106,5 +103,14 @@
   font-weight: 600;
   line-height: 15px;
   text-align: center;
-  
+}
+
+.max250 {
+  max-height: 300px;
+}
+.edit_modal_close {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  cursor: pointer;
 }
