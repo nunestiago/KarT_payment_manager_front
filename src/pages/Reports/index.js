@@ -36,7 +36,7 @@ function Reports() {
 
       const dados = await response.json();
 
-      return setClients(dados);
+      setClients(dados);
     } catch (error) {
       toast.error(error.message);
     }
@@ -58,7 +58,7 @@ function Reports() {
         return;
       }
 
-      return setCharges(dados);
+      setCharges(dados);
     } catch (error) {
       toast.error(error.message);
     }
@@ -94,7 +94,7 @@ function Reports() {
 
   useEffect(() => {
     getQuery();
-  }, [query]);
+  }, [query, clients, charges]);
 
   function handleEmDia() {
     setWhich({ charges: false, clients: true });
