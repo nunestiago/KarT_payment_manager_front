@@ -24,6 +24,9 @@ function ModalEditUser({ setOpenModal, openModal }) {
 
     if (data.telefone) data.telefone = data.telefone.replace(/[^0-9]/g, '');
     if (data.cpf) data.cpf = data.cpf.replace(/[^0-9]/g, '');
+    if (data.telefone.length !== 11 && data.telefone.length !== 10) {
+      return toast.error('(DDD) e telefone com 8 ou 9 dígitos');
+    }
 
     try {
       const response = await fetch(`${baseUrl}user/edit`, {
@@ -62,10 +65,10 @@ function ModalEditUser({ setOpenModal, openModal }) {
             className="form modal_padding"
             onSubmit={handleSubmit(handleEditUser)}
           >
-            <div onClick={() => closeModal()} className="modal_close">
+            <div onClick={() => closeModal()} className="edit_modal_close">
               X
             </div>
-            {'//'} Editar usuário{' '}
+            {'//'} EDITAR USUÁRIO{' '}
             <div className="flex-column input">
               <label htmlFor="nome">Nome</label>
               <input

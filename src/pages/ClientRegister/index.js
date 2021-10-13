@@ -50,7 +50,6 @@ function ClientRegister() {
     data.cpf = data.cpf.replace(/[^0-9]/g, '');
     data.telefone = data.telefone.replace(/[^0-9]/g, '');
     data.cep = data.cep.replace(/[^0-9]/g, '');
-
     try {
       registerValidations(data);
       const response = await fetch(`${baseUrl}client/register`, {
@@ -93,10 +92,11 @@ function ClientRegister() {
           <input
             id="email"
             type="email"
+            onInvalid={() => toast.error('E-mail inválido')}
             {...register('email', { required: true })}
           />{' '}
           <div className="half">
-            <div>
+            <div className="addClient">
               <label htmlFor="cpf">CPF</label>
               <input
                 id="cpf"
@@ -106,7 +106,7 @@ function ClientRegister() {
                 onChange={cpfMask}
               />{' '}
             </div>
-            <div>
+            <div className="addClient">
               <label htmlFor="telefone">Telefone</label>
               <input
                 id="telefone"
@@ -118,7 +118,7 @@ function ClientRegister() {
             </div>
           </div>
           <div className="half">
-            <div>
+            <div className="addClient">
               <label htmlFor="cep">CEP</label>
               <input
                 id="cep"
@@ -131,7 +131,7 @@ function ClientRegister() {
                 }}
               />
             </div>
-            <div>
+            <div className="addClient">
               <label htmlFor="logradouro">Logradouro</label>
               <input
                 id="logradouro"
@@ -143,7 +143,7 @@ function ClientRegister() {
             </div>
           </div>
           <div className="half">
-            <div>
+            <div className="addClient">
               <label htmlFor="bairro">Bairro</label>
               <input
                 id="bairro"
@@ -153,7 +153,7 @@ function ClientRegister() {
                 onChange={e => setAddress({ bairro: e.target.value })}
               />{' '}
             </div>
-            <div>
+            <div className="addClient">
               <label htmlFor="cidade">Cidade</label>
               <input
                 id="cidade"
@@ -165,7 +165,7 @@ function ClientRegister() {
             </div>
           </div>
           <div className="half">
-            <div>
+            <div className="addClient">
               <label htmlFor="complemento">Complemento</label>
               <input
                 id="complemento"
@@ -175,7 +175,7 @@ function ClientRegister() {
                 onChange={e => setAddress({ complemento: e.target.value })}
               />
             </div>
-            <div>
+            <div className="addClient">
               <label htmlFor="pref">Ponto de Referência</label>
               <input id="pref" type="text" {...register('ponto_referencia')} />
             </div>

@@ -1,9 +1,9 @@
 .table-head-charges {
   width: 960px;
   height: 32px;
-  background-color: #9DBBC3;
+  background-color: #9dbbc3;
   border-radius: 8px;
-  margin: 218px 70px 4px 70px;
+  margin: 0 70px 4px 70px;
   justify-content: space-around;
   h1 {
     font-size: 14px;
@@ -11,7 +11,7 @@
     line-height: 20px;
     letter-spacing: 0.005em;
     text-align: left;
-    color: #FFFFFF;
+    color: #ffffff;
   }
 }
 
@@ -43,6 +43,7 @@
     &-nome {
       position: absolute;
       left: 515px;
+      cursor: pointer;
     }
     &-descricao {
       position: absolute;
@@ -62,7 +63,12 @@
     &-vencimento {
       margin-right: 66px;
     }
-  }  
+  }
+  &_search-input {
+    display: flex;
+    align-self: flex-end;
+    margin: 150px 70px 30px 70px;
+  }
 }
 .vencido {
   color: #ff4d4d;

@@ -24,8 +24,10 @@
     font-size: 24px;
   }
   &_close {
-    width: 100%;
-    text-align: right;
+    position: absolute;
+    left: 1520px;
+    top: 110px;
+    cursor: pointer;
   }
 }
 @keyframes apear {
@@ -37,7 +39,7 @@
   }
 }
 
-.form-edit-user {
+.form-edit-client {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,8 +49,8 @@
   padding: 40px 150px;
   margin-top: 70px;
   margin-left: 240px;
-  height: 630px;
-  width: 600px;
+  height: auto;
+  width: 700px;
   label {
     font-size: 16px;
     font-weight: 600;
@@ -71,15 +73,15 @@
 }
 
 .all-size {
-  width: 600px;
+  width: 700px;
 }
 
 .half {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  div {
-    width: 265px;
+  &_div {
+    width: 45%;
   }
 }
 

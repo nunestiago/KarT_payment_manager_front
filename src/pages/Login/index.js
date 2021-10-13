@@ -11,11 +11,11 @@ import { toast } from 'react-toastify';
 import baseUrl from '../../utils/baseUrl';
 import PasswordInput from '../../components/PasswordInput';
 import useAuth from '../../hooks/useAuth';
-import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core';
+import { Backdrop, CircularProgress } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
     color: '#000000',
   },
 }));
@@ -24,7 +24,7 @@ function Login() {
   const {
     register,
     handleSubmit,
-    formState: { isDirty, isValid },
+    formState: { isDirty, isValid, errors },
   } = useForm({
     mode: 'onChange',
   });
@@ -57,11 +57,12 @@ function Login() {
 
       setIsLoading(false);
 
+      const dados = await response.json();
+
       if (!response.ok) {
-        throw new Error(response);
+        throw new Error(dados);
       }
 
-      const dados = await response.json();
       login(dados);
 
       history.push('/home');
@@ -70,6 +71,10 @@ function Login() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    errors?.email && toast.error(errors.email.message);
+  }, [errors?.email]);
 
   return (
     <div className="container-form">
@@ -84,8 +89,11 @@ function Login() {
             <input
               id="email"
               type="email"
+              onInvalid={() => toast.error('E-mail inválido')}
               placeholder="exemplo@gmail.com"
-              {...register('email', { required: true })}
+              {...register('email', {
+                required: 'E-mail e senha são obrigatórios',
+              })}
             />
           </div>
           <PasswordInput
