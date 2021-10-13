@@ -148,30 +148,27 @@ function Reports() {
   }
 
   return (
-    <div>
-      <div className="flex-row ">
+    <div className="flex-column">
+      <div className="flex-row report-head">
         <Link to="/relatorios?relatorio=emdia">
-          <button className="btn-pink-border">Em dia</button>
+          <button className="btn-pink-report">Em dia</button>
         </Link>
 
         <Link to="/relatorios?relatorio=inadimplente">
-          <button className="btn-pink-border">Inadimplente</button>
+          <button className="btn-pink-report">Inadimplente</button>
         </Link>
         <Link to="/relatorios?relatorio=previstas">
-          <button className="btn-pink-border">Previstas</button>
+          <button className="btn-pink-report">Previstas</button>
         </Link>
         <Link to="/relatorios?relatorio=pagas">
-          <button className="btn-pink-border">Pagas</button>
+          <button className="btn-pink-report">Pagas</button>
         </Link>
         <Link to="/relatorios?relatorio=vencidas">
-          <button className="btn-pink-border">Vencidas</button>
+          <button className="btn-pink-report">Vencidas</button>
         </Link>
       </div>
       {which.clients && (
-        <div>
-          <div className="button-register">
-            <div className="flex-row items-center between"></div>
-          </div>
+        <>
           <div className="table-head flex-row items-center">
             <div className="flex-row items-center">
               <h1>Cliente</h1>
@@ -225,12 +222,12 @@ function Reports() {
               </div>
             ))}
           </div>
-        </div>
+        </>
       )}
       {which.charges && (
-        <div>
-          <div className="flex-column">
-            <div className="charges_search-input"></div>
+        <>
+          <div className="flex-column ">
+            <div className="mb"></div>
             <div className="table-head-charges flex-row items-center">
               <h1>ID</h1>
               <div className="flex-row items-center">
@@ -269,7 +266,7 @@ function Reports() {
               </div>
             ))}
           </div>
-        </div>
+        </>
       )}
     </div>
   );
