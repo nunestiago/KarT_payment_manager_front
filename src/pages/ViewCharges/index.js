@@ -3,16 +3,16 @@ import baseUrl from '../../utils/baseUrl';
 import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import './style.scss';
-// import SearchInput from '../../components/SearchInput';
-// import SortNameButton from '../../components/SortNameButton';
-// import ModalEditCharge from '../../components/ModalEditCharge';
+import SearchInput from '../../components/SearchInput';
+import SortNameButton from '../../components/SortNameButton';
+import ModalEditCharge from '../../components/ModalEditCharge';
 
 function Charges() {
   const { token } = useAuth();
-  // const [charges, setCharges] = useState([]);
-  // const [charge, setCharge] = useState([]);
+  const [charges, setCharges] = useState([]);
+  const [charge, setCharge] = useState([]);
   const [filteredCharges, setFilteredCharges] = useState([]);
-  // const [modalEdit, setModalEdit] = useState(false);
+  const [modalEdit, setModalEdit] = useState(false);
 
   const handleGetCharges = async () => {
     try {
@@ -31,7 +31,7 @@ function Charges() {
         return;
       }
       setFilteredCharges(dados);
-      // setCharges(dados);
+      setCharges(dados);
     } catch (error) {
       toast.error(error.message);
     }
@@ -47,10 +47,10 @@ function Charges() {
     return 'PENDENTE';
   }
 
-  // function handleModal(selectedCharge) {
-  //   setModalEdit(!modalEdit);
-  //   setCharge(selectedCharge);
-  // }
+  function handleModal(selectedCharge) {
+    setModalEdit(!modalEdit);
+    setCharge(selectedCharge);
+  }
 
   useEffect(() => {
     handleGetCharges();
@@ -59,13 +59,13 @@ function Charges() {
     <div>
       <div className="flex-column">
         <div className="charges_search-input">
-          {/* <SearchInput data={charges} setListState={setFilteredCharges} /> */}
+          <SearchInput data={charges} setListState={setFilteredCharges} />
         </div>
         <div className="table-head-charges flex-row items-center">
           <h1>ID</h1>
           <div className="flex-row items-center">
             <h1>Cliente</h1>
-            {/* <SortNameButton data={charges} setListState={setFilteredCharges} /> */}
+            <SortNameButton data={charges} setListState={setFilteredCharges} />
           </div>
           <h1>Descrição</h1>
           <h1>Valor</h1>
@@ -77,10 +77,7 @@ function Charges() {
         {filteredCharges.map(key => (
           <div key={key.id} className="charges-body flex-row items-center">
             <div className="charges-list-id">#{key.id}</div>
-            <div
-              className="charges-list-nome"
-              // onClick={() => handleModal(key)}
-            >
+            <div className="charges-list-nome" onClick={() => handleModal(key)}>
               {key.nome}
             </div>
             <div className="charges-list-descricao">{key.descricao}</div>
@@ -101,13 +98,13 @@ function Charges() {
           </div>
         ))}
       </div>
-      {/* {modalEdit && (
+      {modalEdit && (
         <ModalEditCharge
           charge={charge}
           closeModal={setModalEdit}
           handleGetCharges={handleGetCharges}
         />
-      )} */}
+      )}
     </div>
   );
 }

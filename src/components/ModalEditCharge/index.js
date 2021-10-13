@@ -10,11 +10,9 @@ import './style.scss';
 import 'react-datepicker/dist/react-datepicker.css';
 import pt from 'date-fns/locale/pt';
 registerLocale('pt', pt);
-
-import trashIcon from '../../assets/trash.svg'
+import trashIcon from '../../assets/trash.svg';
 
 function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
-  // const history = useHistory();
   const { token } = useAuth();
   const {
     register,
@@ -255,27 +253,33 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
                   />
                 </div>
               </div>
-              <div openModal={openModal} setOpenModal={setOpenModal} className="delete flex-row items-center">
-                <img src={trashIcon} alt= "trash-icon"/>
+              <div
+                openModal={openModal}
+                setOpenModal={setOpenModal}
+                className="delete flex-row items-center"
+              >
+                <img src={trashIcon} alt="trash-icon" />
                 Excluir cobrança
-                <div  className="box2 sb11 flex-column content-center">
-                <div className="flex-column text-delete">
-                  <p>Apagar item?</p>              
-                <div className="flex-row buttons-y-n">
-                  <button onClick={() => handleDeleteCharge()} className="blue">Sim</button>
-                  <Link to="/cobrancas" onClick={() => closeModal(false)}>
-                  <button
-                    type="submit"
-                    className="red"
-                  >
-                    Não
-                  </button>
-                </Link>
-                </div>
+                <div className="box2 sb11 flex-column content-center">
+                  <div className="flex-column text-delete">
+                    <p>Apagar item?</p>
+                    <div className="flex-row buttons-y-n">
+                      <button
+                        onClick={() => handleDeleteCharge()}
+                        className="blue"
+                      >
+                        Sim
+                      </button>
+                      <Link to="/cobrancas" onClick={() => closeModal(false)}>
+                        <button type="submit" className="red">
+                          Não
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
-              </div>
-              
+
               <div className="flex-row btn-add-client">
                 <Link to="/cobrancas" onClick={() => closeModal(false)}>
                   <button

@@ -10,12 +10,12 @@ import editIcon from '../../assets/edit.svg';
 import ModalDetailClient from '../../components/ModalDetailClient';
 import ModalEditClient from '../../components/ModalEditClient';
 import showPhone from '../../utils/showProperPhone';
-// import SearchInput from '../../components/SearchInput';
-// import SortNameButton from '../../components/SortNameButton';
+import SearchInput from '../../components/SearchInput';
+import SortNameButton from '../../components/SortNameButton';
 
 function ViewClients() {
   const { token } = useAuth();
-  // const [clients, setClients] = useState([]);
+  const [clients, setClients] = useState([]);
   const [filteredClients, setFilteredClients] = useState([]);
   const [client, setClient] = useState();
   const [modalViewClient, setModalViewClient] = useState(false);
@@ -37,7 +37,7 @@ function ViewClients() {
 
       const dados = await response.json();
       setFilteredClients(dados);
-      // setClients(dados);
+      setClients(dados);
     } catch (error) {
       toast.error(error.message);
     }
@@ -75,13 +75,13 @@ function ViewClients() {
               Adicionar cliente
             </button>
           </Link>
-          {/* <SearchInput data={clients} setListState={setFilteredClients} /> */}
+          <SearchInput data={clients} setListState={setFilteredClients} />
         </div>
       </div>
       <div className="table-head flex-row items-center">
         <div className="flex-row items-center">
           <h1>Cliente</h1>
-          {/* <SortNameButton data={clients} setListState={setFilteredClients} /> */}
+          <SortNameButton data={clients} setListState={setFilteredClients} />
         </div>
         <div className="th-middle flex-row items-center">
           <h1>Cobranças Feitas</h1>
