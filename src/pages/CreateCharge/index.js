@@ -89,9 +89,9 @@ function CreateCharge() {
   }, [errors.descricao]);
 
   return (
-    <div className="client_register__container">
+    <div className="charge-container flex-column">
       {'//'} CRIAR COBRANÇA{' '}
-      <div className="client_register">
+      <div className="create-charge">
         <form
           noValidate
           autoComplete="off"
@@ -114,10 +114,9 @@ function CreateCharge() {
               </option>
             ))}
           </select>
-
-          <div className="input-help">
+          <div className="input-help flex-column">
             <label htmlFor="descricao">Descrição</label>
-            <input
+            <textarea
               id="descricao"
               type="descricao"
               className="descricao"
@@ -154,8 +153,8 @@ function CreateCharge() {
               Pendente
             </option>
           </select>
-          <div className="half">
-            <div className="valor">
+          <div className="half flex-row items-center content-center">
+            <div className="valor flex-column">
               <label htmlFor="valor">Valor</label>
               <Controller
                 control={control}
@@ -200,7 +199,7 @@ function CreateCharge() {
               />
             </div>
           </div>
-          <div className="flex-row btn-add-client">
+          <div className="flex-row btn-create-charge">
             <Link to="/cobrancas">
               <button
                 type="submit"
