@@ -1,0 +1,116 @@
+.show_client {
+  &-container {
+    background: white;
+    padding: 60px 40px;
+    border-radius: 16px;
+    height: auto;
+    width: auto;
+  }
+  &-h1 {
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 15px;
+    color: #374952;
+    text-align: left;
+    margin-top: 21px;
+  }
+  &-h2 {
+    font-weight: normal;
+    font-size: 14px;
+    letter-spacing: 0.25px;
+    color: #323232;
+    justify-content: flex-end;
+  }
+  &-h3 {
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.005em;
+    color: #4c4c4c;
+  }
+  &-h4 {
+    font-weight: 600;
+    margin: 0;
+  }
+  &-strong {
+    font-weight: 600;
+    color: #374952;
+  }
+  &-img {
+    width: 14px;
+    margin-right: 9px;
+  }
+  &-border {
+    border-right: 1px solid #dddddd;
+    margin-left: 56px;
+    margin-right: 28px;
+  }
+  &-title {
+    margin-bottom: 50px;
+  }
+}
+.between {
+  justify-content: space-between;
+}
+.right {
+  text-align: right;
+}
+.mr {
+  margin-right: 25px;
+}
+.charge_card {
+  &-container {
+    min-width: 410px;
+    max-height: 90px;
+    box-sizing: border-box;
+    background: #f9f9f9;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px 22px;
+    margin-bottom: 15px;
+  }
+}
+
+.tel-mail {
+  margin-bottom: 46px;
+}
+
+.charge_card-container {
+  width: 410px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.show_charges-h2 {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.005em;
+  color: #4c4c4c;
+}
+
+.show_charges-h3 {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.005em;
+  color: #4c4c4c;
+}
+
+.show_charges-h4 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 15px;
+  text-align: center;
+}
+
+.max250 {
+  max-height: 300px;
+}
+.edit_modal_close {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  cursor: pointer;
+}
