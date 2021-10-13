@@ -58,12 +58,12 @@ function ModalDetailClient({ client, closeModal }) {
             </div>
             <div className="flex-row">
               <div className="flex-column between">
-                <div className="flex-row">
-                  <div className="flex-row">
+                <div className="flex-row tel-mail items-center">
+                  <div className="flex-row items-center ">
                     <img src={mailIcon} alt="" className="show_client-img" />
                     <h2 className="show_client-h2 mr">{client.email}</h2>
                   </div>
-                  <div className="flex-row">
+                  <div className="flex-row items-center content-center">
                     <img src={phoneIcon} alt="" className="show_client-img" />
                     <h2 className="show_client-h2">
                       {showPhone(client.telefone)}
@@ -107,24 +107,24 @@ function ModalDetailClient({ client, closeModal }) {
                   charges.map(charge => (
                     <div key={charge.id} className="charge_card-container">
                       <div className="flex-row align-center between">
-                        <h2 className="show_client-h2">
-                          <strong className="show_client-strong">
+                        <h2 className="show_charges-h2">
+                          <strong className="show_charges-strong">
                             #{charge.id}{' '}
                           </strong>
                           {charge.descricao}
                         </h2>
-                        <strong className="show_client-strong">
+                        <strong className="show_charges-strong">
                           R$ {(charge.valor / 100).toFixed(2)}
                         </strong>
                       </div>
                       <div className="flex-row items-center between">
-                        <h3 className="show_client-h3">
+                        <h3 className="show_charges-h3">
                           {new Date(charge.vencimento).toLocaleDateString(
                             'pt-BR',
                           )}
                         </h3>
                         <h4
-                          className={`show_client-h4 ${(charge.status
+                          className={`show_charges-h4 ${(charge.status
                             ? 'PAGO'
                             : 'PENDENTE'
                           ).toLowerCase()}`}
