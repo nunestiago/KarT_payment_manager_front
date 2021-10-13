@@ -44,7 +44,7 @@ function Sidebar({ children }) {
             <Link
               to="/clientes"
               className={
-                location.pathname.includes('/cadastrar-cliente') ? 'active' : ''
+                location.pathname.includes('/clientes') ? 'active' : ''
               }
             >
               <img src={clientsIcon} alt="ícone clients" />
