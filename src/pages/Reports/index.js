@@ -8,7 +8,6 @@ import showPhone from '../../utils/showProperPhone';
 import mailIcon from '../../assets/mail.svg';
 import phonelIcon from '../../assets/phone.svg';
 import { Link, useLocation } from 'react-router-dom';
-
 function Reports() {
   const { token } = useAuth();
   const [charges, setCharges] = useState([]);
@@ -16,8 +15,10 @@ function Reports() {
   const [filteredCharges, setFilteredCharges] = useState([]);
   const [filteredClients, setFilteredClients] = useState([]);
   const [which, setWhich] = useState({ charges: false, clients: false });
+  let data = useLocation();
   const toQuery = new URLSearchParams(useLocation().search);
-  let query = toQuery.get('relatorio');
+  let query = toQuery.get('relatorio') ?? data.state.relatorio;
+  console.log(query);
 
   async function handleGetClients() {
     try {
@@ -35,7 +36,7 @@ function Reports() {
 
       const dados = await response.json();
 
-      return setClients(dados);
+      setClients(dados);
     } catch (error) {
       toast.error(error.message);
     }
@@ -57,7 +58,7 @@ function Reports() {
         return;
       }
 
-      return setCharges(dados);
+      setCharges(dados);
     } catch (error) {
       toast.error(error.message);
     }
@@ -85,6 +86,7 @@ function Reports() {
         break;
     }
   }
+
   useEffect(() => {
     handleGetClients();
     handleGetCharges();
@@ -92,7 +94,7 @@ function Reports() {
 
   useEffect(() => {
     getQuery();
-  }, [query]);
+  }, [query, clients, charges]);
 
   function handleEmDia() {
     setWhich({ charges: false, clients: true });
