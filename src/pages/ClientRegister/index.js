@@ -73,7 +73,7 @@ function ClientRegister() {
   };
   return (
     <div className="client_register__container">
-      // ADICIONAR CLIENTE{' '}
+      {'//'} ADICIONAR CLIENTE{' '}
       <div className="client_register">
         <form
           noValidate
