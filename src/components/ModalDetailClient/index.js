@@ -20,7 +20,7 @@ function ModalDetailClient({ client, closeModal }) {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + token,
+            Authorization: `Bearer ${token}`,
           },
         },
       );
@@ -101,7 +101,7 @@ function ModalDetailClient({ client, closeModal }) {
                   </div>
                 </div>
               </div>
-              <div className="show_client-border"></div>
+              <div className="show_client-border" />
               <div>
                 {charges &&
                   charges.map(charge => (

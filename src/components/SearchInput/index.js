@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './style.scss';
-import searchIcon from '../../assets/search.svg';
 import { toast } from 'react-toastify';
+import searchIcon from '../../assets/search.svg';
 
 function SearchInput({ data, setListState }) {
   const [search, setSearch] = useState('');
@@ -15,8 +15,9 @@ function SearchInput({ data, setListState }) {
         item?.id === parseInt(search) ||
         item?.cpf === search,
     );
-    if (result.length === 0)
+    if (result.length === 0) {
       return toast.warn('Não existe resultado para busca feita');
+    }
 
     return setListState(() => result);
   }

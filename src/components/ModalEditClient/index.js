@@ -30,34 +30,39 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
       const viaCep = await response.json();
       setHandleClient({
         ...handleClient,
-        'cep': insertedCep,
-        'logradouro': viaCep.logradouro,
-        'bairro': viaCep.bairro,
-        'cidade': viaCep.localidade,
-        'complemento': viaCep.complemento,
+        cep: insertedCep,
+        logradouro: viaCep.logradouro,
+        bairro: viaCep.bairro,
+        cidade: viaCep.localidade,
+        complemento: viaCep.complemento,
       });
     } catch (error) {
       toast.error(error.message);
     }
   };
   const handleEditClient = async () => {
-    if (handleClient.cpf)
+    if (handleClient.cpf) {
       handleClient.cpf = handleClient.cpf.replace(/[^0-9]/g, '');
+    }
 
-    if (handleClient.cep)
+    if (handleClient.cep) {
       handleClient.cep = handleClient.cep.replace(/[^0-9]/g, '');
+    }
 
-    if (handleClient.telefone)
+    if (handleClient.telefone) {
       handleClient.telefone = handleClient.telefone.replace(/[^0-9]/g, '');
+    }
 
-    if (handleClient.cpf.length !== 11)
+    if (handleClient.cpf.length !== 11) {
       return toast.error('CPF deve conter 11 dígitos');
+    }
 
     if (
       handleClient.telefone.length !== 11 &&
       handleClient.telefone.length !== 10
-    )
+    ) {
       return toast.error('(DDD) e telefone com 8 ou 9 dígitos');
+    }
 
     try {
       const response = await fetch(`${baseUrl}client/edit`, {
@@ -65,7 +70,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
         body: JSON.stringify(handleClient),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -117,7 +122,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
                 onChange={e =>
                   setHandleClient({
                     ...handleClient,
-                    'nome': e.target.value,
+                    nome: e.target.value,
                   })
                 }
               />
@@ -136,7 +141,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
                 onChange={e =>
                   setHandleClient({
                     ...handleClient,
-                    'email': e.target.value,
+                    email: e.target.value,
                   })
                 }
               />{' '}
@@ -150,7 +155,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
                   onChange={e =>
                     setHandleClient({
                       ...handleClient,
-                      'cpf': e.target.value,
+                      cpf: e.target.value,
                     })
                   }
                   defaultValue={handleClient.cpf}
@@ -168,7 +173,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
                   onChange={e =>
                     setHandleClient({
                       ...handleClient,
-                      'telefone': e.target.value,
+                      telefone: e.target.value,
                     })
                   }
                   value={handleClient?.telefone}
@@ -184,7 +189,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
                   onChange={e => {
                     setHandleClient({
                       ...handleClient,
-                      'cep': e.target.value,
+                      cep: e.target.value,
                     });
                     handleCep(e);
                   }}
@@ -200,7 +205,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
                   onChange={e =>
                     setHandleClient({
                       ...handleClient,
-                      'logradouro': e.target.value,
+                      logradouro: e.target.value,
                     })
                   }
                   value={handleClient?.logradouro}
@@ -217,7 +222,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
                   onChange={e =>
                     setHandleClient({
                       ...handleClient,
-                      'bairro': e.target.value,
+                      bairro: e.target.value,
                     })
                   }
                   value={handleClient.bairro}
@@ -232,7 +237,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
                   onChange={e =>
                     setHandleClient({
                       ...handleClient,
-                      'cidade': e.target.value,
+                      cidade: e.target.value,
                     })
                   }
                   value={handleClient.cidade}
@@ -249,7 +254,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
                   onChange={e =>
                     setHandleClient({
                       ...handleClient,
-                      'complemento': e.target.value,
+                      complemento: e.target.value,
                     })
                   }
                   value={handleClient.complemento}
@@ -264,7 +269,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
                   onChange={e =>
                     setHandleClient({
                       ...handleClient,
-                      'ponto_referencia': e.target.value,
+                      ponto_referencia: e.target.value,
                     })
                   }
                   value={handleClient.ponto_referencia}

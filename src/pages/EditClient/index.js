@@ -2,11 +2,11 @@ import React from 'react';
 import ModalEditClient from '../../components/ModalEditClient';
 
 function EditClient() {
-  return(
+  return (
     <div>
-      <ModalEditClient />      
+      <ModalEditClient />
     </div>
-  )
+  );
 }
 
 export default EditClient;

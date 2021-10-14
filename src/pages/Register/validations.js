@@ -32,6 +32,7 @@ function registerValidations(data) {
     toast.error('Senha é obrigatório.', toastOpts);
     return false;
   }
+  return false;
 }
 
 export default registerValidations;

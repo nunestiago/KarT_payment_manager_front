@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import baseUrl from '../../utils/baseUrl';
-import useAuth from '../../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import baseUrl from '../../utils/baseUrl';
+import useAuth from '../../hooks/useAuth';
 import './style.scss';
 import mailIcon from '../../assets/mail.svg';
 import phonelIcon from '../../assets/phone.svg';
@@ -27,7 +27,7 @@ function ViewClients() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -88,7 +88,7 @@ function ViewClients() {
           <h1>Cobranças Recebidas</h1>
           <h1>Status</h1>
         </div>
-        <div className="empty-space"></div>
+        <div className="empty-space" />
       </div>
       <div className="table-body flex-column">
         {filteredClients.map(client => (

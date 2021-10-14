@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import baseUrl from '../../utils/baseUrl';
-import useAuth from '../../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -9,8 +7,11 @@ import { TextInputMask } from 'tp-react-web-masked-text';
 import './style.scss';
 import 'react-datepicker/dist/react-datepicker.css';
 import pt from 'date-fns/locale/pt';
-registerLocale('pt', pt);
+import useAuth from '../../hooks/useAuth';
+import baseUrl from '../../utils/baseUrl';
 import trashIcon from '../../assets/trash.svg';
+
+registerLocale('pt', pt);
 
 function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
   const { token } = useAuth();
@@ -32,7 +33,7 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -52,20 +53,21 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
     if (typeof payload.valor === 'string') {
       payload.valor = payload.valor.replace(/[^0-9]/g, '');
     }
-    if (payload.valor < 0.01)
+    if (payload.valor < 0.01) {
       return toast.error('Valor deve ser maior que zero');
+    }
 
     if (payload.status !== true && payload.status !== false) {
       return toast.error('Favor selecionar status da cobrança');
     }
-    console.log(payload);
+
     try {
       const response = await fetch(`${baseUrl}charges/editCharge`, {
         method: 'PUT',
         body: JSON.stringify(payload),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -73,9 +75,9 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
-      toast.success(registerInDB);
       closeModal(false);
       handleGetCharges();
+      toast.success(registerInDB);
     } catch (error) {
       toast.error(error.message);
     }
@@ -93,7 +95,7 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
         body: JSON.stringify(payload),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -179,14 +181,14 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
                 <option
                   label="Selecione o um status"
                   disabled
-                  value={'default2'}
+                  value="default2"
                   hidden
                 >
                   Selecione o um status
                 </option>
                 <option
                   label="Pago"
-                  value={true}
+                  value
                   onClick={() => setPayload({ ...payload, status: true })}
                 >
                   Pago
@@ -209,7 +211,7 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
                       <TextInputMask
                         className="valor_container"
                         id="valor"
-                        kind={'money'}
+                        kind="money"
                         options={{
                           precision: 2,
                           separator: ',',

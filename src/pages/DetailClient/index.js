@@ -2,11 +2,11 @@ import React from 'react';
 import ModalDetailClient from '../../components/ModalDetailClient';
 
 function DetailClient() {
-  return(
+  return (
     <div>
-      <ModalDetailClient />      
+      <ModalDetailClient />
     </div>
-  )
+  );
 }
 
 export default DetailClient;

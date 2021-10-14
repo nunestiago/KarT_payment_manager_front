@@ -34,7 +34,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
         body: JSON.stringify(onlyUpdatedData),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -68,7 +68,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
             <div onClick={() => closeModal()} className="edit_modal_close">
               X
             </div>
-            {'//'} EDITAR USUÁRIO{' '}
+            // EDITAR USUÁRIO{' '}
             <div className="flex-column input">
               <label htmlFor="nome">Nome</label>
               <input
@@ -118,7 +118,7 @@ function ModalEditUser({ setOpenModal, openModal }) {
               />{' '}
             </div>
             <button
-              className={`btn-pink-light flex-row items-center content-center`}
+              className="btn-pink-light flex-row items-center content-center"
               type="submit"
             >
               Editar Conta

@@ -4,15 +4,15 @@ import '../../styles/global.scss';
 import '../../styles/alignments.scss';
 import '../../styles/form.scss';
 import '../../styles/buttons.scss';
-import CubosAcademyLogo from '../../assets/cubos-academy.svg';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { Backdrop, CircularProgress } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import baseUrl from '../../utils/baseUrl';
 import PasswordInput from '../../components/PasswordInput';
 import useAuth from '../../hooks/useAuth';
-import { Backdrop, CircularProgress } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import CubosAcademyLogo from '../../assets/cubos-academy.svg';
 
 const useStyles = makeStyles(() => ({
   backdrop: {
@@ -101,11 +101,11 @@ function Login() {
             label="Senha"
             placeholder="minhasenha"
             register={register}
-            reqBool={true}
+            reqBool
           />
         </div>
         <button
-          className={`btn-pink-light flex-row items-center content-center`}
+          className="btn-pink-light flex-row items-center content-center"
           disabled={!isDirty || !isValid}
           type="submit"
         >

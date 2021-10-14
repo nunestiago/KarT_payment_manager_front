@@ -1,13 +1,14 @@
 import './style.scss';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { Link, useLocation } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import baseUrl from '../../utils/baseUrl';
-import { toast } from 'react-toastify';
 import SortNameButton from '../../components/SortNameButton';
 import showPhone from '../../utils/showProperPhone';
 import mailIcon from '../../assets/mail.svg';
 import phonelIcon from '../../assets/phone.svg';
-import { Link, useLocation } from 'react-router-dom';
+
 function Reports() {
   const { token } = useAuth();
   const [charges, setCharges] = useState([]);
@@ -15,10 +16,9 @@ function Reports() {
   const [filteredCharges, setFilteredCharges] = useState([]);
   const [filteredClients, setFilteredClients] = useState([]);
   const [which, setWhich] = useState({ charges: false, clients: false });
-  let data = useLocation();
+  const data = useLocation();
   const toQuery = new URLSearchParams(useLocation().search);
-  let query = toQuery.get('relatorio') ?? data.state.relatorio;
-  console.log(query);
+  const query = toQuery.get('relatorio') ?? data.state.relatorio;
 
   async function handleGetClients() {
     try {
@@ -26,7 +26,7 @@ function Reports() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -48,7 +48,7 @@ function Reports() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -172,7 +172,7 @@ function Reports() {
       {which.clients && (
         <div>
           <div className="button-register">
-            <div className="flex-row items-center between"></div>
+            <div className="flex-row items-center between" />
           </div>
           <div className="table-head flex-row items-center">
             <div className="flex-row items-center">
@@ -187,7 +187,7 @@ function Reports() {
               <h1>Cobranças Recebidas</h1>
               <h1>Status</h1>
             </div>
-            <div className="empty-space"></div>
+            <div className="empty-space" />
           </div>
           <div className="table-body flex-column">
             {filteredClients?.map(client => (
@@ -223,7 +223,7 @@ function Reports() {
                     )}
                   </span>
                 </div>
-                <div className="flex-row edit"></div>
+                <div className="flex-row edit" />
               </div>
             ))}
           </div>
@@ -232,7 +232,7 @@ function Reports() {
       {which.charges && (
         <div>
           <div className="flex-column">
-            <div className="charges_search-input"></div>
+            <div className="charges_search-input" />
             <div className="table-head-charges flex-row items-center">
               <h1>ID</h1>
               <div className="flex-row items-center">

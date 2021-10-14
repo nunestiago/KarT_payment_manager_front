@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 import './style.scss';
 import clientsIcon from '../../assets/clients.svg';
 import moneyIcon from '../../assets/money.svg';
 import baseUrl from '../../utils/baseUrl';
-import { toast } from 'react-toastify';
 import useAuth from '../../hooks/useAuth';
-import { Link } from 'react-router-dom';
 
 function Home() {
   const { token } = useAuth();
@@ -17,7 +17,7 @@ function Home() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 

@@ -4,10 +4,10 @@ import '../../styles/global.scss';
 import '../../styles/alignments.scss';
 import '../../styles/form.scss';
 import '../../styles/buttons.scss';
-import CubosAcademyLogo from '../../assets/cubos-academy.svg';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import CubosAcademyLogo from '../../assets/cubos-academy.svg';
 import registerValidations from './validations';
 
 import baseUrl from '../../utils/baseUrl';
@@ -75,7 +75,7 @@ function Register() {
             label="Senha"
             placeholder="minhasenha"
             register={register}
-            reqBool={true}
+            reqBool
           />
         </div>
         <button

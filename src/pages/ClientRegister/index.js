@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import baseUrl from '../../utils/baseUrl';
 import cepMask from '../../utils/cepMask';
 import cpfMask from '../../utils/cpfMask';
 import './style.scss';
 import useAuth from '../../hooks/useAuth';
-import { useHistory } from 'react-router';
 import phoneMask from '../../utils/phoneMask';
 import registerValidations from './validations';
 
@@ -57,7 +56,7 @@ function ClientRegister() {
         body: JSON.stringify(data),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -74,7 +73,7 @@ function ClientRegister() {
   };
   return (
     <div className="client_register__container">
-      {'//'} ADICIONAR CLIENTE{' '}
+      // ADICIONAR CLIENTE{' '}
       <div className="client_register">
         <form
           noValidate

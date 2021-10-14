@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import baseUrl from '../../utils/baseUrl';
 import useAuth from '../../hooks/useAuth';
-import { toast } from 'react-toastify';
 import './style.scss';
 import SearchInput from '../../components/SearchInput';
 import SortNameButton from '../../components/SortNameButton';
@@ -20,7 +20,7 @@ function Charges() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
