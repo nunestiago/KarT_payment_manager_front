@@ -64,8 +64,6 @@ function Login() {
       }
 
       login(dados);
-      toast.success('Cadastro realizado com sucesso.');
-
       history.push('/home');
     } catch (error) {
       toast.error(error.message);

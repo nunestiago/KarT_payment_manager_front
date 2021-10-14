@@ -36,7 +36,7 @@ function Register() {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
-      toast.success('Registrado, favor fazer login');
+      toast.success('Registrado com sucesso, favor fazer login');
       history.push('/');
     } catch (error) {
       return toast.error(error.message);

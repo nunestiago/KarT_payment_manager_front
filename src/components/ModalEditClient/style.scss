@@ -14,20 +14,12 @@
     z-index: 1;
 
     button {
-      margin-top: 30px;
     }
   }
   &_padding {
-    padding: 50px 72px;
-    height: 650px;
-    width: 405px;
-    font-size: 24px;
+    padding: 60px 70px;
   }
   &_close {
-    position: absolute;
-    left: 1520px;
-    top: 110px;
-    cursor: pointer;
   }
 }
 @keyframes apear {
@@ -47,10 +39,7 @@
   box-shadow: 0px 0px 32px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
   padding: 40px 150px;
-  margin-top: 70px;
-  margin-left: 240px;
-  height: auto;
-  width: 700px;
+  max-width: 1200px;
   label {
     font-size: 16px;
     font-weight: 600;
@@ -72,16 +61,12 @@
   }
 }
 
-.all-size {
-  width: 700px;
-}
-
 .half {
   display: flex;
   justify-content: space-between;
   align-items: center;
   &_div {
-    width: 45%;
+    width: 48%;
   }
 }
 
