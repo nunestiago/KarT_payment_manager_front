@@ -1,4 +1,6 @@
 .view_charges_row {
+  width: 80%;
+  margin: 0 auto;
   padding: 0 70px;
   display: flex;
   flex-direction: column;
@@ -17,7 +19,7 @@
   }
   th {
     background-color: #9dbbc3;
-    padding: 6px 24px;
+    padding: 10px 24px;
     &:first-child {
       border-radius: 8px 0 0 8px;
     }

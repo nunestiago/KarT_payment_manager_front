@@ -12,14 +12,9 @@
     overflow: auto;
     animation: apear 0.5s;
     z-index: 1;
-
-    button {
-    }
   }
   &_padding {
     padding: 60px 70px;
-  }
-  &_close {
   }
 }
 @keyframes apear {
