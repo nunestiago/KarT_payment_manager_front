@@ -53,10 +53,13 @@ function Sidebar({ children }) {
           </div>
         </div>
         <div className="flex-row items-center content-center">
-          <button className="btn-pink flex-row items-center content-center">
-            <Link to="/nova-cobranca"></Link>
-            Criar cobrança
-          </button>
+          <div>
+            <Link to="/nova-cobranca">
+              <button className="btn-pink flex-row items-center content-center">
+                Criar cobrança
+              </button>
+            </Link>
+          </div>
         </div>
       </nav>
       <div className="flex-column wd100">
