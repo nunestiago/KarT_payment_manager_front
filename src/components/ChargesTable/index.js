@@ -30,6 +30,10 @@ function ChargesTable({ children, fromReports }) {
         toast.error(dados);
         return;
       }
+      if (dados.length === 0) {
+        return;
+      }
+
       setFilteredCharges(dados);
       setCharges(dados);
     } catch (error) {
@@ -59,7 +63,6 @@ function ChargesTable({ children, fromReports }) {
   useEffect(() => {
     setFilteredCharges(fromReports);
   }, [fromReports]);
-
   return (
     <div>
       <div className="flex-row mb30 items-center between">
@@ -68,58 +71,66 @@ function ChargesTable({ children, fromReports }) {
       </div>
 
       <table className="table">
-        <tr className="table-head-charges">
-          <th>ID</th>
+        <thead>
+          <tr className="table-head-charges">
+            <th>ID</th>
 
-          <th>
-            <div className="flex-row">
-              Cliente
-              <SortNameButton
-                data={charges}
-                setListState={setFilteredCharges}
-              />
-            </div>
-          </th>
+            <th>
+              <div className="flex-row">
+                Cliente
+                <SortNameButton
+                  data={charges}
+                  setListState={setFilteredCharges}
+                />
+              </div>
+            </th>
 
-          <th>Descrição</th>
-          <th>Valor</th>
-          <th>Status</th>
-          <th>Vencimento</th>
-        </tr>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Status</th>
+            <th>Vencimento</th>
+          </tr>
+        </thead>
         {filteredCharges ? (
           filteredCharges.map(key => (
-            <tr key={key.id} className="charges-body">
-              <td className="charges-list-id">#{key.id}</td>
-              <td
-                className="charges-list-nome"
-                onClick={() => handleModal(key)}
-              >
-                {key.nome}
-              </td>
-              <td className="charges-list-descricao">{key.descricao}</td>
-              <td className="charges-list-valor">
-                R$ {(key.valor / 100).toFixed(2)}
-              </td>
-              <td
-                className={`charges-list-status ${handleStatus(
-                  key.status,
-                  key.vencimento,
-                ).toLowerCase()}`}
-              >
-                {handleStatus(key.status, key.vencimento)}
-              </td>
-              <td className="charges-list-vencimento">
-                {new Date(key.vencimento).toLocaleDateString('pt-BR')}
-              </td>
-            </tr>
+            <tbody key={key.id}>
+              <tr className="charges-body">
+                <td className="charges-list-id">#{key.id}</td>
+                <td
+                  className="charges-list-nome"
+                  onClick={() => handleModal(key)}
+                >
+                  {key.nome}
+                </td>
+                <td className="charges-list-descricao">{key.descricao}</td>
+                <td className="charges-list-valor">
+                  R$ {(key.valor / 100).toFixed(2)}
+                </td>
+                <td
+                  className={`charges-list-status ${handleStatus(
+                    key.status,
+                    key.vencimento,
+                  ).toLowerCase()}`}
+                >
+                  {handleStatus(key.status, key.vencimento)}
+                </td>
+                <td className="charges-list-vencimento">
+                  {new Date(key.vencimento).toLocaleDateString('pt-BR')}
+                </td>
+              </tr>
+            </tbody>
           ))
         ) : (
-          <div>
-            <p>Nenhum Registro</p>
-            <Link to={'/nova-cobranca'}>
-              Clique aqui para cadastrar nova cobrança
-            </Link>
-          </div>
+          <tbody>
+            <tr>
+              <td style={{ background: 'none' }}>
+                <p>Nenhum Registro</p>
+                <Link to={'/nova-cobranca'}>
+                  Clique aqui para cadastrar nova cobrança
+                </Link>
+              </td>
+            </tr>
+          </tbody>
         )}
       </table>
 
