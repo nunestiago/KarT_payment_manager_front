@@ -5,6 +5,7 @@ import './style.scss';
 
 function ReportsDropDown() {
   const [dropMenuOne, setDropMenuOne] = useState(false);
+  const [dropMenuTwo, setDropMenuTwo] = useState(false);
   const [dropMenuOneText, setDropMenuOneText] = useState('');
   const data = useLocation();
   const toQuery = new URLSearchParams(useLocation().search);
@@ -64,16 +65,16 @@ function ReportsDropDown() {
         <p
           className="drop_down_report"
           alt="user-icon"
-          onClick={() => setDropMenuOne(!dropMenuOne)}
-          onMouseEnter={() => setDropMenuOne(true)}
+          onClick={() => setDropMenuOne(!dropMenuTwo)}
+          onMouseEnter={() => setDropMenuTwo(true)}
         >
           {query?.toUpperCase() || 0}
         </p>
-        {dropMenuOne && (
+        {dropMenuTwo && (
           <div
             className="drop_down-menu"
-            onMouseEnter={() => setDropMenuOne(true)}
-            onMouseLeave={() => setDropMenuOne(false)}
+            onMouseEnter={() => setDropMenuTwo(true)}
+            onMouseLeave={() => setDropMenuTwo(false)}
           >
             {dropMenuOneText === 'Clientes' && (
               <>
