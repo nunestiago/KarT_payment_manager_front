@@ -135,6 +135,7 @@ function ClientsTable({ children, fromReports }) {
                     src={editIcon}
                     alt="edit-icon"
                     onClick={() => handleClickEditClient(client)}
+                    style={{ cursor: 'pointer' }}
                   />
                 </td>
               </tr>

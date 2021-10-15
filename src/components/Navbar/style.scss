@@ -1,6 +1,5 @@
 .profile {
   position: relative;
-  cursor: pointer;
   display: flex;
   justify-content: stretch;
   flex-direction: column;
@@ -9,6 +8,7 @@
   padding: 15px 30px 70px 30px;
 }
 .user-menu {
+  cursor: pointer;
   position: absolute;
   top: 55px;
   background: #ffffff;

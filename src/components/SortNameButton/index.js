@@ -11,7 +11,7 @@ function SortNameButton({ data, setListState }) {
     return setListState(result);
   }
   return (
-    <div>
+    <div style={{ cursor: 'pointer', marginLeft: '5px' }}>
       <img src={sortIcon} alt="" onClick={handleSort} />
     </div>
   );
