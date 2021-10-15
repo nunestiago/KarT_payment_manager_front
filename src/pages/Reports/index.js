@@ -14,8 +14,6 @@ function Reports() {
   const [clients, setClients] = useState([]);
   const [filteredCharges, setFilteredCharges] = useState([]);
   const [filteredClients, setFilteredClients] = useState([]);
-  // const [openModal, setOpenModal] = useState(false);
-
   const [which, setWhich] = useState({ charges: false, clients: false });
 
   const data = useLocation();
@@ -96,7 +94,7 @@ function Reports() {
 
   useEffect(() => {
     getQuery();
-  }, [query, clients, charges]);
+  }, [query, clients, charges, filteredClients, filteredCharges]);
 
   function handleEmDia() {
     setWhich({ charges: false, clients: true });
@@ -117,7 +115,7 @@ function Reports() {
 
   function handlePrevistas() {
     setWhich({ charges: true, clients: false });
-    return setFilteredCharges(
+    setFilteredCharges(() =>
       charges.filter(
         charge =>
           charge.status === false &&
@@ -151,10 +149,10 @@ function Reports() {
     <div className="reports-box">
       {which.clients && (
         <ClientsTable fromReports={filteredClients}>
-          <ReportsDropDown />
+          <ReportsDropDown query={query} />
         </ClientsTable>
       )}
-      {which.charges && (
+      {which.charges && filteredCharges && (
         <ChargesTable fromReports={filteredCharges}>
           <ReportsDropDown query={query} />
         </ChargesTable>
