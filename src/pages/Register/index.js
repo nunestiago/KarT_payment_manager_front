@@ -86,7 +86,7 @@ function Register() {
           ENTRAR
         </button>
       </form>
-      <h1>
+      <h1 className="mt10">
         Já possui uma conta? <Link to="/">Acesse agora!</Link>
       </h1>
     </div>
