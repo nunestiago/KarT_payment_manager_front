@@ -13,7 +13,6 @@ import baseUrl from '../../utils/baseUrl';
 import PasswordInput from '../../components/PasswordInput';
 import useAuth from '../../hooks/useAuth';
 import CubosAcademyLogo from '../../assets/cubos-academy.svg';
-import { ErrorMessage } from '@hookform/error-message';
 
 const useStyles = makeStyles(() => ({
   backdrop: {
