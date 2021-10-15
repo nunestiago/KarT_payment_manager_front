@@ -13,7 +13,7 @@ function Sidebar({ children }) {
 
   return (
     <div className="flex-row">
-      <nav className="flex-column">
+      <nav className="flex-column flex1">
         <img
           className="cubos"
           src={logoWhite}
@@ -53,12 +53,16 @@ function Sidebar({ children }) {
           </div>
         </div>
         <div className="flex-row items-center content-center">
-          <Link to="/nova-cobranca">
-            <button className="btn-pink">Criar cobrança</button>
-          </Link>
+          <div>
+            <Link to="/nova-cobranca">
+              <button className="btn-pink flex-row items-center content-center">
+                Criar cobrança
+              </button>
+            </Link>
+          </div>
         </div>
       </nav>
-      <div className="flex-column">
+      <div className="flex-column wd100">
         <Navbar />
         {children}
       </div>

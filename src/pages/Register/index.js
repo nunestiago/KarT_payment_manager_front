@@ -4,10 +4,10 @@ import '../../styles/global.scss';
 import '../../styles/alignments.scss';
 import '../../styles/form.scss';
 import '../../styles/buttons.scss';
-import CubosAcademyLogo from '../../assets/cubos-academy.svg';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import CubosAcademyLogo from '../../assets/cubos-academy.svg';
 import registerValidations from './validations';
 
 import baseUrl from '../../utils/baseUrl';
@@ -36,7 +36,7 @@ function Register() {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
-      toast.success('Registrado, favor fazer login');
+      toast.success('Registrado com sucesso, favor fazer login');
       history.push('/');
     } catch (error) {
       return toast.error(error.message);
@@ -75,7 +75,7 @@ function Register() {
             label="Senha"
             placeholder="minhasenha"
             register={register}
-            reqBool={true}
+            reqBool
           />
         </div>
         <button
@@ -86,7 +86,7 @@ function Register() {
           ENTRAR
         </button>
       </form>
-      <h1>
+      <h1 className="mt10">
         Já possui uma conta? <Link to="/">Acesse agora!</Link>
       </h1>
     </div>

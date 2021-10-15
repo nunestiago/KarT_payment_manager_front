@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import baseUrl from '../../utils/baseUrl';
 import cepMask from '../../utils/cepMask';
 import cpfMask from '../../utils/cpfMask';
 import './style.scss';
 import useAuth from '../../hooks/useAuth';
-import { useHistory } from 'react-router';
 import phoneMask from '../../utils/phoneMask';
 import registerValidations from './validations';
 
@@ -25,15 +24,15 @@ function ClientRegister() {
   });
 
   const handleCep = async e => {
-    const insertedCep = e.target.value;
+    const insertedCep = e.target.value.replace(/[^0-9]/g, '');
 
-    if (insertedCep?.length < 9) {
+    if (insertedCep.length < 8) {
       return;
     }
 
     try {
       const response = await fetch(
-        `https://viacep.com.br/ws/${insertedCep?.replace(/[^0-9]/g, '')}/json/`,
+        `https://viacep.com.br/ws/${insertedCep}/json/`,
       );
       const viaCep = await response.json();
       setValue('logradouro', viaCep.logradouro);
@@ -50,6 +49,14 @@ function ClientRegister() {
     data.cpf = data.cpf.replace(/[^0-9]/g, '');
     data.telefone = data.telefone.replace(/[^0-9]/g, '');
     data.cep = data.cep.replace(/[^0-9]/g, '');
+
+    if (data.cpf.length !== 11) {
+      return toast.error('CPF deve conter 11 dígitos');
+    }
+
+    if (data.telefone.length !== 11 && data.telefone.length !== 10) {
+      return toast.error('(DDD) e telefone com 8 ou 9 dígitos');
+    }
     try {
       registerValidations(data);
       const response = await fetch(`${baseUrl}client/register`, {
@@ -57,7 +64,7 @@ function ClientRegister() {
         body: JSON.stringify(data),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -74,7 +81,7 @@ function ClientRegister() {
   };
   return (
     <div className="client_register__container">
-      {'//'} ADICIONAR CLIENTE{' '}
+      <p className="drop_down_report">{'//'} ADICIONAR CLIENTE </p>
       <div className="client_register">
         <form
           noValidate

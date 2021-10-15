@@ -23,6 +23,7 @@ function Navbar() {
         alt="user-icon"
         onClick={() => setDropUserMenu(!dropUserMenu)}
         onMouseEnter={() => setDropUserMenu(true)}
+        style={{ cursor: 'pointer' }}
       />
       {dropUserMenu && (
         <div

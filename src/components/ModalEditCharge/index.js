@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import baseUrl from '../../utils/baseUrl';
-import useAuth from '../../hooks/useAuth';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { TextInputMask } from 'tp-react-web-masked-text';
 import './style.scss';
 import 'react-datepicker/dist/react-datepicker.css';
 import pt from 'date-fns/locale/pt';
+import useAuth from '../../hooks/useAuth';
+import baseUrl from '../../utils/baseUrl';
+import trashIcon from '../../assets/trash.svg';
+
 registerLocale('pt', pt);
 
-import trashIcon from '../../assets/trash.svg'
-
 function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
-  // const history = useHistory();
   const { token } = useAuth();
   const {
     register,
@@ -27,6 +26,7 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
   const [clients, setClients] = useState([]);
   const [payload, setPayload] = useState();
   const [openModal, setOpenModal] = useState(false);
+  const history = useHistory();
 
   async function handleGetClients() {
     try {
@@ -34,7 +34,7 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -54,20 +54,21 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
     if (typeof payload.valor === 'string') {
       payload.valor = payload.valor.replace(/[^0-9]/g, '');
     }
-    if (payload.valor < 0.01)
+    if (payload.valor < 0.01) {
       return toast.error('Valor deve ser maior que zero');
+    }
 
     if (payload.status !== true && payload.status !== false) {
       return toast.error('Favor selecionar status da cobrança');
     }
-    console.log(payload);
+
     try {
       const response = await fetch(`${baseUrl}charges/editCharge`, {
         method: 'PUT',
         body: JSON.stringify(payload),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -75,9 +76,10 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
       if (!response.ok) {
         throw new Error(registerInDB);
       }
-      toast.success(registerInDB);
       closeModal(false);
+      setOpenModal(false);
       handleGetCharges();
+      toast.success(registerInDB);
     } catch (error) {
       toast.error(error.message);
     }
@@ -89,13 +91,23 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
   }, []);
 
   async function handleDeleteCharge() {
+    if (payload.status === true) {
+      toast.error('Cobrança paga não pode ser excluída');
+      return history.push('/cobrancas');
+    }
+
+    if (new Date(payload.vencimento).getTime() < Date.now()) {
+      toast.error('Cobrança vencida não pode ser excluída');
+      return history.push('/cobrancas');
+    }
+
     try {
       const response = await fetch(`${baseUrl}charges/delete`, {
         method: 'DELETE',
         body: JSON.stringify(payload),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -104,8 +116,9 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
       if (!response.ok) {
         throw new Error(dados);
       }
-
-      setClients(dados);
+      handleGetCharges();
+      toast.success('Cobrança foi apagada');
+      history.push('/cobrancas');
     } catch (error) {
       toast.error(error.message);
     }
@@ -120,15 +133,15 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
           }}
         >
           {' '}
-          <div className="client_register">
-            <div onClick={() => closeModal()} className="modal-close">
-              X
-            </div>
+          <div className="create-charge">
             <form
               noValidate
               autoComplete="off"
               onSubmit={handleSubmit(handleEditCharge)}
             >
+              <div onClick={() => closeModal()} className="modal-close">
+                X
+              </div>
               <div className="flex-column">
                 <label htmlFor="cliente">Cliente</label>
                 <select
@@ -140,23 +153,24 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
                   <option label={payload?.nome} disabled value="default" hidden>
                     Selecione o cliente
                   </option>
-                  {clients.map(key => (
-                    <option
-                      key={key.id}
-                      value={key.id}
-                      onClick={() =>
-                        setPayload({ ...payload, cliente_id: key.id })
-                      }
-                    >
-                      {key.nome}
-                    </option>
-                  ))}
+                  {clients &&
+                    clients?.map(key => (
+                      <option
+                        key={key.id}
+                        value={key.id}
+                        onClick={() =>
+                          setPayload({ ...payload, cliente_id: key.id })
+                        }
+                      >
+                        {key.nome}
+                      </option>
+                    ))}
                 </select>
               </div>
 
               <div className="input-help">
                 <label htmlFor="descricao">Descrição</label>
-                <input
+                <textarea
                   id="descricao"
                   type="descricao"
                   className="descricao"
@@ -181,14 +195,14 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
                 <option
                   label="Selecione o um status"
                   disabled
-                  value={'default2'}
+                  value="default2"
                   hidden
                 >
                   Selecione o um status
                 </option>
                 <option
                   label="Pago"
-                  value={true}
+                  value
                   onClick={() => setPayload({ ...payload, status: true })}
                 >
                   Pago
@@ -202,7 +216,7 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
                 </option>
               </select>
               <div className="half">
-                <div className="valor">
+                <div className="valor flex-column">
                   <label htmlFor="valor">Valor</label>
                   <Controller
                     control={control}
@@ -211,7 +225,7 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
                       <TextInputMask
                         className="valor_container"
                         id="valor"
-                        kind={'money'}
+                        kind="money"
                         options={{
                           precision: 2,
                           separator: ',',
@@ -229,7 +243,7 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
                     )}
                   />
                 </div>
-                <div className="flex-column ">
+                <div className="flex-column vencimento">
                   <label htmlFor="vencimento">Vencimento</label>
                   <Controller
                     control={control}
@@ -255,28 +269,46 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
                   />
                 </div>
               </div>
-              <div openModal={openModal} setOpenModal={setOpenModal} className="delete flex-row items-center">
-                <img src={trashIcon} alt= "trash-icon"/>
-                Excluir cobrança
-                <div  className="box2 sb11 flex-column content-center">
-                <div className="flex-column text-delete">
-                  <p>Apagar item?</p>              
-                <div className="flex-row buttons-y-n">
-                  <button onClick={() => handleDeleteCharge()} className="blue">Sim</button>
-                  <Link to="/cobrancas" onClick={() => closeModal(false)}>
-                  <button
-                    type="submit"
-                    className="red"
-                  >
-                    Não
-                  </button>
-                </Link>
+              <div className=" flex-row items-center mb30">
+                <div
+                  className="delete flex-row items-center mr"
+                  onClick={() => setOpenModal(!openModal)}
+                >
+                  <img src={trashIcon} alt="trash-icon" />
+                  <p>Excluir cobrança</p>
                 </div>
-                </div>
+
+                {openModal && (
+                  <div className="box2 sb11 flex-column content-center">
+                    <div className="flex-column text-delete">
+                      <p className="erase_item">Apagar item?</p>
+                      <div className="flex-row  items-center buttons-y-n">
+                        <button
+                          onClick={() => {
+                            handleDeleteCharge();
+                            closeModal(false);
+                            setOpenModal(false);
+                          }}
+                          className="blue"
+                        >
+                          Sim
+                        </button>
+                        <button className="red">
+                          <Link
+                            className="red"
+                            to="/cobrancas"
+                            onClick={() => closeModal(false)}
+                          >
+                            Não
+                          </Link>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
-              </div>
-              
-              <div className="flex-row btn-add-client">
+
+              <div className="flex-row btn-create-charge">
                 <Link to="/cobrancas" onClick={() => closeModal(false)}>
                   <button
                     type="submit"

@@ -4,15 +4,15 @@ import '../../styles/global.scss';
 import '../../styles/alignments.scss';
 import '../../styles/form.scss';
 import '../../styles/buttons.scss';
-import CubosAcademyLogo from '../../assets/cubos-academy.svg';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { Backdrop, CircularProgress } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import baseUrl from '../../utils/baseUrl';
 import PasswordInput from '../../components/PasswordInput';
 import useAuth from '../../hooks/useAuth';
-import { Backdrop, CircularProgress } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import CubosAcademyLogo from '../../assets/cubos-academy.svg';
 
 const useStyles = makeStyles(() => ({
   backdrop: {
@@ -24,7 +24,7 @@ function Login() {
   const {
     register,
     handleSubmit,
-    formState: { isDirty, isValid, errors },
+    formState: { errors, isDirty, isValid },
   } = useForm({
     mode: 'onChange',
   });
@@ -45,7 +45,6 @@ function Login() {
       toast.error('Email e senha são obrigatórios.');
       return;
     }
-
     setIsLoading(true);
 
     try {
@@ -55,16 +54,14 @@ function Login() {
         headers: { 'Content-Type': 'application/json' },
       });
 
-      setIsLoading(false);
-
       const dados = await response.json();
 
       if (!response.ok) {
         throw new Error(dados);
       }
 
+      setIsLoading(false);
       login(dados);
-
       history.push('/home');
     } catch (error) {
       toast.error(error.message);
@@ -74,7 +71,7 @@ function Login() {
 
   useEffect(() => {
     errors?.email && toast.error(errors.email.message);
-  }, [errors?.email]);
+  }, [errors]);
 
   return (
     <div className="container-form">
@@ -100,11 +97,11 @@ function Login() {
             label="Senha"
             placeholder="minhasenha"
             register={register}
-            reqBool={true}
+            reqBool
           />
         </div>
         <button
-          className={`btn-pink-light flex-row items-center content-center`}
+          className="btn-pink-light flex-row items-center content-center"
           disabled={!isDirty || !isValid}
           type="submit"
         >
@@ -114,7 +111,7 @@ function Login() {
       <Backdrop className={classes.backdrop} open={isLoading}>
         <CircularProgress color="inherit" />
       </Backdrop>
-      <h1>
+      <h1 className="mt10">
         Não tem uma conta? <Link to="/cadastro">Cadastre-se</Link>
       </h1>
     </div>

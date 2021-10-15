@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import baseUrl from '../../utils/baseUrl';
-import useAuth from '../../hooks/useAuth';
 import { Link, useHistory } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -9,6 +7,8 @@ import { TextInputMask } from 'tp-react-web-masked-text';
 import './style.scss';
 import 'react-datepicker/dist/react-datepicker.css';
 import pt from 'date-fns/locale/pt';
+import useAuth from '../../hooks/useAuth';
+import baseUrl from '../../utils/baseUrl';
 
 registerLocale('pt', pt);
 
@@ -34,7 +34,7 @@ function CreateCharge() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -52,8 +52,9 @@ function CreateCharge() {
 
   async function handleAddCharge(data) {
     setValue('vencimento', startDate);
-    if (valor === 0 || valor.replace(/[^0-9]/g, '') < 0.01)
+    if (valor === 0 || valor.replace(/[^0-9]/g, '') < 0.01) {
       return toast.error('Valor deve ser maior que zero');
+    }
     if (data.status !== 'true' && data.status !== 'false') {
       return toast.error('Favor selecionar status da cobrança');
     }
@@ -65,7 +66,7 @@ function CreateCharge() {
         body: JSON.stringify(data),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -141,12 +142,12 @@ function CreateCharge() {
             <option
               label="Selecione o um status"
               disabled
-              value={'default2'}
+              value="default2"
               hidden
             >
               Selecione o um status
             </option>
-            <option label="Pago" value={true}>
+            <option label="Pago" value>
               Pago
             </option>
             <option label="Pendente" value={false}>
@@ -163,7 +164,7 @@ function CreateCharge() {
                   <TextInputMask
                     className="valor_container"
                     id="valor"
-                    kind={'money'}
+                    kind="money"
                     options={{
                       precision: 2,
                       separator: ',',
