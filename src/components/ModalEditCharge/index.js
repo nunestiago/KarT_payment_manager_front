@@ -27,7 +27,6 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
   const [payload, setPayload] = useState();
   const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
-  const [modalDelete, setModalDelete] = useState(false);
 
   async function handleGetClients() {
     try {
@@ -92,6 +91,16 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
   }, []);
 
   async function handleDeleteCharge() {
+    if (payload.status === true) {
+      toast.error('Cobrança paga não pode ser excluída');
+      return history.push('/cobrancas');
+    }
+
+    if (new Date(payload.vencimento).getTime() < Date.now()) {
+      toast.error('Cobrança vencida não pode ser excluída');
+      return history.push('/cobrancas');
+    }
+
     try {
       const response = await fetch(`${baseUrl}charges/delete`, {
         method: 'DELETE',
