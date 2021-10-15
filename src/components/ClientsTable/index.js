@@ -75,76 +75,80 @@ function ClientsTable({ children, fromReports }) {
       </div>
 
       <table className="table">
-        <tr className="table-head-charges">
-          <th>
-            <div className="flex-row">
+        <thead>
+          <tr className="table-head-charges">
+            <th className="flex-row">
               Cliente
               <SortNameButton
                 data={clients}
                 setListState={setFilteredClients}
               />
-            </div>
-          </th>
-          <th>Cobranças Feitas</th>
-          <th>Cobranças Recebidas</th>
-          <th>Status</th>
-          <th className="empty-space" />
-        </tr>
+            </th>
+            <th>Cobranças Feitas</th>
+            <th>Cobranças Recebidas</th>
+            <th>Status</th>
+            <th className="empty-space" />
+          </tr>
+        </thead>
         {filteredClients ? (
           filteredClients.map(client => (
-            <tr className="charges-body" key={client.id}>
-              <td>
-                <p
-                  onClick={() => handleClickViewClient(client)}
-                  className="client-list-name"
-                >
-                  {client.nome}
-                </p>
-                <div className="flex-row small">
-                  <img src={mailIcon} alt="mail-icon" />
-                  <span>{client.email}</span>
-                </div>
-                <div className="flex-row small">
-                  <img src={phonelIcon} alt="phone-icon" />
-                  <span>{showPhone(client.telefone)}</span>
-                </div>
-              </td>
-              <td className="charges-list-nome">
-                <span>
-                  R$ {client.feitas ? (client.feitas / 100).toFixed(2) : 0}
-                </span>
-              </td>
-              <td className="charges-list-recebidas">
-                <span>
-                  R${' '}
-                  {client.recebidas ? (client.recebidas / 100).toFixed(2) : 0}
-                </span>
-              </td>
-              <td className="charges-list-descricao">
-                <span>
-                  {(client.feitas || 0) - (client.recebidas || 0) === 0 ? (
-                    <span className="emdia">EM DIA</span>
-                  ) : (
-                    <span className="inadimplente">INADIMPLENTE</span>
-                  )}
-                </span>
-              </td>
-              <td className="charges-list-valor">
-                <img
-                  src={editIcon}
-                  alt="edit-icon"
-                  onClick={() => handleClickEditClient(client)}
-                />
-              </td>
-            </tr>
+            <tbody key={client.id}>
+              <tr className="charges-body">
+                <td>
+                  <p
+                    onClick={() => handleClickViewClient(client)}
+                    className="client-list-name"
+                  >
+                    {client.nome}
+                  </p>
+                  <div className="flex-row small">
+                    <img src={mailIcon} alt="mail-icon" />
+                    <span>{client.email}</span>
+                  </div>
+                  <div className="flex-row small">
+                    <img src={phonelIcon} alt="phone-icon" />
+                    <span>{showPhone(client.telefone)}</span>
+                  </div>
+                </td>
+                <td className="charges-list-nome">
+                  <span>
+                    R$ {client.feitas ? (client.feitas / 100).toFixed(2) : 0}
+                  </span>
+                </td>
+                <td className="charges-list-recebidas">
+                  <span>
+                    R${' '}
+                    {client.recebidas ? (client.recebidas / 100).toFixed(2) : 0}
+                  </span>
+                </td>
+                <td className="charges-list-descricao">
+                  <span>
+                    {(client.feitas || 0) - (client.recebidas || 0) === 0 ? (
+                      <span className="emdia">EM DIA</span>
+                    ) : (
+                      <span className="inadimplente">INADIMPLENTE</span>
+                    )}
+                  </span>
+                </td>
+                <td className="charges-list-valor">
+                  <img
+                    src={editIcon}
+                    alt="edit-icon"
+                    onClick={() => handleClickEditClient(client)}
+                  />
+                </td>
+              </tr>
+            </tbody>
           ))
         ) : (
-          <div>
-            <p>Nenhum cliente</p>
-            <Link to={'/cadastrar-cliente'}>
-              Clique aqui para cadastrar nova cobrança
-            </Link>
-          </div>
+          <tbody>
+            <td style={{ background: 'none' }}>
+              <p>Nenhum cliente</p>
+              <Link to={'/cadastrar-cliente'}>
+                Clique aqui para cadastrar nova cobrança
+              </Link>
+            </td>
+          </tbody>
         )}
       </table>
       {modalViewClient && (
