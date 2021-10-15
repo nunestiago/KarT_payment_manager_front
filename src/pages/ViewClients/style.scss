@@ -1,7 +1,22 @@
-.button-register {
-  margin: 100px 0px 0px 70px;
-  &-button {
-    background-color: #e5e5e5;
+.view_clients_row {
+  width: 80%;
+  margin: 0 auto;
+  padding: 0 70px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 25px;
+}
+
+.client-list- {
+  &name {
+    font-weight: bold;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  &email {
+    display: flex;
+    flex-direction: column;
+    row-gap: 6px;
   }
 }
 
@@ -92,10 +107,8 @@
   position: absolute;
   left: 780px;
 }
-
-.status {
-  position: absolute;
-  left: 1000px;
+.mb30 {
+  margin-bottom: 30px;
 }
 
 .emdia {
@@ -112,10 +125,4 @@
   line-height: 15px;
   text-align: left;
   color: #ff4d4d;
-}
-
-.edit {
-  position: absolute;
-  left: 1200px;
-  cursor: pointer;
 }

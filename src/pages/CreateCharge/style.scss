@@ -1,18 +1,18 @@
 .charge-container {
-  margin-top: 88px;
-  margin-left: 72px;
+  padding: 0 70px;
   font-size: 24px;
   font-weight: 400;
-  line-height: 29px;  
+  line-height: 29px;
+  margin: 0 auto;
 }
 
 .create-charge {
-  height: 556px;
+  height: auto;
   width: 958px;
   border-radius: 16px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   margin-top: 24px;
-  display: flex;  
+  display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 16px;
@@ -42,12 +42,13 @@
   border: 1px solid #374952;
   width: 512px;
   margin-bottom: 32px;
-  padding: 12px 20px;
+  padding: 12px 10px;
   font-size: 12px;
   font-weight: 400;
   line-height: 15px;
   letter-spacing: 0.25px;
   color: #323232;
+  background: #fff;
 }
 
 .valor {
@@ -60,7 +61,7 @@
   text-align: left;
   width: 184px;
   height: 40px;
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid #374952;
   box-sizing: border-box;
   border-radius: 8px;
@@ -71,24 +72,25 @@
   margin-left: 16px;
 }
 
-.vencimento input{
+.vencimento input {
   width: 312px;
   height: 40px;
   border: 1px solid #374952;
   box-sizing: border-box;
-  border-radius: 8px;  
+  border-radius: 8px;
   padding-left: 10px;
 }
 
 .input-help textarea {
   height: 56px;
   width: 512px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border: 1px solid #374952;
   box-sizing: border-box;
-  border-radius: 8px; 
+  border-radius: 8px;
   margin-top: 8px;
   margin-bottom: 32px;
+  padding: 5px 10px;
 }
 
 .input-help-text {
@@ -115,5 +117,5 @@ input[type='number'] {
 .btn-create-charge {
   display: flex;
   justify-content: center;
-  margin-top: 37px;
+  margin: 30px 0;
 }

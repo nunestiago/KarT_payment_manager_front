@@ -90,7 +90,8 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
 
   useEffect(() => {
     errors?.email && toast.error(errors.email.message);
-  }, [errors.email]);
+    errors?.nome && toast.error(errors.nome.message);
+  }, [errors.email, errors.nome]);
 
   return (
     <>
@@ -117,7 +118,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
               <input
                 id="nome"
                 type="text"
-                {...register('nome', { required: true })}
+                {...register('nome', { required: 'Campo nome obrigatório' })}
                 value={handleClient?.nome}
                 onChange={e =>
                   setHandleClient({
