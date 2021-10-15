@@ -52,10 +52,29 @@ function ReportsDropDown() {
             onMouseLeave={() => setDropMenuOne(false)}
           >
             <div onClick={() => setDropMenuOneText('Clientes')}>
-              <p> Cliente </p>
+              <p
+                className={`drop_down-${
+                  query === 'emdia' || query === 'inadimplente'
+                    ? 'active'
+                    : 'not'
+                }`}
+              >
+                {' '}
+                Cliente{' '}
+              </p>
             </div>
             <div onClick={() => setDropMenuOneText('Cobranças')}>
-              <p>Cobranças</p>
+              <p
+                className={`drop_down-${
+                  query === 'vencidas' ||
+                  query === 'previstas' ||
+                  query === 'pagas'
+                    ? 'active'
+                    : 'not'
+                }`}
+              >
+                Cobranças
+              </p>
             </div>
           </div>
         )}
@@ -81,12 +100,18 @@ function ReportsDropDown() {
                 <Link
                   to="/relatorios?relatorio=emdia"
                   onClick={() => setDropMenuOneText('Clientes')}
+                  className={`drop_down-${
+                    query === 'emdia' ? 'active' : 'not'
+                  }`}
                 >
                   Em dia
                 </Link>
                 <Link
                   to="/relatorios?relatorio=inadimplente"
                   onClick={() => setDropMenuOneText('Clientes')}
+                  className={`drop_down-${
+                    query === 'inadimplente' ? 'active' : 'not'
+                  }`}
                 >
                   Inadimplente
                 </Link>
@@ -97,18 +122,27 @@ function ReportsDropDown() {
                 <Link
                   to="/relatorios?relatorio=previstas"
                   onClick={() => setDropMenuOneText('Cobranças')}
+                  className={`drop_down-${
+                    query === 'previstas' ? 'active' : 'not'
+                  }`}
                 >
                   Previstas
                 </Link>
                 <Link
                   to="/relatorios?relatorio=pagas"
                   onClick={() => setDropMenuOneText('Cobranças')}
+                  className={`drop_down-${
+                    query === 'pagas' ? 'active' : 'not'
+                  }`}
                 >
                   Pagas
                 </Link>
                 <Link
                   to="/relatorios?relatorio=vencidas"
                   onClick={() => setDropMenuOneText('Cobranças')}
+                  className={`drop_down-${
+                    query === 'vencidas' ? 'active' : 'not'
+                  }`}
                 >
                   Vencidas
                 </Link>
