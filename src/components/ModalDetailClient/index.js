@@ -42,99 +42,97 @@ function ModalDetailClient({ client, closeModal }) {
 
   return (
     <>
-      <div className="modal_container" onClick={() => closeModal()}>
+      <div
+        className="modal_container"
+        onClick={() => {
+          closeModal();
+        }}
+      >
         <div
-          onClick={e => {
-            e.stopPropagation();
-          }}
+          className="show_client-container"
+          onClick={e => e.stopPropagation()}
         >
-          <div className="show_client-container">
-            <div onClick={() => closeModal()} className="edit_modal_close">
-              X
-            </div>
-            <div className="show_client-title">
-              <h1 className="show_client-h1">{client.nome}</h1>
-              <h2 className="show_client-h2">{showCpf(client.cpf)}</h2>
-            </div>
-            <div className="flex-row content-center">
-              <div className="flex-column between max250">
-                <div className="flex-row tel-mail items-center">
-                  <div className="flex-row items-center ">
-                    <img src={mailIcon} alt="" className="show_client-img" />
-                    <h2 className="show_client-h2 mr">{client.email}</h2>
-                  </div>
-                  <div className="flex-row items-center content-center">
-                    <img src={phoneIcon} alt="" className="show_client-img" />
-                    <h2 className="show_client-h2">
-                      {showPhone(client.telefone)}
-                    </h2>
-                  </div>
+          <p onClick={() => closeModal()} className="edit_modal_close">
+            X
+          </p>
+          <h2 className="show_client-h2">{client.nome}</h2>
+          <p className="show_client-p mb30">{showCpf(client.cpf)}</p>
+          <div className="show_client-card">
+            <div className="show_client-info">
+              <div className="flex-row items-center">
+                <div className="flex-row items-center ">
+                  <img src={mailIcon} alt="" className="show_client-img" />
+                  <p className="show_client-p mr">{client.email}</p>
                 </div>
-                <div className="flex-row between">
-                  <div>
-                    <strong className="show_client-strong">CEP</strong>
-                    <h2 className="show_client-h2">{client.cep}</h2>
-                  </div>
-                  <div>
-                    <strong className="show_client-strong">Bairro</strong>
-                    <h2 className="show_client-h2">{client.bairro}</h2>
-                  </div>{' '}
-                  <div>
-                    <strong className="show_client-strong">Cidade</strong>
-                    <h2 className="show_client-h2">{client.cidade}</h2>
-                  </div>
+                <div className="flex-row items-center content-center">
+                  <img src={phoneIcon} alt="" className="show_client-img" />
+                  <p className="show_client-p">{showPhone(client.telefone)}</p>
+                </div>
+              </div>
+              <div className="flex-row between">
+                <div>
+                  <strong className="show_client-strong">CEP</strong>
+                  <p className="show_client-p mt10">{client.cep}</p>
                 </div>
                 <div>
-                  <strong className="show_client-strong">Logradouro</strong>
-                  <h2 className="show_client-h2">{client.logradouro}</h2>
-                </div>
-                <div className="flex-row between">
-                  <div className="mr">
-                    <strong className="show_client-strong">Complemento</strong>
-                    <h2 className="show_client-h2">{client.complemento}</h2>
-                  </div>{' '}
-                  <div>
-                    <strong className="show_client-strong">
-                      Ponto de Referência
-                    </strong>
-                    <h2 className="show_client-h2">{client.bairro}</h2>
-                  </div>
+                  <strong className="show_client-strong">Bairro</strong>
+                  <p className="show_client-p  mt10">{client.bairro}</p>
+                </div>{' '}
+                <div>
+                  <strong className="show_client-strong">Cidade</strong>
+                  <p className="show_client-p  mt10">{client.cidade}</p>
                 </div>
               </div>
-              <div className="show_client-border" />
               <div>
-                {charges &&
-                  charges.map(charge => (
-                    <div key={charge.id} className="charge_card-container">
-                      <div className="flex-row items-center between">
-                        <h2 className="show_charges-h2">
-                          <strong className="show_charges-strong">
-                            #{charge.id}{' '}
-                          </strong>
-                          {charge.descricao}
-                        </h2>
-                        <strong className="show_charges-strong">
-                          R$ {(charge.valor / 100).toFixed(2)}
-                        </strong>
-                      </div>
-                      <div className="flex-row items-center between">
-                        <h3 className="show_charges-h3">
-                          {new Date(charge.vencimento).toLocaleDateString(
-                            'pt-BR',
-                          )}
-                        </h3>
-                        <h4
-                          className={`show_charges-h4 ${(charge.status
-                            ? 'PAGO'
-                            : 'PENDENTE'
-                          ).toLowerCase()}`}
-                        >
-                          {charge.status ? 'PAGO' : 'PENDENTE'}
-                        </h4>
-                      </div>
-                    </div>
-                  ))}
+                <strong className="show_client-strong">Logradouro</strong>
+                <p className="show_client-p  mt10">{client.logradouro}</p>
               </div>
+              <div className="flex-row between">
+                <div className="mr">
+                  <strong className="show_client-strong">Complemento</strong>
+                  <p className="show_client-p  mt10">{client.complemento}</p>
+                </div>{' '}
+                <div>
+                  <strong className="show_client-strong">
+                    Ponto de Referência
+                  </strong>
+                  <p className="show_client-p mt10">{client.bairro}</p>
+                </div>
+              </div>
+            </div>
+            <div className="show_client-border" />
+            <div>
+              {charges &&
+                charges.map(charge => (
+                  <div key={charge.id} className="charge_card-container">
+                    <div className="flex-row items-center between mb20">
+                      <h2 className="show_charges-h2">
+                        <strong className="show_charges-strong">
+                          #{charge.id}{' '}
+                        </strong>
+                        {charge.descricao}
+                      </h2>
+                      <strong className="show_charges-strong">
+                        R$ {(charge.valor / 100).toFixed(2)}
+                      </strong>
+                    </div>
+                    <div className="flex-row items-center between">
+                      <h3 className="show_charges-h3">
+                        {new Date(charge.vencimento).toLocaleDateString(
+                          'pt-BR',
+                        )}
+                      </h3>
+                      <h4
+                        className={`show_charges-h4 ${(charge.status
+                          ? 'PAGO'
+                          : 'PENDENTE'
+                        ).toLowerCase()}`}
+                      >
+                        {charge.status ? 'PAGO' : 'PENDENTE'}
+                      </h4>
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
