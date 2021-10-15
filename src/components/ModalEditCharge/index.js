@@ -15,12 +15,7 @@ registerLocale('pt', pt);
 
 function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
   const { token } = useAuth();
-  const {
-    register,
-    handleSubmit,
-
-    control,
-  } = useForm({
+  const { register, handleSubmit, control } = useForm({
     mode: 'onChange',
   });
   const [clients, setClients] = useState([]);

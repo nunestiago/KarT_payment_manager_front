@@ -5,7 +5,6 @@ function useAuthProvider() {
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem('userData')) ?? null,
   );
-  const [clients, setClients] = useState({});
 
   const login = (userData, callback) => {
     setToken(userData.token);
@@ -27,8 +26,6 @@ function useAuthProvider() {
     token,
     user,
     setUser,
-    clients,
-    setClients,
   };
 }
 

@@ -1,25 +1,25 @@
 import './style.scss';
-import React, { useEffect, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import baseUrl from '../../utils/baseUrl';
-import ClientsTable from '../../components/ClientsTable';
-import ChargesTable from '../../components/ChargesTable';
+const ClientsTable = lazy(() => import('../../components/ClientsTable'));
+const ChargesTable = lazy(() => import('../../components/ChargesTable'));
 import ReportsDropDown from '../../components/ReportsDropDown';
 
 function Reports() {
+  const data = useLocation();
   const { token } = useAuth();
   const [charges, setCharges] = useState([]);
   const [clients, setClients] = useState([]);
   const [filteredCharges, setFilteredCharges] = useState([]);
   const [filteredClients, setFilteredClients] = useState([]);
   const [which, setWhich] = useState({ charges: false, clients: false });
+  // const [query, setQuery] = useState(data.state.relatorio);
 
-  const data = useLocation();
   const toQuery = new URLSearchParams(useLocation().search);
-  const query = toQuery.get('relatorio') ?? data.state.relatorio;
-
+  let query = toQuery.get('relatorio') ?? data.state.relatorio;
   async function handleGetClients() {
     try {
       const response = await fetch(`${baseUrl}client/getAll`, {
@@ -94,7 +94,7 @@ function Reports() {
 
   useEffect(() => {
     getQuery();
-  }, [query, clients, charges, filteredClients, filteredCharges]);
+  }, [query, clients, charges]);
 
   function handleEmDia() {
     setWhich({ charges: false, clients: true });
@@ -115,13 +115,12 @@ function Reports() {
 
   function handlePrevistas() {
     setWhich({ charges: true, clients: false });
-    setFilteredCharges(() =>
-      charges.filter(
-        charge =>
-          charge.status === false &&
-          new Date(charge.vencimento).getTime() > Date.now(),
-      ),
+    const myCharges = charges.filter(
+      charge =>
+        charge.status === false &&
+        new Date(charge.vencimento).getTime() > Date.now(),
     );
+    setFilteredCharges(myCharges);
   }
 
   function handlePagas() {
@@ -140,22 +139,21 @@ function Reports() {
     );
   }
 
-  // function handleModal() {
-  //   setDropMenuOne(!dropMenuOne);
-  //   setOpenModal(!openModal);
-  // }
-
   return (
     <div className="reports-box">
       {which.clients && (
-        <ClientsTable fromReports={filteredClients}>
-          <ReportsDropDown query={query} />
-        </ClientsTable>
+        <Suspense fallback={<div>Loading...</div>}>
+          <ClientsTable fromReports={filteredClients}>
+            <ReportsDropDown />
+          </ClientsTable>
+        </Suspense>
       )}
       {which.charges && filteredCharges && (
-        <ChargesTable fromReports={filteredCharges}>
-          <ReportsDropDown query={query} />
-        </ChargesTable>
+        <Suspense fallback={<div>Loading...</div>}>
+          <ChargesTable fromReports={filteredCharges}>
+            <ReportsDropDown />
+          </ChargesTable>
+        </Suspense>
       )}
     </div>
   );

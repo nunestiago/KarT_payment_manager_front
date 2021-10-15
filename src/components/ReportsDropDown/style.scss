@@ -2,6 +2,7 @@
   position: relative;
   &_report {
     font-size: 24px;
+    cursor: pointer;
   }
   &_img {
     font-size: 24px;
@@ -25,8 +26,10 @@
   }
   &-active {
     color: #da0175;
+    cursor: pointer;
   }
   &-not {
     color: #000;
+    cursor: pointer;
   }
 }
