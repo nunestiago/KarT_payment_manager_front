@@ -112,7 +112,7 @@ function ModalEditCharge({ charge, closeModal, handleGetCharges }) {
         throw new Error(dados);
       }
       handleGetCharges();
-      toast.success('Cobrança foi apagada');
+      toast.success('Cobrança foi excluída');
       history.push('/cobrancas');
     } catch (error) {
       toast.error(error.message);
