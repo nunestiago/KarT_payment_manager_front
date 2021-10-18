@@ -26,6 +26,8 @@ function ClientsTable({ children, fromReports }) {
   }, [filteredClients]);
 
   const handleGetClients = async () => {
+    if (fromReports) return setFilteredClients(fromReports);
+
     try {
       const response = await fetch(`${baseUrl}client/getAll`, {
         method: 'GET',
@@ -61,10 +63,6 @@ function ClientsTable({ children, fromReports }) {
       setModalViewClient(false);
       setModalEditClient(false);
     };
-  }, []);
-
-  useEffect(() => {
-    setFilteredClients(fromReports);
   }, [fromReports]);
 
   return (

@@ -1,3 +1,4 @@
+import 'react-toastify/dist/ReactToastify.css';
 import {
   BrowserRouter as Router,
   Route,
@@ -5,6 +6,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import { AuthProvider } from '../contexts/AuthContext';
 import Login from '../pages/Login';
 import Home from '../pages/Home';
 import Register from '../pages/Register';
@@ -13,8 +15,6 @@ import ViewClients from '../pages/ViewClients';
 import ClientRegister from '../pages/ClientRegister';
 import EditClient from '../pages/EditClient';
 import DetailClient from '../pages/DetailClient';
-import { AuthProvider } from '../contexts/AuthContext';
-import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../components/Sidebar';
 import useAuth from '../hooks/useAuth';
 import Charges from '../pages/ViewCharges';

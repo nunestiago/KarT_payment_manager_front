@@ -101,10 +101,10 @@ function ModalDetailClient({ client, closeModal }) {
               </div>
             </div>
             <div className="show_client-border" />
-            <div>
+            <div className="charge_card-container">
               {charges &&
                 charges.map(charge => (
-                  <div key={charge.id} className="charge_card-container">
+                  <div key={charge.id} className="charge_card-inside">
                     <div className="flex-row items-center between mb20">
                       <h2 className="show_charges-h2">
                         <strong className="show_charges-strong">

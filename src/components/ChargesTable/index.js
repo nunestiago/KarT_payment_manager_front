@@ -15,6 +15,8 @@ function ChargesTable({ children, fromReports }) {
   const [modalEdit, setModalEdit] = useState(false);
 
   const handleGetCharges = async () => {
+    if (fromReports) return setFilteredCharges(fromReports);
+
     try {
       const response = await fetch(`${baseUrl}charges/getAll`, {
         method: 'GET',
@@ -58,11 +60,8 @@ function ChargesTable({ children, fromReports }) {
 
   useEffect(() => {
     handleGetCharges();
-  }, []);
-
-  useEffect(() => {
-    setFilteredCharges(fromReports);
   }, [fromReports]);
+
   return (
     <div>
       <div className="flex-row mb30 items-center between">
