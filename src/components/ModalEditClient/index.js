@@ -19,8 +19,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
 
   const handleCep = async e => {
     const insertedCep = e.target.value.replace(/[^0-9]/g, '');
-    console.log(insertedCep);
-    console.log(insertedCep.length);
+
     if (insertedCep?.length < 8) {
       return;
     }
