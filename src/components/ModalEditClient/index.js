@@ -19,7 +19,8 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
 
   const handleCep = async e => {
     const insertedCep = e.target.value.replace(/[^0-9]/g, '');
-
+    console.log(insertedCep);
+    console.log(insertedCep.length);
     if (insertedCep?.length < 8) {
       return;
     }
@@ -89,10 +90,9 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
   };
 
   useEffect(() => {
-    errors?.email && toast.error(errors.email.message);
-    errors?.nome && toast.error(errors.nome.message);
+    if (errors?.email) return toast.error(errors.email.message);
+    if (errors?.nome) return toast.error(errors.nome.message);
   }, [errors.email, errors.nome]);
-
   return (
     <>
       <div className="modal_container" onClick={() => closeModal()}>
@@ -118,7 +118,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
               <input
                 id="nome"
                 type="text"
-                {...register('nome', { required: 'Campo nome obrigatório' })}
+                {...register('nome', { required: 'Campo "Nome" obrigatório' })}
                 value={handleClient?.nome}
                 onChange={e =>
                   setHandleClient({
@@ -132,7 +132,7 @@ function ModalEditClient({ closeModal, client, handleGetClients }) {
                 id="email"
                 type="email"
                 {...register('email', {
-                  required: 'required',
+                  required: 'Campo "E-mail" obrigatório',
                   pattern: {
                     value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/,
                     message: 'E-mail inválido',
