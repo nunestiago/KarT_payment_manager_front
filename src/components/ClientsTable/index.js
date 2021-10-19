@@ -15,7 +15,6 @@ import { Link } from 'react-router-dom';
 function ClientsTable({ children, fromReports }) {
   const [modalViewClient, setModalViewClient] = useState(false);
   const [modalEditClient, setModalEditClient] = useState(false);
-  const [clients, setClients] = useState([]);
   const [filteredClients, setFilteredClients] = useState([]);
 
   const [client, setClient] = useState();
@@ -43,7 +42,6 @@ function ClientsTable({ children, fromReports }) {
 
       const dados = await response.json();
       setFilteredClients(dados);
-      setClients(dados);
     } catch (error) {
       toast.error(error.message);
     }
@@ -69,7 +67,7 @@ function ClientsTable({ children, fromReports }) {
     <div>
       <div className="flex-row mb30 items-center between">
         {children}
-        <SearchInput data={clients} setListState={setFilteredClients} />
+        <SearchInput data={filteredClients} setListState={setFilteredClients} />
       </div>
 
       <table className="table">
@@ -78,7 +76,7 @@ function ClientsTable({ children, fromReports }) {
             <th className="flex-row">
               Cliente
               <SortNameButton
-                data={clients}
+                data={filteredClients}
                 setListState={setFilteredClients}
               />
             </th>

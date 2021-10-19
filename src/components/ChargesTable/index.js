@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 
 function ChargesTable({ children, fromReports }) {
   const { token } = useAuth();
-  const [charges, setCharges] = useState([]);
   const [charge, setCharge] = useState([]);
   const [filteredCharges, setFilteredCharges] = useState([]);
   const [modalEdit, setModalEdit] = useState(false);
@@ -37,7 +36,6 @@ function ChargesTable({ children, fromReports }) {
       }
 
       setFilteredCharges(dados);
-      setCharges(dados);
     } catch (error) {
       toast.error(error.message);
     }
@@ -66,7 +64,7 @@ function ChargesTable({ children, fromReports }) {
     <div>
       <div className="flex-row mb30 items-center between">
         <div>{children}</div>
-        <SearchInput data={charges} setListState={setFilteredCharges} />
+        <SearchInput data={filteredCharges} setListState={setFilteredCharges} />
       </div>
 
       <table className="table">
@@ -78,7 +76,7 @@ function ChargesTable({ children, fromReports }) {
               <div className="flex-row">
                 Cliente
                 <SortNameButton
-                  data={charges}
+                  data={filteredCharges}
                   setListState={setFilteredCharges}
                 />
               </div>

@@ -8,6 +8,8 @@ function SearchInput({ data, setListState }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (e.target.value) setListState(data);
+
     const result = data.filter(
       item =>
         item.nome?.toLocaleLowerCase().includes(search.toLowerCase()) ||
@@ -15,6 +17,7 @@ function SearchInput({ data, setListState }) {
         item?.id === parseInt(search) ||
         item?.cpf === search,
     );
+
     if (result.length === 0) {
       return toast.warn('Não existe resultado para busca feita');
     }
